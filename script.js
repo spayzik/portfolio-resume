@@ -150,6 +150,13 @@ function applyTheme(theme) {
     document.documentElement.dataset.theme = theme;
     if (themeMeta) themeMeta.setAttribute('content', theme === 'light' ? '#F4F6FA' : '#08080C');
     document.querySelectorAll('.theme-toggle').forEach((b) => b.setAttribute('aria-pressed', String(theme === 'light')));
+    
+    // Обновляем фон без скролла
+    if (typeof applyBgGradient === 'function' && typeof BG_PALETTES_DARK !== 'undefined') {
+        const doc = document.documentElement;
+        const p = doc.scrollTop / Math.max(1, (doc.scrollHeight - doc.clientHeight));
+        applyBgGradient(Math.max(0, Math.min(p, 1)));
+    }
 }
 function toggleTheme() {
     const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
@@ -654,11 +661,17 @@ const RING_C = 138.23; // длина окружности прогресс-ко�
 /* Палитры фона: 4 ключевые позиции (t=0..1), каждая — три стопа градиента [r,g,b].
    Очень тёмные: близки к базовому #08080C, чтобы фон оставался таким же глубоким,
    а градиент лишь едва-едва переливался оттенком при скролле. */
-const BG_PALETTES = [
+const BG_PALETTES_DARK = [
     { g1: [9, 13, 22],  g2: [11, 13, 26], g3: [18, 12, 28] },   // начало: глубокий сине-фиолет
     { g1: [8, 16, 20],  g2: [12, 13, 30], g3: [20, 12, 32] },   // 1/3: бирюзово-индиго
     { g1: [10, 14, 24], g2: [16, 12, 32], g3: [26, 10, 30] },   // 2/3: сине-пурпурный
     { g1: [9, 15, 24],  g2: [12, 12, 28], g3: [22, 12, 32] },   // конец: морской градиент
+];
+const BG_PALETTES_LIGHT = [
+    { g1: [244, 246, 250], g2: [235, 242, 255], g3: [246, 240, 255] },
+    { g1: [240, 248, 255], g2: [238, 244, 255], g3: [250, 242, 255] },
+    { g1: [245, 248, 255], g2: [242, 242, 255], g3: [252, 240, 255] },
+    { g1: [242, 250, 255], g2: [238, 242, 255], g3: [248, 242, 255] },
 ];
 function lerp(a, b, t) { return a + (b - a) * t; }
 function mixPalette(A, B, t) {
@@ -669,14 +682,17 @@ function mixPalette(A, B, t) {
     };
 }
 function applyBgGradient(t) {
-    const seg = t * (BG_PALETTES.length - 1);
-    const i = Math.min(Math.floor(seg), BG_PALETTES.length - 2);
+    const pals = document.documentElement.dataset.theme === 'light' ? BG_PALETTES_LIGHT : BG_PALETTES_DARK;
+    const seg = t * (pals.length - 1);
+    const i = Math.min(Math.floor(seg), pals.length - 2);
     const f = seg - i;
-    const c = mixPalette(BG_PALETTES[i], BG_PALETTES[i + 1], f);
+    const c = mixPalette(pals[i], pals[i + 1], f);
     document.documentElement.style.setProperty('--gf-1', `rgb(${c.g1.map(Math.round).join(',')})`);
     document.documentElement.style.setProperty('--gf-2', `rgb(${c.g2.map(Math.round).join(',')})`);
     document.documentElement.style.setProperty('--gf-3', `rgb(${c.g3.map(Math.round).join(',')})`);
 }
+// Вызов для установки правильных цветов при загрузке до первого скролла
+applyBgGradient(document.documentElement.scrollTop / Math.max(1, (document.documentElement.scrollHeight - document.documentElement.clientHeight)));
 
 window.addEventListener('scroll', () => {
     const doc = document.documentElement;
