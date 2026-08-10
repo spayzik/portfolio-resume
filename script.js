@@ -143,18 +143,17 @@ function applyTheme(theme) {
     document.documentElement.dataset.theme = theme;
     if (themeMeta) themeMeta.setAttribute('content', theme === 'light' ? '#F4F6FA' : '#08080C');
     document.querySelectorAll('.theme-toggle').forEach((b) => b.setAttribute('aria-pressed', String(theme === 'light')));
-    
-    // Обновляем фон без скролла
-    if (typeof applyBgGradient === 'function' && typeof BG_PALETTES_DARK !== 'undefined') {
-        const doc = document.documentElement;
-        const p = doc.scrollTop / Math.max(1, (doc.scrollHeight - doc.clientHeight));
-        applyBgGradient(Math.max(0, Math.min(p, 1)));
-    }
 }
 function toggleTheme() {
     const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
     localStorage.setItem(THEME_KEY, next);
     applyTheme(next);
+    /* Обновляем палитру фона под новую тему (функция уже определена к моменту клика) */
+    if (typeof applyBgGradient === 'function') {
+        const doc = document.documentElement;
+        const p = doc.scrollTop / Math.max(1, (doc.scrollHeight - doc.clientHeight));
+        applyBgGradient(Math.max(0, Math.min(p, 1)));
+    }
 }
 applyTheme(getTheme());
 document.querySelectorAll('.theme-toggle').forEach((b) => b.addEventListener('click', toggleTheme));
