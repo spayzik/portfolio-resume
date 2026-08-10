@@ -38,19 +38,19 @@
 :root {
     color-scheme: dark;
     --bg:            #08080C;
-    --bg-soft:       #0B0B10;
-    --surface:       rgba(255, 255, 255, 0.035);
-    --surface-hover: rgba(255, 255, 255, 0.06);
-    --surface-soft:  rgba(255, 255, 255, 0.03);
-    --surface-mid:   rgba(255, 255, 255, 0.04);
-    --surface-strong:rgba(255, 255, 255, 0.08);
-    --border:        rgba(255, 255, 255, 0.08);
-    --border-hover:  rgba(0, 210, 255, 0.35);
-    --nav-border:    rgba(255, 255, 255, 0.05);
+    --bg-soft:       #0C0D12;
+    --surface:       rgba(14, 15, 20, 0.75);
+    --surface-hover: rgba(20, 22, 28, 0.85);
+    --surface-soft:  rgba(14, 15, 20, 0.65);
+    --surface-mid:   rgba(20, 22, 28, 0.7);
+    --surface-strong:rgba(30, 34, 42, 0.8);
+    --border:        rgba(255, 255, 255, 0.12);
+    --border-hover:  rgba(0, 210, 255, 0.4);
+    --nav-border:    rgba(255, 255, 255, 0.08);
 
-    --text:          #F2F4F8;
-    --text-muted:    #AAB2C4;
-    --text-dim:      #737B90;
+    --text:          #FFFFFF;
+    --text-muted:    #B4BBD0;
+    --text-dim:      #828A9F;
 
     --accent-1:      #00D2FF;
     --accent-2:      #3A7BD5;
@@ -58,18 +58,18 @@
     --gradient:      linear-gradient(120deg, var(--accent-1), var(--accent-2));
 
     /* Подложки и свечения: токены, чтобы светлая тема могла их переопределить */
-    --grid-line:     rgba(255, 255, 255, 0.012);
+    --grid-line:     rgba(255, 255, 255, 0.015);
     --blend-mode:    screen;
-    --blob-1-bg:     rgba(0, 210, 255, 0.20);
-    --blob-2-bg:     rgba(58, 123, 213, 0.22);
-    --blob-3-bg:     rgba(139, 92, 246, 0.16);
-    --blob-4-bg:     rgba(0, 190, 255, 0.14);
-    --blob-5-bg:     rgba(90, 140, 255, 0.16);
-    --shadow-card:   0 30px 80px rgba(0, 0, 0, 0.45), 0 0 60px rgba(0, 210, 255, 0.06);
+    --blob-1-bg:     rgba(0, 210, 255, 0.12);
+    --blob-2-bg:     rgba(58, 123, 213, 0.14);
+    --blob-3-bg:     rgba(139, 92, 246, 0.10);
+    --blob-4-bg:     rgba(0, 190, 255, 0.08);
+    --blob-5-bg:     rgba(90, 140, 255, 0.10);
+    --shadow-card:   0 20px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(0, 210, 255, 0.08);
     --shadow-btn:    0 8px 30px rgba(0, 210, 255, 0.22);
     --shadow-btn-hover: 0 14px 44px rgba(0, 210, 255, 0.35);
     --shadow-chip:   0 12px 34px rgba(0, 210, 255, 0.18);
-    --muted-icon:    rgba(255, 255, 255, 0.28);
+    --muted-icon:    rgba(255, 255, 255, 0.35);
 
     --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-mono: 'JetBrains Mono', 'Consolas', monospace;
@@ -85,36 +85,36 @@
 :root[data-theme="light"] {
     color-scheme: light;
     --bg:            #F4F6FA;
-    --bg-soft:       #EDEFF4;
-    --surface:       rgba(16, 24, 40, 0.04);
-    --surface-hover: rgba(16, 24, 40, 0.07);
-    --surface-soft:  rgba(16, 24, 40, 0.035);
-    --surface-mid:   rgba(16, 24, 40, 0.05);
-    --surface-strong:rgba(16, 24, 40, 0.08);
-    --border:        rgba(16, 24, 40, 0.10);
+    --bg-soft:       #EBEEF5;
+    --surface:       rgba(255, 255, 255, 0.85);
+    --surface-hover: rgba(255, 255, 255, 0.95);
+    --surface-soft:  rgba(255, 255, 255, 0.75);
+    --surface-mid:   rgba(255, 255, 255, 0.85);
+    --surface-strong:rgba(255, 255, 255, 1);
+    --border:        rgba(16, 24, 40, 0.12);
     --border-hover:  rgba(0, 120, 180, 0.45);
     --nav-border:    rgba(16, 24, 40, 0.08);
 
-    --text:          #16181D;
-    --text-muted:    #4A5265;
-    --text-dim:      #7C8598;
+    --text:          #111318;
+    --text-muted:    #3E4658;
+    --text-dim:      #6A738A;
 
-    --accent-1:      #0097C4;
-    --accent-2:      #2A6CD6;
-    --accent-3:      #6D4AE0;
+    --accent-1:      #0085B3;
+    --accent-2:      #2159BA;
+    --accent-3:      #5B39CC;
 
-    --grid-line:     rgba(16, 24, 40, 0.045);
+    --grid-line:     rgba(16, 24, 40, 0.035);
     --blend-mode:    multiply;
-    --blob-1-bg:     rgba(0, 151, 196, 0.11);
-    --blob-2-bg:     rgba(42, 108, 214, 0.10);
-    --blob-3-bg:     rgba(109, 74, 224, 0.09);
-    --blob-4-bg:     rgba(0, 160, 210, 0.08);
-    --blob-5-bg:     rgba(60, 110, 220, 0.09);
-    --shadow-card:   0 18px 50px rgba(16, 24, 40, 0.10);
+    --blob-1-bg:     rgba(0, 151, 196, 0.06);
+    --blob-2-bg:     rgba(42, 108, 214, 0.06);
+    --blob-3-bg:     rgba(109, 74, 224, 0.05);
+    --blob-4-bg:     rgba(0, 160, 210, 0.04);
+    --blob-5-bg:     rgba(60, 110, 220, 0.05);
+    --shadow-card:   0 12px 40px rgba(16, 24, 40, 0.08);
     --shadow-btn:    0 6px 20px rgba(0, 120, 180, 0.18);
     --shadow-btn-hover: 0 10px 30px rgba(0, 120, 180, 0.28);
     --shadow-chip:   0 8px 22px rgba(0, 120, 180, 0.14);
-    --muted-icon:    rgba(16, 24, 40, 0.32);
+    --muted-icon:    rgba(16, 24, 40, 0.35);
 }
 
 /* ============================================================
@@ -129,6 +129,7 @@ body {
     color: var(--text);
     font-family: var(--font-sans);
     font-weight: 400;
+    font-size: 17px;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
@@ -179,7 +180,7 @@ body::before {
     background-image:
         linear-gradient(var(--grid-line) 1px, transparent 1px),
         linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-    background-size: 72px 72px;
+    background-size: 144px 144px; /* Увеличил ячейки, чтобы было чище */
     pointer-events: none;
     z-index: 0;
 }
@@ -197,9 +198,10 @@ body::before {
 .bg-aurora .blob {
     position: absolute;
     border-radius: 50%;
-    filter: blur(120px) hue-rotate(var(--shue, 0deg));
+    filter: blur(160px) hue-rotate(var(--shue, 0deg)); /* Сильнее размытие, чтобы фон не отвлекал */
     mix-blend-mode: var(--blend-mode);
     will-change: transform, filter;
+    opacity: 0.85; /* Немного приглушил */
 }
 /* Цифровая сетка с импульсами данных (canvas), рисуется JS */
 #bg-canvas {
@@ -877,12 +879,12 @@ body::before {
 
 .project-card {
     position: relative;
-    background: var(--surface-soft);
+    background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: clamp(28px, 3.5vw, 44px);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
     display: flex;
     flex-direction: column;
     gap: 22px;
@@ -915,10 +917,10 @@ body::before {
     text-transform: uppercase;
     color: var(--accent-1);
 }
-.project-title { font-size: clamp(1.6rem, 2.6vw, 2.1rem); font-weight: 700; letter-spacing: -0.02em; }
-.project-subtitle { font-size: 14px; font-weight: 500; color: var(--accent-3); margin-top: 4px; }
+.project-title { font-size: clamp(1.8rem, 2.8vw, 2.3rem); font-weight: 700; letter-spacing: -0.02em; }
+.project-subtitle { font-size: 15px; font-weight: 500; color: var(--accent-3); margin-top: 4px; }
 .project-desc {
-    font-size: 16px;
+    font-size: 17px;
     line-height: 1.8;
     color: var(--text-muted);
     font-weight: 400;
@@ -1004,13 +1006,20 @@ body::before {
     display: grid;
     grid-template-columns: 64px 1fr;
     gap: 20px 22px;
-    padding: 24px 26px;
+    padding: 26px 28px;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    transition: border-color 0.35s ease, background 0.35s ease, transform 0.35s var(--ease);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: border-color 0.35s ease, background 0.35s ease, transform 0.35s var(--ease), box-shadow 0.35s ease;
     position: relative;
     overflow: hidden;
+}
+.exp-card:hover {
+    border-color: var(--border-hover);
+    box-shadow: var(--shadow-card);
+    transform: translateY(-2px);
 }
 .exp-card::before {
     content: '';
@@ -1063,25 +1072,25 @@ body::before {
     margin-bottom: 6px;
 }
 .exp-role {
-    font-size: 18px;
-    font-weight: 600;
+    font-size: 20px;
+    font-weight: 700;
     letter-spacing: -0.02em;
     line-height: 1.3;
     margin: 0;
 }
 .exp-date {
     font-family: var(--font-mono);
-    font-size: 12.5px;
+    font-size: 13.5px;
     letter-spacing: 0.04em;
     color: var(--accent-1);
     white-space: nowrap;
     padding-top: 4px;
 }
 .exp-company {
-    font-size: 15px;
-    font-weight: 500;
+    font-size: 16px;
+    font-weight: 600;
     color: var(--text);
-    margin: 0 0 8px;
+    margin: 0 0 12px;
 }
 .exp-meta {
     display: flex;
@@ -1102,23 +1111,23 @@ body::before {
 .exp-bullets {
     list-style: none;
     display: grid;
-    gap: 8px;
+    gap: 12px;
     margin: 0;
     padding: 0;
 }
 .exp-bullets li {
-    font-size: 14.5px;
+    font-size: 16px;
     color: var(--text-muted);
     font-weight: 400;
-    line-height: 1.6;
-    padding-left: 18px;
+    line-height: 1.7;
+    padding-left: 20px;
     position: relative;
 }
 .exp-bullets li::before {
     content: '';
     position: absolute;
     left: 0;
-    top: 9px;
+    top: 10px;
     width: 6px;
     height: 6px;
     border-radius: 50%;
@@ -1137,20 +1146,20 @@ body::before {
     grid-template-columns: 90px 1fr;
     gap: 18px;
     align-items: baseline;
-    padding: 22px 26px;
+    padding: 24px 28px;
     background: var(--surface);
     border: 1px dashed var(--border);
     border-radius: var(--radius);
 }
 .education-year {
     font-family: var(--font-mono);
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 600;
     letter-spacing: 0.08em;
     color: var(--accent-1);
 }
-.education-degree { font-size: 15.5px; font-weight: 600; letter-spacing: -0.01em; }
-.education-place { font-family: var(--font-mono); font-size: 12.5px; color: var(--text-dim); margin-top: 5px; }
+.education-degree { font-size: 17px; font-weight: 600; letter-spacing: -0.01em; }
+.education-place { font-family: var(--font-mono); font-size: 13.5px; color: var(--text-dim); margin-top: 5px; }
 
 /* HR-ключевики */
 .hr-chips { margin-top: 48px; }
