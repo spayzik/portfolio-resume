@@ -873,6 +873,78 @@ body::before {
 }
 
 /* ============================================================
+   9.5. ПРОФЕССИОНАЛЬНЫЙ ПОДХОД (полный цикл, 8 шагов)
+   ============================================================ */
+.approach-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.7fr;
+    gap: clamp(32px, 5vw, 64px);
+    align-items: start;
+}
+.approach-kicker {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--accent-3);
+    display: block;
+    margin-bottom: 18px;
+}
+.approach-intro p {
+    font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+    font-weight: 400;
+    line-height: 1.75;
+    color: var(--text-muted);
+}
+.approach-intro strong { color: var(--text); font-weight: 600; }
+.cycle-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+.cycle-step {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 22px;
+    transition: border-color 0.35s ease, transform 0.35s var(--ease), background 0.35s ease;
+}
+.cycle-step:hover { border-color: var(--border-hover); background: var(--surface-hover); transform: translateY(-3px); }
+.cycle-num {
+    font-family: var(--font-mono);
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    display: block;
+    margin-bottom: 12px;
+}
+.cycle-step h4 {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 6px;
+}
+.cycle-step p {
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--text-muted);
+    margin: 0;
+}
+@media (max-width: 900px) {
+    .approach-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+    .cycle-grid { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
    10. ПРОЕКТЫ (glassmorphism + 3D-tilt)
    ============================================================ */
 .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
@@ -1160,30 +1232,6 @@ body::before {
 }
 .education-degree { font-size: 17px; font-weight: 600; letter-spacing: -0.01em; }
 .education-place { font-family: var(--font-mono); font-size: 13.5px; color: var(--text-dim); margin-top: 5px; }
-
-/* HR-ключевики */
-.hr-chips { margin-top: 48px; }
-.hr-chips-title {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    display: block;
-    margin-bottom: 16px;
-}
-.hr-chips-row { display: flex; flex-wrap: wrap; gap: 8px; }
-.hr-chips-row span {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--text-muted);
-    background: var(--surface-soft);
-    border: 1px solid var(--border);
-    border-radius: 100px;
-    padding: 6px 13px;
-    transition: color 0.3s ease, border-color 0.3s ease;
-}
-.hr-chips-row span:hover { color: var(--accent-1); border-color: var(--border-hover); }
 
 /* Ряд кнопок с резюме в контактах */
 .resume-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 28px; }
@@ -1673,7 +1721,7 @@ body::before {
     body { background: #fff !important; color: #111; }
     body::before, .bg-aurora, .preloader, .progress-bar, .cursor-dot, .cursor-ring,
     .to-top, .header, .mobile-nav, .burger, .lang-switch, .marquee, .scroll-hint,
-    #hero-canvas, .hero-glow, .contact-form, .footer-glow, .hr-chips, .toast,
+    #hero-canvas, .hero-glow, .contact-form, .footer-glow, .toast,
     .skills-grid, .btn svg, .social-link,
     .project-visual, .view-badge, .project-modal, .photo-viewer,
     .form-status, .form-again, .resume-hint { display: none !important; }
@@ -1790,11 +1838,12 @@ body::before {
     <div class="container header-inner">
         <a href="#" class="logo">dd<span>.</span>dev</a>
         <nav class="nav">
-            <a href="#about"    data-i18n="nav_about"></a>
-            <a href="#skills"   data-i18n="nav_skills"></a>
-            <a href="#career"   data-i18n="nav_career"></a>
-            <a href="#projects" data-i18n="nav_projects"></a>
-            <a href="#contact"  data-i18n="nav_contact"></a>
+            <a href="#about"     data-i18n="nav_about"></a>
+            <a href="#approach"  data-i18n="nav_approach"></a>
+            <a href="#career"    data-i18n="nav_career"></a>
+            <a href="#skills"    data-i18n="nav_skills"></a>
+            <a href="#projects"  data-i18n="nav_projects"></a>
+            <a href="#contact"   data-i18n="nav_contact"></a>
         </nav>
         <div style="display:flex; align-items:center; gap:14px;">
             <div class="lang-switch" role="group" aria-label="Language switch">
@@ -1814,11 +1863,12 @@ body::before {
 
 <!-- Мобильное меню -->
 <nav class="mobile-nav" id="mobile-nav">
-    <a href="#about"    data-i18n="nav_about"></a>
-    <a href="#skills"   data-i18n="nav_skills"></a>
-    <a href="#career"   data-i18n="nav_career"></a>
-    <a href="#projects" data-i18n="nav_projects"></a>
-    <a href="#contact"  data-i18n="nav_contact"></a>
+    <a href="#about"     data-i18n="nav_about"></a>
+    <a href="#approach"  data-i18n="nav_approach"></a>
+    <a href="#career"    data-i18n="nav_career"></a>
+    <a href="#skills"    data-i18n="nav_skills"></a>
+    <a href="#projects"  data-i18n="nav_projects"></a>
+    <a href="#contact"   data-i18n="nav_contact"></a>
     <div class="mobile-nav-extra">
         <button class="theme-toggle" id="theme-toggle-mobile" aria-label="Toggle theme">
             <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
@@ -1906,21 +1956,29 @@ body::before {
     </div>
 </section>
 
-<!-- ================= КОМПЕТЕНЦИИ ================= -->
-<section id="skills">
+<!-- ================= ПРОФЕССИОНАЛЬНЫЙ ПОДХОД ================= -->
+<section id="approach">
     <div class="container">
         <div class="section-head reveal">
             <span class="section-index">02</span>
-            <h2 class="section-title" data-i18n="skills_title"></h2>
+            <h2 class="section-title" data-i18n="approach_title"></h2>
+            <p class="section-sub" data-i18n="approach_sub"></p>
         </div>
-
-        <!-- Карточки компетенций рендерятся из CONFIG.skills -->
-        <div class="skills-grid" id="skills-grid"></div>
-
-        <!-- Ключевые навыки одним списком — для HR-фильтров и поиска -->
-        <div class="hr-chips reveal" style="--delay:.15s">
-            <span class="hr-chips-title" data-i18n="hr_title"></span>
-            <div class="hr-chips-row" id="hr-chips-row"></div>
+        <div class="approach-grid">
+            <div class="approach-intro reveal" style="--delay:.1s">
+                <span class="approach-kicker" data-i18n="approach_kicker"></span>
+                <p data-i18n-html="approach_text"></p>
+            </div>
+            <div class="cycle-grid reveal" style="--delay:.15s">
+                <div class="cycle-step"><span class="cycle-num">01</span><h4 data-i18n="c1_t"></h4><p data-i18n="c1_s"></p></div>
+                <div class="cycle-step"><span class="cycle-num">02</span><h4 data-i18n="c2_t"></h4><p data-i18n="c2_s"></p></div>
+                <div class="cycle-step"><span class="cycle-num">03</span><h4 data-i18n="c3_t"></h4><p data-i18n="c3_s"></p></div>
+                <div class="cycle-step"><span class="cycle-num">04</span><h4 data-i18n="c4_t"></h4><p data-i18n="c4_s"></p></div>
+                <div class="cycle-step"><span class="cycle-num">05</span><h4 data-i18n="c5_t"></h4><p data-i18n="c5_s"></p></div>
+                <div class="cycle-step"><span class="cycle-num">06</span><h4 data-i18n="c6_t"></h4><p data-i18n="c6_s"></p></div>
+                <div class="cycle-step"><span class="cycle-num">07</span><h4 data-i18n="c7_t"></h4><p data-i18n="c7_s"></p></div>
+                <div class="cycle-step"><span class="cycle-num">08</span><h4 data-i18n="c8_t"></h4><p data-i18n="c8_s"></p></div>
+            </div>
         </div>
     </div>
 </section>
@@ -1940,11 +1998,24 @@ body::before {
     </div>
 </section>
 
+<!-- ================= КОМПЕТЕНЦИИ ================= -->
+<section id="skills">
+    <div class="container">
+        <div class="section-head reveal">
+            <span class="section-index">04</span>
+            <h2 class="section-title" data-i18n="skills_title"></h2>
+        </div>
+
+        <!-- Карточки компетенций рендерятся из CONFIG.skills -->
+        <div class="skills-grid" id="skills-grid"></div>
+    </div>
+</section>
+
 <!-- ================= ПРОЕКТЫ ================= -->
 <section id="projects">
     <div class="container">
         <div class="section-head reveal">
-            <span class="section-index">04</span>
+            <span class="section-index">05</span>
             <h2 class="section-title" data-i18n="projects_title"></h2>
         </div>
 
@@ -1957,7 +2028,7 @@ body::before {
 <section id="contact">
     <div class="container">
         <div class="section-head reveal">
-            <span class="section-index">05</span>
+            <span class="section-index">06</span>
             <h2 class="section-title" data-i18n="contact_title"></h2>
         </div>
         <div class="contact-grid">

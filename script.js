@@ -115,13 +115,6 @@ const CONFIG = {
         },
     ],
 
-    hrChips: [
-        'Requirements Engineering', 'Event Storming', 'BPMN', 'UML', 'C4 Model', 'ArchiMate', 'DDD',
-        'CQRS', 'Saga', 'Microservices', 'SQL', 'Python', 'FastAPI', 'React', 'TypeScript',
-        'RAG', 'LLM', 'Kafka', 'Qdrant', 'ChromaDB', 'Docker', 'Kubernetes', 'CI/CD',
-        'Prometheus', 'Grafana', 'Unit Economics', 'Jira', 'Confluence',
-    ],
-
     education: [
         { year: '2024', typeKey: 'edu1_type', specKey: 'edu1_spec', placeKey: 'edu1_place' },
         { year: '2028', typeKey: 'edu2_type', specKey: 'edu2_spec', placeKey: 'edu2_place' },
@@ -177,7 +170,7 @@ const GITHUB_SVG = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5
    ============================================================ */
 const I18N = {
     ru: {
-        nav_about: 'Обо мне', nav_skills: 'Компетенции',
+        nav_about: 'Обо мне', nav_approach: 'Подход', nav_skills: 'Компетенции',
         nav_career: 'Опыт', nav_projects: 'Проекты', nav_contact: 'Контакты',
 
         hero_label: 'Портфолио · Анализ & Архитектура',
@@ -197,6 +190,19 @@ const I18N = {
         stat_2: 'продукта с нуля: FinGuard, EzLearn',
         stat_3: 'автотестов (pytest + vitest)',
         stat_4: 'уязвимостей закрыто в аудите безопасности',
+
+        approach_title: 'Профессиональный подход',
+        approach_sub: 'Полный цикл — от бизнес-проблемы до измеримого результата.',
+        approach_kicker: 'Full-cycle analysis',
+        approach_text: 'Моя сильная сторона — <strong>полный цикл</strong>: от бизнес-проблемы до работающего решения. Объединяю бизнес-анализ, системное проектирование и контроль внедрения — поэтому готовлю не просто ТЗ, а довожу решение до работающего продукта с измеримым эффектом.',
+        c1_t: 'Business Problem', c1_s: 'проблема бизнеса как стартовая точка',
+        c2_t: 'Requirements', c2_s: 'сбор и формализация требований',
+        c3_t: 'Architecture', c3_s: 'проектирование архитектуры решения',
+        c4_t: 'Solution Design', c4_s: 'дизайн решения, API-контракты, интеграции',
+        c5_t: 'Integration', c5_s: 'интеграции и согласование с командами разработки',
+        c6_t: 'Deployment', c6_s: 'внедрение в продакшен',
+        c7_t: 'Monitoring', c7_s: 'метрики, наблюдаемость и эксплуатация',
+        c8_t: 'Business Result', c8_s: 'измеримый бизнес-эффект',
 
         projects_title: 'Ключевые проекты',
         projects_sub: 'Два продукта, которые я спроектировал и собрал с нуля — от требований до релиза.',
@@ -236,8 +242,6 @@ const I18N = {
         sk6_title: 'Инструменты',
         sk6_l1: 'SQL, REST / OpenAPI, Postman', sk6_l2: 'Jira, Confluence, Miro, draw.io',
         sk6_l3: 'Figma, Excel', sk6_l4: 'Git, Python для аналитики',
-
-        hr_title: 'Ключевые навыки',
 
         career_title: 'Опыт работы',
         career_sub: 'Полный цикл — от сбора требований и архитектуры до внедрения и метрик.',
@@ -285,7 +289,7 @@ const I18N = {
         footer_name: 'Даниил Дунаев', footer_built: 'сделано на чистом HTML/CSS/JS',
     },
     en: {
-        nav_about: 'About', nav_skills: 'Skills',
+        nav_about: 'About', nav_approach: 'Approach', nav_skills: 'Skills',
         nav_career: 'Career', nav_projects: 'Projects', nav_contact: 'Contact',
 
         hero_label: 'Portfolio · Analysis & Architecture',
@@ -305,6 +309,20 @@ const I18N = {
         stat_2: 'products built from scratch: FinGuard, EzLearn',
         stat_3: 'automated tests (pytest + vitest)',
         stat_4: 'vulnerabilities fixed in security audit',
+
+        approach_title: 'Professional approach',
+        approach_sub: 'The full cycle — from a business problem to a measurable result.',
+        approach_kicker: 'Full-cycle analysis',
+        approach_text: 'My strength is the <strong>full cycle</strong>: from a business problem to a working solution. I combine business analysis, systems design and delivery oversight — so I do not just write a spec, I deliver a working product with measurable impact.',
+        c1_t: 'Business Problem', c1_s: 'the business problem as the starting point',
+        c2_t: 'Requirements', c2_s: 'gathering and formalizing requirements',
+        c3_t: 'Architecture', c3_s: 'designing the solution architecture',
+        c4_t: 'Solution Design', c4_s: 'solution design, API contracts, integrations',
+        c5_t: 'Integration', c5_s: 'integrations and alignment with engineering teams',
+        c6_t: 'Deployment', c6_s: 'rolling out to production',
+        c7_t: 'Monitoring', c7_s: 'metrics, observability and operations',
+        c8_t: 'Business Result', c8_s: 'measurable business impact',
+
         
         projects_title: 'Key projects',
         projects_sub: 'Two products I designed and built from scratch — from requirements to release.',
@@ -344,8 +362,6 @@ const I18N = {
         sk6_title: 'Tools',
         sk6_l1: 'SQL, REST / OpenAPI, Postman', sk6_l2: 'Jira, Confluence, Miro, draw.io',
         sk6_l3: 'Figma, Excel', sk6_l4: 'Git, Python for data analysis',
-
-        hr_title: 'Key skills',
 
         career_title: 'Work experience',
         career_sub: 'The full cycle — from requirements and architecture to rollout and metrics.',
@@ -526,9 +542,6 @@ function renderDynamic() {
                 ${s.items.map(k => `<li>${d[k]}</li>`).join('')}
             </ul>
         </div>`).join('');
-
-    document.getElementById('hr-chips-row').innerHTML =
-        CONFIG.hrChips.map(c => `<span>${c}</span>`).join('');
 
     document.getElementById('projects-grid').innerHTML = CONFIG.projects.map((p, i) => `
         <article class="project-card tilt reveal" style="--delay:${(0.1 + i * 0.1).toFixed(2)}s"
