@@ -1,0 +1,8 @@
+# Резервные копии перед правками
+index-backup-*
+script-backup-*
+
+# Системное
+Thumbs.db
+.DS_Store
+desktop.ini

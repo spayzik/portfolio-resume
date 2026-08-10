@@ -1,0 +1,1269 @@
+'use strict';
+
+/* ============================================================
+   0. CONFIG — все данные и ссылки сайта в одном месте.
+      Плейсхолдеры заменяются здесь — и обновятся по всему сайту.
+   ============================================================ */
+const CONFIG = {
+    email: '[your@email.com]',
+    resumePdf: '',                 // путь к resume.pdf или '' (тогда кнопка открывает печать)
+    siteUrl: '',                   // домен для SEO, напр. 'https://ddunaev.ru' (JSON-LD + hreflang)
+
+    /* Отправка формы: если telegramBotToken + telegramChatId заполнены — сообщения
+       уходят в ваш Telegram через Bot API. Иначе — открывается почтовый клиент. */
+    telegramBotToken: '',          // токен бота от @BotFather
+    telegramChatId: '',            // ваш chat_id (узнать у @userinfobot)
+
+    socials: {
+        github:    'https://github.com/spayzik',
+        hh:        'https://hh.ru/',
+        habr:      'https://career.habr.com/',
+        getmatch:  'https://getmatch.ru/',
+        linkedin:  'https://linkedin.com/',
+        telegram:  'https://t.me/',
+    },
+
+    /* Проекты: карточки + модальные окна с галереей рендерятся отсюда.
+       Скриншоты клади в assets/projects/ с именами из shots. */
+    projects: [
+        {
+            id: 'finguard',
+            name: 'FinGuard',
+            tag: 'FinTech / AI',
+            roleKey: 'p1_role',
+            descKey: 'p1_desc',
+            hlKeys: ['p1_h1', 'p1_h2', 'p1_h3', 'p1_h4'],
+            metrics: 'CAC · LTV · ROI',
+            repo: 'https://github.com/spayzik/finguard-platform',
+            stack: ['Python', 'FastAPI', 'Kafka', 'gRPC', 'GraphQL', 'Qdrant', 'Qwen 2.5', 'Kubernetes', 'Keycloak', 'Prometheus', 'Grafana'],
+            shots: [
+                'assets/projects/finguard-1.webp',
+                'assets/projects/finguard-2.webp',
+                'assets/projects/finguard-3.webp',
+                'assets/projects/finguard-4.webp',
+            ],
+        },
+        {
+            id: 'ezlearn',
+            name: 'EzLearn',
+            tag: 'EdTech / AI',
+            roleKey: 'p2_role',
+            descKey: 'p2_desc',
+            hlKeys: ['p2_h1', 'p2_h2', 'p2_h3', 'p2_h4'],
+            metrics: '115+ pytest · 41+ vitest',
+            repo: 'https://github.com/spayzik/ezlearn',
+            stack: ['Python', 'FastAPI', 'React', 'TypeScript', 'SQLAlchemy', 'LM Studio', 'Qwen 2.5', 'ChromaDB', 'Docker', 'GitHub Actions'],
+            shots: [
+                'assets/projects/ezlearn-1.webp',
+                'assets/projects/ezlearn-2.webp',
+                'assets/projects/ezlearn-3.webp',
+                'assets/projects/ezlearn-4.webp',
+            ],
+        },
+    ],
+
+    /* Компетенции: иконки + ключи текстов из I18N */
+    skills: [
+        {
+            titleKey: 'sk1_title', items: ['sk1_l1', 'sk1_l2', 'sk1_l3', 'sk1_l4'],
+            icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="8.5" y="14" width="7" height="7" rx="1.5"/><path d="M6.5 10v2h11v-2M12 12v2"/></svg>',
+        },
+        {
+            titleKey: 'sk2_title', items: ['sk2_l1', 'sk2_l2', 'sk2_l3', 'sk2_l4'],
+            icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg>',
+        },
+        {
+            titleKey: 'sk3_title', items: ['sk3_l1', 'sk3_l2', 'sk3_l3', 'sk3_l4'],
+            icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.01a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.01a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>',
+        },
+        {
+            titleKey: 'sk4_title', items: ['sk4_l1', 'sk4_l2', 'sk4_l3', 'sk4_l4'],
+            icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg>',
+        },
+        {
+            titleKey: 'sk5_title', items: ['sk5_l1', 'sk5_l2', 'sk5_l3', 'sk5_l4'],
+            icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12l2 2 4-4"/></svg>',
+        },
+        {
+            titleKey: 'sk6_title', items: ['sk6_l1', 'sk6_l2', 'sk6_l3', 'sk6_l4'],
+            icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>',
+        },
+    ],
+
+    /* Опыт работы (карточки HH/GetMatch-style; лого — assets/companies/*.webp|png|svg) */
+    experience: [
+        {
+            dateKey: 'exp1_date', roleKey: 'exp1_role', companyKey: 'exp1_company',
+            typeKey: 'exp1_type', locKey: 'exp1_loc',
+            bullets: ['exp1_a1', 'exp1_a2', 'exp1_a3'],
+            logo: 'assets/companies/aquarius.webp',
+            brand: '#00A3E0', initials: 'AQ',
+        },
+        {
+            dateKey: 'exp2_date', roleKey: 'exp2_role', companyKey: 'exp2_company',
+            typeKey: 'exp2_type', locKey: 'exp2_loc',
+            bullets: ['exp2_a1', 'exp2_a2', 'exp2_a3', 'exp2_a4'],
+            logo: 'assets/companies/stoloto.webp',
+            brand: '#E30613', initials: 'СТ',
+        },
+        {
+            dateKey: 'exp3_date', roleKey: 'exp3_role', companyKey: 'exp3_company',
+            typeKey: 'exp3_type', locKey: 'exp3_loc',
+            bullets: ['exp3_a1', 'exp3_a2', 'exp3_a3'],
+            logo: 'assets/companies/teleset.webp',
+            brand: '#8B5CF6', initials: 'Т+',
+        },
+    ],
+
+    hrChips: [
+        'Requirements Engineering', 'Event Storming', 'BPMN', 'UML', 'C4 Model', 'ArchiMate', 'DDD',
+        'CQRS', 'Saga', 'Microservices', 'SQL', 'Python', 'FastAPI', 'React', 'TypeScript',
+        'RAG', 'LLM', 'Kafka', 'Qdrant', 'ChromaDB', 'Docker', 'Kubernetes', 'CI/CD',
+        'Prometheus', 'Grafana', 'Unit Economics', 'Jira', 'Confluence',
+    ],
+
+    education: [
+        { year: '2024', typeKey: 'edu1_type', specKey: 'edu1_spec', placeKey: 'edu1_place' },
+        { year: '2028', typeKey: 'edu2_type', specKey: 'edu2_spec', placeKey: 'edu2_place' },
+    ],
+
+    knowsAbout: [
+        'Business Analysis', 'Systems Analysis', 'Requirements Engineering', 'Event Storming',
+        'BPMN', 'UML', 'C4 Model', 'Solution Architecture', 'AI Engineering', 'RAG',
+        'FinTech', 'EdTech', 'Microservices', 'Kubernetes',
+    ],
+};
+
+/* ============================================================
+   0.5. ТЁМНАЯ / СВЕТЛАЯ ТЕМА
+   ============================================================ */
+const THEME_KEY = 'dd_theme';
+const themeMeta = document.querySelector('meta[name="theme-color"]');
+const systemLight = window.matchMedia('(prefers-color-scheme: light)');
+
+function getTheme() {
+    const saved = localStorage.getItem(THEME_KEY);
+    if (saved === 'light' || saved === 'dark') return saved;
+    return systemLight.matches ? 'light' : 'dark';
+}
+function applyTheme(theme) {
+    document.documentElement.dataset.theme = theme;
+    if (themeMeta) themeMeta.setAttribute('content', theme === 'light' ? '#F4F6FA' : '#08080C');
+    document.querySelectorAll('.theme-toggle').forEach((b) => b.setAttribute('aria-pressed', String(theme === 'light')));
+}
+function toggleTheme() {
+    const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+    localStorage.setItem(THEME_KEY, next);
+    applyTheme(next);
+}
+applyTheme(getTheme());
+document.querySelectorAll('.theme-toggle').forEach((b) => b.addEventListener('click', toggleTheme));
+/* Пока пользователь не выбрал тему вручную — следуем за системной */
+systemLight.addEventListener('change', (e) => {
+    if (!localStorage.getItem(THEME_KEY)) applyTheme(e.matches ? 'light' : 'dark');
+});
+
+const GITHUB_SVG = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.17c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.53-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.25 5.67.41.35.77 1.05.77 2.12v3.14c0 .3.21.66.8.55A11.52 11.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>';
+
+/* ============================================================
+   1. СЛОВАРЬ ПЕРЕВОДОВ (RU / EN)
+   ============================================================ */
+const I18N = {
+    ru: {
+        nav_about: 'Обо мне', nav_skills: 'Компетенции',
+        nav_career: 'Опыт', nav_projects: 'Проекты', nav_contact: 'Контакты',
+
+        hero_label: 'Портфолио · Анализ & Архитектура',
+        hero_name: 'Даниил Дунаев',
+        hero_tagline: 'Разбираю бизнес-процессы и системы до требований — и проектирую <em>архитектуру</em>, которую команда может реализовать',
+        hero_cta_projects: 'Смотреть проекты', hero_cta_contact: 'Связаться',
+        hero_cta_resume: 'Скачать резюме',
+        scroll: 'скролл',
+        metaDesc: 'Портфолио Даниила Дунаева: fullstack-аналитик (системный + бизнес-анализ), проектирование архитектуры, AI-инженерия. FinGuard, EzLearn, микросервисы, unit-экономика.',
+        ogTitle: 'Даниил Дунаев — Fullstack Analyst → Solution Architect',
+        docTitle: 'Даниил Дунаев — Fullstack Analyst (Systems + Business) → Solution Architect',
+
+        about_title: 'Обо мне',
+        about_sub: 'Соединяю бизнес- и системный анализ: разбираю задачу до требований и архитектуры, которую команда может реализовать.',
+        about_text: '<p>Я — <strong>fullstack-аналитик</strong>: работаю на стыке бизнеса, продукта и разработки. Разбираю существующие системы на части, моделирую процессы (Event Storming, BPMN, UML, C4) и проектирую целевые решения — от постановки задачи до внедрения и метрик. Понимаю и «почему», и «как»: от юнит-экономики до строк кода.</p>',
+        stat_1: 'года в аналитике и архитектуре',
+        stat_2: 'продукта с нуля: FinGuard, EzLearn',
+        stat_3: 'автотестов (pytest + vitest)',
+        stat_4: 'уязвимостей закрыто в аудите безопасности',
+
+        projects_title: 'Ключевые проекты',
+        projects_sub: 'Два продукта, которые я спроектировал и собрал с нуля — от требований до релиза.',
+        p1_role: 'Роль: Solution Architect / Systems Analyst',
+        p1_desc: 'Платформа мониторинга транзакций с <b>ML-скорингом</b> и AI-ассистентом для банков. Спроектировал микросервисную архитектуру (<b>Kafka, gRPC, GraphQL</b>), внедрил идемпотентность, обучил модель антифрода, построил <b>RAG-пайплайн с локальным LLM</b>, настроил CI/CD в Kubernetes и рассчитал юнит-экономику: CAC, LTV, ROI.',
+        p2_role: 'Роль: Full-stack Architect & AI Engineer',
+        p2_desc: 'AI-нативная LMS с <b>мультиагентной оркестрацией</b>, RAG, ролевыми тренажёрами и маркетплейсом. Разработал с нуля: бэкенд (FastAPI), фронтенд (React), AI-оркестратор на Qwen 2.5, <b>гибридный поиск</b> (ChromaDB + FTS), геймификацию и сертификации. Покрытие тестами — <b>115+ pytest, 41+ vitest</b>, аудит безопасности: 35/37 уязвимостей закрыто.',
+        view_more: 'Подробнее',
+        modal_hl_title: 'Ключевые результаты',
+        close_btn: 'Закрыть',
+        p1_h1: 'Микросервисная архитектура: Kafka-пайплайны, gRPC-контракты, GraphQL-шлюз',
+        p1_h2: 'Идемпотентная обработка транзакций — без дублей и потери событий',
+        p1_h3: 'ML-модель антифрода + RAG-ассистент на локальном LLM (Qwen 2.5)',
+        p1_h4: 'Kubernetes-деплой, наблюдаемость (Prometheus/Grafana), юнит-экономика CAC / LTV / ROI',
+        p2_h1: 'Мультиагентный AI-оркестратор на Qwen 2.5 с ролевыми тренажёрами',
+        p2_h2: 'Гибридный поиск: ChromaDB + FTS — ответы, опирающиеся на материалы курса',
+        p2_h3: '115+ pytest и 41+ vitest; аудит безопасности: 35/37 уязвимостей закрыто',
+        p2_h4: 'Геймификация, сертификации и маркетплейс курсов',
+
+        skills_title: 'Компетенции',
+        skills_sub: 'Технологии и практики, с которыми работаю каждый день — от требований до продакшена.',
+        sk1_title: 'Архитектура',
+        sk1_l1: 'Микросервисы, DDD, CQRS', sk1_l2: 'Saga, Event Storming',
+        sk1_l3: 'C4 Model', sk1_l4: 'ArchiMate',
+        sk2_title: 'AI & Data',
+        sk2_l1: 'RAG, Qdrant, ChromaDB', sk2_l2: 'Локальные LLM (Qwen 2.5)',
+        sk2_l3: 'ML-скоринг', sk2_l4: 'Kafka, CDC',
+        sk3_title: 'DevOps',
+        sk3_l1: 'Docker, Kubernetes, Helm', sk3_l2: 'GitHub Actions',
+        sk3_l3: 'Prometheus, Grafana', sk3_l4: 'OpenSearch',
+        sk4_title: 'Продукт',
+        sk4_l1: 'Unit-экономика: CAC, LTV, ROI', sk4_l2: 'A/B-тесты',
+        sk4_l3: 'WSJF-приоритизация', sk4_l4: 'FinOps',
+        sk5_title: 'Анализ систем',
+        sk5_l1: 'Требования: функциональные и нефункциональные', sk5_l2: 'Event Storming, BPMN, UML',
+        sk5_l3: 'Use Cases, User Stories, критерии приёмки', sk5_l4: 'Gap-анализ, AS-IS / TO-BE',
+        sk6_title: 'Инструменты',
+        sk6_l1: 'SQL, REST / OpenAPI, Postman', sk6_l2: 'Jira, Confluence, Miro, draw.io',
+        sk6_l3: 'Figma, Excel', sk6_l4: 'Git, Python для аналитики',
+
+        hr_title: 'Ключевые навыки',
+
+        career_title: 'Опыт работы',
+        career_sub: 'Полный цикл — от сбора требований и архитектуры до внедрения и метрик.',
+        exp1_date: 'Февраль 2026 — н.в.', exp1_role: 'Системный аналитик / Архитектор', exp1_company: 'Аквариус',
+        exp1_type: 'Полная занятость', exp1_loc: 'Удалённо',
+        exp1_a1: 'Выстраиваю процесс сбора и приоритизации требований для продуктов',
+        exp1_a2: 'Проектирую целевые архитектуры и интеграции (C4, Event Storming)',
+        exp1_a3: 'Вожу полный цикл: требования → дизайн решения → внедрение → метрики',
+        exp2_date: '2024 — начало 2026', exp2_role: 'Middle Systems Analyst', exp2_company: 'ТК Центр (Столото)',
+        exp2_type: 'Полная занятость', exp2_loc: 'Москва · гибрид',
+        exp2_a1: 'Анализировал существующие системы и процессы, находил узкие места',
+        exp2_a2: 'Готовил ТЗ и моделировал решения (BPMN, UML, схемы данных)',
+        exp2_a3: 'Вёл требования в Jira, согласовывал решения между бизнесом и разработкой',
+        exp2_a4: 'Проектировал интеграции и API-контракты',
+        exp3_date: '2022 — 2024', exp3_role: 'Systems Analyst (freelance)', exp3_company: 'Телесеть+, Дубна',
+        exp3_type: 'Проектная работа', exp3_loc: 'Дубна · удалённо',
+        exp3_a1: 'Автоматизировал бизнес-процессы заказчиков малого и среднего бизнеса',
+        exp3_a2: 'Формализовал требования, моделировал состояния AS-IS / TO-BE',
+        exp3_a3: 'Проектировал API-интеграции и контролировал внедрение',
+
+        edu1_type: 'Среднее профессиональное',
+        edu1_spec: 'Сетевое и системное администрирование',
+        edu1_place: 'Колледж государственного университета «Дубна»',
+        edu2_type: 'Бакалавр',
+        edu2_spec: 'Менеджмент, предпринимательство и управление бизнесом',
+        edu2_place: 'Московский международный университет, Москва',
+
+        contact_title: 'Обсудим задачу?',
+        contact_sub: 'Расскажите о задаче — разберу процессы и системы, соберу требования, предложу архитектуру и оценю юнит-экономику решения.',
+        wish_label: 'Ищу роль',
+        wish_text: '<b>Senior Systems Analyst → Solution Architect</b> · удалённо / гибрид · г. Дубна, готова к переезду',
+        copy_done: 'Email скопирован', copy_fail: 'Не удалось скопировать',
+        mail_open: 'Открываю почтовый клиент…',
+        resume_hint: 'PDF добавлю позже — пока доступна печать (Ctrl+P)',
+        f_name: 'Имя', f_name_ph: 'Как к вам обращаться',
+        f_email: 'Email', f_email_ph: 'you@company.com',
+        f_msg: 'Сообщение', f_msg_ph: 'Коротко о задаче: домен, сроки, цели…',
+        f_send: 'Отправить', f_sending: 'Отправка…',
+        f_success: 'Сообщение отправлено — отвечу в течение дня.',
+        f_error: 'Не удалось отправить. Попробуйте ещё раз или напишите на почту.',
+        f_again: 'Написать ещё',
+
+        footer_title: 'Открыт к <span class="gradient-text">новым проектам</span>',
+        footer_sub: 'Fullstack-аналитик (системный + бизнес) с опытом архитектурного проектирования в FinTech и EdTech.',
+        footer_name: 'Даниил Дунаев', footer_built: 'сделано на чистом HTML/CSS/JS',
+    },
+    en: {
+        nav_about: 'About', nav_skills: 'Skills',
+        nav_career: 'Career', nav_projects: 'Projects', nav_contact: 'Contact',
+
+        hero_label: 'Portfolio · Analysis & Architecture',
+        hero_name: 'Daniil Dunaev',
+        hero_tagline: "I break business processes and systems down into requirements — and design <em>architecture</em> a team can actually build",
+        hero_cta_projects: 'View projects', hero_cta_contact: 'Get in touch',
+        hero_cta_resume: 'Download CV',
+        scroll: 'scroll',
+        metaDesc: 'Portfolio of Daniil Dunaev: fullstack analyst (systems + business analysis), architecture design, AI engineering. FinGuard, EzLearn, microservices, unit economics.',
+        ogTitle: 'Daniil Dunaev — Fullstack Analyst → Solution Architect',
+        docTitle: 'Daniil Dunaev — Fullstack Analyst (Systems + Business) → Solution Architect',
+
+        about_title: 'About me',
+        about_sub: 'I bridge business and systems analysis: breaking a challenge down into requirements and architecture a team can actually build.',
+        about_text: '<p>I am a <strong>fullstack analyst</strong> working at the intersection of business, product and engineering. I break existing systems apart, model processes (Event Storming, BPMN, UML, C4) and design target solutions — from problem framing to rollout and metrics. I understand both the "why" and the "how": from unit economics down to code.</p>',
+        stat_1: 'years in analysis & architecture',
+        stat_2: 'products built from scratch: FinGuard, EzLearn',
+        stat_3: 'automated tests (pytest + vitest)',
+        stat_4: 'vulnerabilities fixed in security audit',
+        
+        projects_title: 'Key projects',
+        projects_sub: 'Two products I designed and built from scratch — from requirements to release.',
+        p1_role: 'Role: Solution Architect / Systems Analyst',
+        p1_desc: 'A transaction monitoring platform with <b>ML scoring</b> and an AI assistant for banks. Designed a microservice architecture (<b>Kafka, gRPC, GraphQL</b>), implemented idempotency, trained a fraud-detection model, built a <b>RAG pipeline with a local LLM</b>, set up CI/CD in Kubernetes and worked out the unit economics: CAC, LTV, ROI.',
+        p2_role: 'Role: Full-stack Architect & AI Engineer',
+        p2_desc: 'An AI-native LMS with <b>multi-agent orchestration</b>, RAG, role-based simulators and a marketplace. Built from scratch: backend (FastAPI), frontend (React), AI orchestrator on Qwen 2.5, <b>hybrid search</b> (ChromaDB + FTS), gamification and certification. Test coverage — <b>115+ pytest, 41+ vitest</b>; security audit: 35/37 vulnerabilities fixed.',
+        view_more: 'Details',
+        modal_hl_title: 'Key results',
+        close_btn: 'Close',
+        p1_h1: 'Microservice architecture: Kafka pipelines, gRPC contracts, GraphQL gateway',
+        p1_h2: 'Idempotent transaction handling — no duplicates, no lost events',
+        p1_h3: 'Fraud-detection ML model + RAG assistant on a local LLM (Qwen 2.5)',
+        p1_h4: 'Kubernetes deployment, observability (Prometheus/Grafana), CAC / LTV / ROI unit economics',
+        p2_h1: 'Multi-agent AI orchestrator on Qwen 2.5 with role-based simulators',
+        p2_h2: 'Hybrid search: ChromaDB + FTS — answers grounded in course materials',
+        p2_h3: '115+ pytest and 41+ vitest; security audit: 35/37 vulnerabilities fixed',
+        p2_h4: 'Gamification, certifications and a course marketplace',
+
+        skills_title: 'Core skills',
+        skills_sub: 'Technologies and practices I work with every day — from requirements to production.',
+        sk1_title: 'Architecture',
+        sk1_l1: 'Microservices, DDD, CQRS', sk1_l2: 'Saga, Event Storming',
+        sk1_l3: 'C4 Model', sk1_l4: 'ArchiMate',
+        sk2_title: 'AI & Data',
+        sk2_l1: 'RAG, Qdrant, ChromaDB', sk2_l2: 'Local LLMs (Qwen 2.5)',
+        sk2_l3: 'ML scoring', sk2_l4: 'Kafka, CDC',
+        sk3_title: 'DevOps',
+        sk3_l1: 'Docker, Kubernetes, Helm', sk3_l2: 'GitHub Actions',
+        sk3_l3: 'Prometheus, Grafana', sk3_l4: 'OpenSearch',
+        sk4_title: 'Product',
+        sk4_l1: 'Unit economics: CAC, LTV, ROI', sk4_l2: 'A/B testing',
+        sk4_l3: 'WSJF prioritization', sk4_l4: 'FinOps',
+        sk5_title: 'Systems analysis',
+        sk5_l1: 'Functional & non-functional requirements', sk5_l2: 'Event Storming, BPMN, UML',
+        sk5_l3: 'Use cases, user stories, acceptance criteria', sk5_l4: 'Gap analysis, AS-IS / TO-BE',
+        sk6_title: 'Tools',
+        sk6_l1: 'SQL, REST / OpenAPI, Postman', sk6_l2: 'Jira, Confluence, Miro, draw.io',
+        sk6_l3: 'Figma, Excel', sk6_l4: 'Git, Python for data analysis',
+
+        hr_title: 'Key skills',
+
+        career_title: 'Work experience',
+        career_sub: 'The full cycle — from requirements and architecture to rollout and metrics.',
+        exp1_date: 'Feb 2026 — present', exp1_role: 'Systems Analyst / Architect', exp1_company: 'Aquarius',
+        exp1_type: 'Full-time', exp1_loc: 'Remote',
+        exp1_a1: 'Setting up requirements gathering and prioritization for products',
+        exp1_a2: 'Designing target architectures and integrations (C4, Event Storming)',
+        exp1_a3: 'Owning the full cycle: requirements → solution design → rollout → metrics',
+        exp2_date: '2024 — early 2026', exp2_role: 'Middle Systems Analyst', exp2_company: 'TK Center (Stoloto)',
+        exp2_type: 'Full-time', exp2_loc: 'Moscow · hybrid',
+        exp2_a1: 'Analyzed existing systems and processes, finding bottlenecks',
+        exp2_a2: 'Produced specs and solution models (BPMN, UML, data schemas)',
+        exp2_a3: 'Managed requirements in Jira, aligned decisions between business and engineering',
+        exp2_a4: 'Designed integrations and API contracts',
+        exp3_date: '2022 — 2024', exp3_role: 'Systems Analyst (freelance)', exp3_company: 'Teleset+, Dubna',
+        exp3_type: 'Contract', exp3_loc: 'Dubna · remote',
+        exp3_a1: 'Automated business processes for SMB clients',
+        exp3_a2: 'Formalized requirements, modeled AS-IS / TO-BE states',
+        exp3_a3: 'Designed API integrations and supervised delivery',
+
+        edu1_type: 'Secondary vocational',
+        edu1_spec: 'Network & Systems Administration',
+        edu1_place: 'College of Dubna State University',
+        edu2_type: "Bachelor's degree",
+        edu2_spec: 'Management, Entrepreneurship and Business Administration',
+        edu2_place: 'Moscow International University, Moscow',
+
+        contact_title: "Let's discuss your project?",
+        contact_sub: "Tell me about the challenge — I'll break down the processes and systems, gather requirements, propose an architecture and estimate the unit economics.",
+        wish_label: 'Looking for',
+        wish_text: '<b>Senior Systems Analyst → Solution Architect</b> · remote / hybrid · Dubna, open to relocation',
+        copy_done: 'Email copied', copy_fail: 'Copy failed',
+        mail_open: 'Opening your mail client…',
+        resume_hint: 'PDF coming soon — printable version available (Ctrl+P)',
+        f_name: 'Name', f_name_ph: 'What should I call you',
+        f_email: 'Email', f_email_ph: 'you@company.com',
+        f_msg: 'Message', f_msg_ph: 'Briefly about the task: domain, timeline, goals…',
+        f_send: 'Send', f_sending: 'Sending…',
+        f_success: "Message sent — I'll reply within a day.",
+        f_error: 'Failed to send. Please try again or email me directly.',
+        f_again: 'Write again',
+
+        footer_title: 'Open to a <span class="gradient-text">new role</span>',
+        footer_sub: "Fullstack analyst (systems + business) with architecture design experience across FinTech and EdTech.",
+        footer_name: 'Daniil Dunaev', footer_built: 'built with pure HTML/CSS/JS',
+    }
+};
+
+/* ============================================================
+   2. СЛУЖЕБНЫЕ ФУНКЦИИ
+   ============================================================ */
+let currentLang = 'ru';
+const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const isTouch = window.matchMedia('(pointer: coarse)').matches;
+
+const heroSection = document.getElementById('hero');
+const heroContent = document.getElementById('hero-content');
+
+/* Достаёт значение по точечному пути: resolvePath(CONFIG, 'socials.github') */
+function resolvePath(obj, path) {
+    return path.split('.').reduce((o, k) => (o ? o[k] : undefined), obj);
+}
+
+/* Проставляет href/text из CONFIG по data-href / data-email-text / data-copy */
+function applyConfig() {
+    document.querySelectorAll('[data-href]').forEach(el => {
+        const key = el.dataset.href;
+        let url = key === 'email' ? `mailto:${CONFIG.email}` : resolvePath(CONFIG, key) || '';
+        if (url) {
+            el.href = url;
+            if (key === 'resumePdf') el.setAttribute('download', '');
+        } else {
+            el.removeAttribute('href');
+        }
+    });
+    document.querySelectorAll('[data-email-text]').forEach(el => {
+        el.textContent = CONFIG.email;
+    });
+    document.querySelectorAll('[data-copy]').forEach(el => {
+        el.dataset.copy = CONFIG.email;
+    });
+    /* Подсказка про печать видна только пока нет PDF */
+    document.getElementById('resume-hint').style.display = CONFIG.resumePdf ? 'none' : '';
+}
+
+/* Копирование с фолбэком для старых браузеров и iOS */
+function copyText(text) {
+    return new Promise((resolve, reject) => {
+        const fallback = () => {
+            try {
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                ta.setAttribute('readonly', '');
+                ta.style.position = 'fixed';
+                ta.style.opacity = '0';
+                document.body.appendChild(ta);
+                ta.select();
+                const ok = document.execCommand('copy');
+                document.body.removeChild(ta);
+                ok ? resolve() : reject(new Error('execCommand failed'));
+            } catch (err) {
+                reject(err);
+            }
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(resolve, fallback);
+        } else {
+            fallback();
+        }
+    });
+}
+
+const toast = document.getElementById('toast');
+let toastTimer;
+function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 2000);
+}
+
+document.querySelectorAll('[data-copy]').forEach(el => {
+    el.addEventListener('click', (e) => {
+        e.preventDefault();
+        copyText(el.dataset.copy)
+            .then(() => showToast(I18N[currentLang].copy_done))
+            .catch(() => showToast(I18N[currentLang].copy_fail));
+    });
+});
+
+/* ============================================================
+   3. ДИНАМИЧЕСКИЙ РЕНДЕР СЕКЦИЙ (данные из CONFIG)
+   ============================================================ */
+function renderDynamic() {
+    const d = I18N[currentLang];
+
+    document.getElementById('education-list').innerHTML = CONFIG.education.map((e, i) => `
+        <div class="education-item reveal" style="--delay:${(0.05 + i * 0.08).toFixed(2)}s">
+            <span class="education-year">${e.year}</span>
+            <div>
+                <p class="education-degree">${d[e.typeKey]} · ${d[e.specKey]}</p>
+                <p class="education-place">${d[e.placeKey]}</p>
+            </div>
+        </div>`).join('');
+
+    document.getElementById('timeline').innerHTML = CONFIG.experience.map((ex, i) => {
+        const brand = ex.brand || '#00D2FF';
+        const soft = brand.startsWith('#')
+            ? `color-mix(in srgb, ${brand} 18%, transparent)`
+            : 'rgba(0, 210, 255, 0.12)';
+        const initials = ex.initials || (d[ex.companyKey] || '?').slice(0, 2).toUpperCase();
+        const logo = ex.logo
+            ? `<img src="${ex.logo}" alt="" width="64" height="64" loading="lazy" decoding="async" onerror="this.remove()">`
+            : '';
+        const meta = [ex.typeKey && d[ex.typeKey], ex.locKey && d[ex.locKey]].filter(Boolean);
+        return `
+        <article class="exp-card reveal" style="--delay:${(0.05 + i * 0.1).toFixed(2)}s; --exp-brand:${brand}; --exp-brand-soft:${soft}">
+            <div class="exp-logo" aria-hidden="true"><span>${initials}</span>${logo}</div>
+            <div class="exp-body">
+                <div class="exp-head">
+                    <h3 class="exp-role">${d[ex.roleKey]}</h3>
+                    <time class="exp-date">${d[ex.dateKey]}</time>
+                </div>
+                <p class="exp-company">${d[ex.companyKey]}</p>
+                ${meta.length ? `<div class="exp-meta">${meta.map(m => `<span>${m}</span>`).join('')}</div>` : ''}
+                <ul class="exp-bullets">
+                    ${ex.bullets.map(b => `<li>${d[b]}</li>`).join('')}
+                </ul>
+            </div>
+        </article>`;
+    }).join('');
+
+    document.getElementById('skills-grid').innerHTML = CONFIG.skills.map((s, i) => `
+        <div class="skill-card tilt reveal" style="--delay:${(0.05 + i * 0.07).toFixed(2)}s">
+            <div class="skill-icon">${s.icon}</div>
+            <h3>${d[s.titleKey]}</h3>
+            <ul>
+                ${s.items.map(k => `<li>${d[k]}</li>`).join('')}
+            </ul>
+        </div>`).join('');
+
+    document.getElementById('hr-chips-row').innerHTML =
+        CONFIG.hrChips.map(c => `<span>${c}</span>`).join('');
+
+    document.getElementById('projects-grid').innerHTML = CONFIG.projects.map((p, i) => `
+        <article class="project-card tilt reveal" style="--delay:${(0.1 + i * 0.1).toFixed(2)}s"
+                 data-project="${p.id}" tabindex="0" role="button"
+                 aria-haspopup="dialog" aria-label="${p.name}: ${d.view_more}">
+            <div class="project-visual">
+                <div class="project-visual-fallback">${p.name}</div>
+                <img src="${p.shots[0]}" alt="${p.name}" width="640" height="400"
+                     loading="lazy" decoding="async">
+                <span class="view-badge">${d.view_more}</span>
+            </div>
+            <span class="project-tag">${p.tag}</span>
+            <div>
+                <h3 class="project-title">${p.name}</h3>
+                <p class="project-subtitle">${d[p.roleKey]}</p>
+            </div>
+            <p class="project-desc">${d[p.descKey]}</p>
+            <ul class="stack">
+                ${p.stack.map(t => `<li>${t}</li>`).join('')}
+            </ul>
+            <div class="project-footer">
+                <span class="project-metrics">${p.metrics}</span>
+                <a href="${p.repo}" target="_blank" rel="noopener" class="btn btn--ghost btn--sm" data-stop>
+                    ${GITHUB_SVG} GitHub
+                </a>
+            </div>
+        </article>`).join('');
+
+    /* Обновление эффектов и наблюдателя появления */
+    bindEffects();
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+}
+
+/* ============================================================
+   4. ЯЗЫК
+   ============================================================ */
+function applyLang(lang) {
+    const dict = I18N[lang];
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        el.textContent = dict[el.dataset.i18n] ?? '';
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(el => {
+        el.innerHTML = dict[el.dataset.i18nHtml] ?? '';
+    });
+    document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+        el.placeholder = dict[el.dataset.i18nPh] ?? '';
+    });
+    /* Динамическое обновление SEO-мета */
+    document.title = dict.docTitle ?? '';
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) metaDesc.setAttribute('content', dict.metaDesc ?? '');
+    const ogDesc = document.querySelector('meta[property="og:description"]');
+    if (ogDesc) ogDesc.setAttribute('content', dict.metaDesc ?? '');
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) ogTitle.setAttribute('content', dict.ogTitle ?? '');
+    renderDynamic();
+    splitHeroName(); // пересобираем имя по буквам
+}
+
+function setLang(lang) {
+    if (lang === currentLang) return;
+    currentLang = lang;
+    localStorage.setItem('dd_portfolio_lang', lang);
+    document.getElementById('lang-ru').classList.toggle('active', lang === 'ru');
+    document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+    document.documentElement.lang = lang;
+
+    const nodes = document.querySelectorAll('[data-i18n], [data-i18n-html]');
+    nodes.forEach(n => n.classList.add('i18n-fade', 'fading'));
+    setTimeout(() => {
+        applyLang(lang);
+        nodes.forEach(n => n.classList.remove('fading'));
+        setTimeout(() => nodes.forEach(n => n.classList.remove('i18n-fade')), 300);
+    }, 250);
+}
+
+/* Появление имени по буквам (градиент наследуется от родителя) */
+function splitHeroName() {
+    const el = document.querySelector('#hero-title .gradient-text');
+    const title = document.getElementById('hero-title');
+    const text = el.textContent;
+    el.innerHTML = text.split('').map((c, i) =>
+        c === ' ' ? ' ' : `<span class="char" style="--i:${i}">${c}</span>`
+    ).join('');
+    title.classList.remove('playing');
+    void title.offsetWidth; // принудительный reflow для перезапуска анимации
+    title.classList.add('playing');
+}
+
+/* ============================================================
+   5. ПРЕЛОАДЕР + РЕЗЮМЕ
+   ============================================================ */
+const preloader = document.getElementById('preloader');
+function hidePreloader() {
+    preloader.classList.add('done');
+    document.body.classList.remove('locked');
+    heroSection.classList.add('playing'); // каскадное появление блоков героя
+    if (!prefersReduced) splitHeroName();
+}
+window.addEventListener('load', () => setTimeout(hidePreloader, 600));
+setTimeout(hidePreloader, 2500); // страховка, если load не сработал
+
+/* Повторные визиты в рамках сессии — без прелоадера */
+if (sessionStorage.getItem('dd_portfolio_seen')) {
+    document.addEventListener('DOMContentLoaded', () => setTimeout(hidePreloader, 0));
+} else {
+    sessionStorage.setItem('dd_portfolio_seen', '1');
+}
+
+/* Резюме: файл из CONFIG или печать (window.print) */
+document.querySelectorAll('[data-resume]').forEach(a => {
+    a.addEventListener('click', (e) => {
+        if (!CONFIG.resumePdf) {
+            e.preventDefault();
+            window.print();
+        }
+    });
+});
+
+/* ============================================================
+   6. ШАПКА, СКРОЛЛ, BACK-TO-TOP, SCROLLSPY, ПОЯВЛЕНИЕ, СЧЁТЧИКИ
+   ============================================================ */
+const header = document.getElementById('header');
+const scrollHint = document.querySelector('.scroll-hint');
+const progressBar = document.getElementById('progress-bar');
+const toTop = document.getElementById('to-top');
+const ringCircle = document.getElementById('ring-circle');
+const RING_C = 138.23; // длина окружности прогресс-кольца
+
+/* Палитры фона: 4 ключевые позиции (t=0..1), каждая — три стопа градиента [r,g,b].
+   Очень тёмные: близки к базовому #08080C, чтобы фон оставался таким же глубоким,
+   а градиент лишь едва-едва переливался оттенком при скролле. */
+const BG_PALETTES = [
+    { g1: [9, 13, 22],  g2: [11, 13, 26], g3: [18, 12, 28] },   // начало: глубокий сине-фиолет
+    { g1: [8, 16, 20],  g2: [12, 13, 30], g3: [20, 12, 32] },   // 1/3: бирюзово-индиго
+    { g1: [10, 14, 24], g2: [16, 12, 32], g3: [26, 10, 30] },   // 2/3: сине-пурпурный
+    { g1: [9, 15, 24],  g2: [12, 12, 28], g3: [22, 12, 32] },   // конец: морской градиент
+];
+function lerp(a, b, t) { return a + (b - a) * t; }
+function mixPalette(A, B, t) {
+    return {
+        g1: [lerp(A.g1[0], B.g1[0], t), lerp(A.g1[1], B.g1[1], t), lerp(A.g1[2], B.g1[2], t)],
+        g2: [lerp(A.g2[0], B.g2[0], t), lerp(A.g2[1], B.g2[1], t), lerp(A.g2[2], B.g2[2], t)],
+        g3: [lerp(A.g3[0], B.g3[0], t), lerp(A.g3[1], B.g3[1], t), lerp(A.g3[2], B.g3[2], t)],
+    };
+}
+function applyBgGradient(t) {
+    const seg = t * (BG_PALETTES.length - 1);
+    const i = Math.min(Math.floor(seg), BG_PALETTES.length - 2);
+    const f = seg - i;
+    const c = mixPalette(BG_PALETTES[i], BG_PALETTES[i + 1], f);
+    document.documentElement.style.setProperty('--gf-1', `rgb(${c.g1.map(Math.round).join(',')})`);
+    document.documentElement.style.setProperty('--gf-2', `rgb(${c.g2.map(Math.round).join(',')})`);
+    document.documentElement.style.setProperty('--gf-3', `rgb(${c.g3.map(Math.round).join(',')})`);
+}
+
+window.addEventListener('scroll', () => {
+    const doc = document.documentElement;
+    const p = doc.scrollTop / (doc.scrollHeight - doc.clientHeight);
+    header.classList.toggle('scrolled', doc.scrollTop > 40);
+    scrollHint.classList.toggle('hidden', doc.scrollTop > 120);
+    progressBar.style.transform = `scaleX(${Math.min(p, 1)})`;
+    toTop.classList.toggle('visible', doc.scrollTop > 600);
+    ringCircle.style.strokeDashoffset = RING_C * (1 - Math.min(p, 1));
+
+    // Аурора реагирует на скролл: блобы разъезжаются, оттенок плывёт
+    if (!prefersReduced) {
+        const t = Math.max(0, Math.min(p, 1));
+        doc.style.setProperty('--s1y', (7 + 16 * t) + 'vh');
+        doc.style.setProperty('--s2y', (-6 - 14 * t) + 'vh');
+        doc.style.setProperty('--s3y', (-9 + 12 * t) + 'vh');
+        doc.style.setProperty('--s4y', (6 - 14 * t) + 'vh');
+        doc.style.setProperty('--s5y', (5 + 11 * t) + 'vh');
+        doc.style.setProperty('--shue', Math.round(18 * Math.sin(t * Math.PI)) + 'deg');
+        // Плавная смена градиента фона между палитрами по мере прокрутки
+        applyBgGradient(t);
+    }
+}, { passive: true });
+
+toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+/* Мобильное меню */
+const burger = document.getElementById('burger');
+const mobileNav = document.getElementById('mobile-nav');
+function closeMenu() {
+    burger.classList.remove('open');
+    mobileNav.classList.remove('open');
+    burger.setAttribute('aria-expanded', 'false');
+}
+burger.addEventListener('click', () => {
+    const open = mobileNav.classList.toggle('open');
+    burger.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', open);
+});
+mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+/* Закрытие по клику вне панели и по Esc */
+document.addEventListener('click', (e) => {
+    if (mobileNav.classList.contains('open') &&
+        !mobileNav.contains(e.target) && !burger.contains(e.target)) closeMenu();
+});
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        if (photoViewer.classList.contains('open')) closePhotoViewer();
+        else if (projectModal.classList.contains('open')) closeProjectModal();
+        else closeMenu();
+    }
+});
+
+/* SCROLLSPY: подсветка активного пункта меню */
+const navLinks = document.querySelectorAll('.nav a, .mobile-nav a');
+const spy = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+        if (e.isIntersecting) {
+            const id = '#' + e.target.id;
+            navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === id));
+        }
+    });
+}, { rootMargin: '-45% 0px -50% 0px' });
+document.querySelectorAll('section[id], footer[id]').forEach(s => spy.observe(s));
+
+/* Появление блоков при скролле */
+const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            revealObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+/* Анимированные счётчики статистики */
+function animateCounter(el) {
+    const target = parseFloat(el.dataset.count);
+    const suffix = el.dataset.suffix || '';
+    if (prefersReduced) { el.textContent = target + suffix; return; }
+    const dur = 1300;
+    let t0 = null;
+    function frame(t) {
+        if (!t0) t0 = t;
+        const p = Math.min((t - t0) / dur, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(target * eased) + suffix;
+        if (p < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+}
+const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+        if (e.isIntersecting) {
+            animateCounter(e.target);
+            counterObserver.unobserve(e.target);
+        }
+    });
+}, { threshold: 0.6 });
+document.querySelectorAll('.stat .num').forEach(el => counterObserver.observe(el));
+
+/* ============================================================
+   7. МОДАЛКА ПРОЕКТА + ГАЛЕРЕЯ ФОТО
+   ============================================================ */
+const projectModal = document.getElementById('project-modal');
+const photoViewer = document.getElementById('photo-viewer');
+const photoViewerImg = document.getElementById('photo-viewer-img');
+let currentProject = null;
+
+function openProjectModal(id) {
+    const p = CONFIG.projects.find(x => x.id === id);
+    if (!p) return;
+    currentProject = p;
+    const d = I18N[currentLang];
+    projectModal.innerHTML = `
+        <div class="modal-overlay" data-close></div>
+        <div class="modal-dialog" role="dialog" aria-modal="true" aria-label="${p.name}">
+            <button class="modal-close" data-close aria-label="${d.close_btn}">✕</button>
+            <span class="project-tag">${p.tag}</span>
+            <h3 class="modal-title">${p.name}</h3>
+            <p class="modal-role">${d[p.roleKey]}</p>
+            <div class="modal-gallery">
+                ${p.shots.map((s, i) => `
+                    <figure data-photo="${i}">
+                        <img src="${s}" alt="${p.name} ${i + 1}" width="640" height="400"
+                             loading="lazy" decoding="async">
+                        <figcaption>${i + 1} / ${p.shots.length}</figcaption>
+                    </figure>`).join('')}
+            </div>
+            <p class="modal-desc">${d[p.descKey]}</p>
+            <h4 class="modal-hl-title">${d.modal_hl_title}</h4>
+            <ul class="modal-hl">
+                ${p.hlKeys.map(k => `<li>${d[k]}</li>`).join('')}
+            </ul>
+            <div class="modal-stack">
+                <span class="modal-label">Stack</span>
+                <ul class="stack">${p.stack.map(t => `<li>${t}</li>`).join('')}</ul>
+            </div>
+            <p class="modal-metrics">${p.metrics}</p>
+            <div class="modal-footer">
+                <a href="${p.repo}" target="_blank" rel="noopener" class="btn btn--primary">${GITHUB_SVG} GitHub</a>
+            </div>
+        </div>`;
+    projectModal.classList.add('open');
+    projectModal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('locked');
+    projectModal.querySelector('.modal-dialog').scrollTop = 0;
+}
+
+function closeProjectModal() {
+    projectModal.classList.remove('open');
+    projectModal.setAttribute('aria-hidden', 'true');
+    currentProject = null;
+    if (!photoViewer.classList.contains('open')) document.body.classList.remove('locked');
+}
+
+function openPhotoViewer(src, alt) {
+    photoViewerImg.src = src;
+    photoViewerImg.alt = alt;
+    photoViewer.classList.add('open');
+    photoViewer.setAttribute('aria-hidden', 'false');
+}
+
+function closePhotoViewer() {
+    photoViewer.classList.remove('open');
+    photoViewer.setAttribute('aria-hidden', 'true');
+    if (!projectModal.classList.contains('open')) document.body.classList.remove('locked');
+}
+
+/* Клик по карточке открывает детали; кнопка GitHub — отдельно */
+document.getElementById('projects-grid').addEventListener('click', (e) => {
+    if (e.target.closest('[data-stop]')) return;
+    const card = e.target.closest('[data-project]');
+    if (card) openProjectModal(card.dataset.project);
+});
+document.getElementById('projects-grid').addEventListener('keydown', (e) => {
+    const card = e.target.closest('[data-project]');
+    if (card && (e.key === 'Enter' || e.key === ' ')) {
+        e.preventDefault();
+        openProjectModal(card.dataset.project);
+    }
+});
+
+projectModal.addEventListener('click', (e) => {
+    if (e.target.closest('[data-close]')) { closeProjectModal(); return; }
+    const fig = e.target.closest('.modal-gallery figure');
+    if (fig && e.target.tagName === 'IMG' && currentProject) {
+        const i = +fig.dataset.photo;
+        openPhotoViewer(currentProject.shots[i], `${currentProject.name} ${i + 1}`);
+    }
+});
+photoViewer.addEventListener('click', closePhotoViewer);
+
+/* Если скриншот не загрузился — показываем градиент-заглушку */
+document.addEventListener('error', (e) => {
+    if (e.target && e.target.tagName === 'IMG') {
+        const wrap = e.target.closest('.project-visual') || e.target.closest('.modal-gallery figure');
+        if (wrap) wrap.classList.add('no-img');
+    }
+}, true);
+
+/* ============================================================
+   8. ЭФФЕКТЫ: ПАРАЛЛАКС, 3D-НАКЛОН, МАГНИТНЫЕ КНОПКИ, КУРСОР
+   ============================================================ */
+if (!isTouch && !prefersReduced) {
+    heroSection.addEventListener('mousemove', (e) => {
+        const r = heroSection.getBoundingClientRect();
+        const nx = (e.clientX - r.left) / r.width - 0.5;
+        const ny = (e.clientY - r.top) / r.height - 0.5;
+        heroContent.style.transform = `translate3d(${nx * -18}px, ${ny * -14}px, 0)`;
+    });
+    heroSection.addEventListener('mouseleave', () => {
+        heroContent.style.transition = 'transform 0.7s cubic-bezier(0.22,1,0.36,1)';
+        heroContent.style.transform = 'translate3d(0,0,0)';
+        setTimeout(() => heroContent.style.transition = '', 700);
+    });
+}
+
+/* Навешивает эффекты на элементы, отрендеренные динамически (data-fx — защита от повторов) */
+function bindEffects() {
+    if (isTouch || prefersReduced) return;
+    document.querySelectorAll('.tilt:not([data-fx])').forEach(card => {
+        card.dataset.fx = '1';
+        card.addEventListener('mousemove', (e) => {
+            const r = card.getBoundingClientRect();
+            const px = (e.clientX - r.left) / r.width;
+            const py = (e.clientY - r.top) / r.height;
+            const rotY = (px - 0.5) * 2 * 7;
+            const rotX = (0.5 - py) * 2 * 7;
+            card.style.transform =
+                `perspective(1100px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-4px)`;
+            card.style.setProperty('--mx', `${px * 100}%`);
+            card.style.setProperty('--my', `${py * 100}%`);
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.transition = 'transform 0.6s cubic-bezier(0.22,1,0.36,1), border-color .4s ease, box-shadow .4s ease, background .4s ease';
+            card.style.transform = 'perspective(1100px) rotateX(0) rotateY(0)';
+            setTimeout(() => card.style.transition = '', 600);
+        });
+    });
+    document.querySelectorAll('.btn, .social-link, .contact-email').forEach(el => {
+        if (el.dataset.fx) return;
+        el.dataset.fx = '1';
+        el.addEventListener('mousemove', (e) => {
+            const r = el.getBoundingClientRect();
+            const dx = e.clientX - (r.left + r.width / 2);
+            const dy = e.clientY - (r.top + r.height / 2);
+            el.style.setProperty('--mx', `${dx * 0.18}px`);
+            el.style.setProperty('--my', `${dy * 0.18}px`);
+        });
+        el.addEventListener('mouseleave', () => {
+            el.style.removeProperty('--mx');
+            el.style.removeProperty('--my');
+        });
+    });
+}
+
+/* Кастомный курсор (точка + кольцо с инерцией) */
+const cursorDot = document.getElementById('cursor-dot');
+const cursorRing = document.getElementById('cursor-ring');
+
+if (!isTouch && !prefersReduced) {
+    let mx = 0, my = 0, rx = 0, ry = 0, shown = false;
+    document.addEventListener('mousemove', (e) => {
+        mx = e.clientX; my = e.clientY;
+        if (!shown) {
+            shown = true;
+            cursorDot.style.opacity = 1;
+            cursorRing.style.opacity = 1;
+        }
+        cursorDot.style.transform = `translate3d(${mx - 3}px, ${my - 3}px, 0)`;
+    });
+    (function loop() {
+        rx += (mx - rx) * 0.16;
+        ry += (my - ry) * 0.16;
+        cursorRing.style.transform = `translate3d(${rx - 18}px, ${ry - 18}px, 0)`;
+        requestAnimationFrame(loop);
+    })();
+    /* Увеличение кольца над интерактивными элементами */
+    document.addEventListener('mouseover', (e) => {
+        cursorRing.classList.toggle('hover', !!e.target.closest('a, button, .tilt, input, textarea, .lang-switch'));
+    });
+}
+
+/* ============================================================
+   9. ЧАСТИЦЫ НА КАНВАСЕ (динамическая плотность + пауза вне экрана)
+   ============================================================ */
+(function particles() {
+    const canvas = document.getElementById('hero-canvas');
+    const ctx = canvas.getContext('2d');
+    let w, h, particles;
+    const mouse = { x: null, y: null };
+    const LINK_DIST = 150;
+    const MOUSE_DIST = 220;
+
+    function resize() {
+        w = canvas.width = heroSection.offsetWidth;
+        h = canvas.height = heroSection.offsetHeight;
+        const count = Math.min(140, Math.floor(w * h / 20000));
+        particles = Array.from({ length: count }, () => ({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            vx: (Math.random() - 0.5) * 0.35,
+            vy: (Math.random() - 0.5) * 0.35,
+            r: Math.random() * 1.6 + 0.5,
+        }));
+    }
+
+    function step() {
+        ctx.clearRect(0, 0, w, h);
+        for (const p of particles) {
+            p.x += p.vx;
+            p.y += p.vy;
+            if (p.x < 0 || p.x > w) p.vx *= -1;
+            if (p.y < 0 || p.y > h) p.vy *= -1;
+            if (mouse.x !== null) {
+                const dx = mouse.x - p.x, dy = mouse.y - p.y;
+                const d = Math.hypot(dx, dy);
+                if (d < MOUSE_DIST && d > 0.001) {
+                    p.x += (dx / d) * 0.45;
+                    p.y += (dy / d) * 0.45;
+                }
+            }
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(0, 210, 255, 0.45)';
+            ctx.fill();
+        }
+        for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+                const a = particles[i], b = particles[j];
+                const d = Math.hypot(a.x - b.x, a.y - b.y);
+                if (d < LINK_DIST) {
+                    const alpha = (1 - d / LINK_DIST) * 0.14;
+                    ctx.beginPath();
+                    ctx.moveTo(a.x, a.y);
+                    ctx.lineTo(b.x, b.y);
+                    ctx.strokeStyle = `rgba(90, 140, 255, ${alpha})`;
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                }
+            }
+        }
+        rafId = requestAnimationFrame(step);
+    }
+
+    heroSection.addEventListener('mousemove', (e) => {
+        const r = canvas.getBoundingClientRect();
+        mouse.x = e.clientX - r.left;
+        mouse.y = e.clientY - r.top;
+    });
+    heroSection.addEventListener('mouseleave', () => { mouse.x = mouse.y = null; });
+    window.addEventListener('resize', resize);
+
+    /* Пауза анимации, пока hero не в зоне видимости (экономия CPU) */
+    let running = false;
+    let rafId = null;
+    function start() { if (!running && !prefersReduced) { running = true; step(); } }
+    function stop() { running = false; if (rafId) { cancelAnimationFrame(rafId); rafId = null; } }
+
+    resize();
+    if (prefersReduced) { ctx.clearRect(0, 0, w, h); }
+    else {
+        const heroIO = new IntersectionObserver((entries) => {
+            entries.forEach(en => en.isIntersecting ? start() : stop());
+        }, { threshold: 0.01 });
+        heroIO.observe(heroSection);
+        start();
+    }
+})();
+
+/* ============================================================
+   9.5. ФОН: цифровая сетка узлов + импульсы данных (canvas)
+   ============================================================ */
+(function bgGrid() {
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let w, h, nodes;
+    const GAP = 64;                 // шаг сетки
+    const MAX_PULSES = 16;          // одновременных импульсов
+    const RIPPLE_DIST = 170;        // радиус подсветки узлов у курсора
+    const pulses = [];
+    const mouse = { x: null, y: null };
+
+    function resize() {
+        w = canvas.width = canvas.offsetWidth;
+        h = canvas.height = canvas.offsetHeight;
+        nodes = [];
+        for (let x = GAP / 2; x < w; x += GAP)
+            for (let y = GAP / 2; y < h; y += GAP)
+                nodes.push({ x, y });
+    }
+
+    /* Импульс: бежит от узла по прямой, затухая в конце пути */
+    function spawnPulse() {
+        const n = nodes[(Math.random() * nodes.length) | 0];
+        const dirs = [[1, 0], [-1, 0], [0, 1], [0, -1]];
+        const [dx, dy] = dirs[(Math.random() * 4) | 0];
+        pulses.push({
+            x: n.x, y: n.y, sx: n.x, sy: n.y,
+            dx, dy,
+            speed: 1.4 + Math.random() * 1.8,
+            dist: 0,
+            maxDist: GAP * (2 + ((Math.random() * 3) | 0)),
+            hue: Math.random() < 0.55 ? '0, 210, 255' : '139, 92, 246',
+        });
+    }
+
+    function drawNodes() {
+        for (const n of nodes) {
+            let a = 0.10;
+            if (mouse.x !== null) {
+                const d = Math.hypot(mouse.x - n.x, mouse.y - n.y);
+                if (d < RIPPLE_DIST) a = 0.10 + (1 - d / RIPPLE_DIST) * 0.42;
+            }
+            ctx.beginPath();
+            ctx.arc(n.x, n.y, 1.1, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(130, 175, 255, ${a})`;
+            ctx.fill();
+        }
+    }
+
+    function step() {
+        ctx.clearRect(0, 0, w, h);
+        drawNodes();
+
+        if (pulses.length < MAX_PULSES && Math.random() < 0.35) spawnPulse();
+        for (let i = pulses.length - 1; i >= 0; i--) {
+            const p = pulses[i];
+            p.x += p.dx * p.speed;
+            p.y += p.dy * p.speed;
+            p.dist += p.speed;
+            const fade = Math.sin(Math.min(p.dist / p.maxDist, 1) * Math.PI); // плавное появление-затухание
+            ctx.beginPath();
+            ctx.moveTo(p.sx, p.sy);
+            ctx.lineTo(p.x, p.y);
+            ctx.strokeStyle = `rgba(${p.hue}, ${0.16 * fade})`;
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, 2.1, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${p.hue}, ${0.55 * fade})`;
+            ctx.fill();
+            if (p.dist >= p.maxDist) pulses.splice(i, 1);
+        }
+        rafId = requestAnimationFrame(step);
+    }
+
+    window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; }, { passive: true });
+    window.addEventListener('mouseleave', () => { mouse.x = mouse.y = null; });
+    window.addEventListener('resize', resize);
+
+    let rafId = null;
+    resize();
+    if (prefersReduced) {
+        ctx.clearRect(0, 0, w, h);
+        drawNodes();           // статичная сетка без импульсов
+    } else {
+        step();
+    }
+})();
+
+/* ============================================================
+   10. ФОРМА: Telegram Bot API или mailto-фолбэк
+   ============================================================ */
+const contactForm = document.getElementById('contact-form');
+const formStatus = document.getElementById('form-status');
+const formSubmit = document.getElementById('form-submit');
+const formAgain = document.getElementById('form-again');
+
+/* Формирует текст сообщения в Telegram */
+function formatTgMessage(d) {
+    return [
+        '\u{1F4AC} Новое сообщение с портфолио',
+        '',
+        `\u{1F464} Имя: ${d.get('name')}`,
+        `\u{1F4E7} Email: ${d.get('email')}`,
+        '',
+        d.get('message'),
+    ].join('\n');
+}
+
+contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    formStatus.className = 'form-status';
+    const d = new FormData(contactForm);
+
+    /* Honeypot: бот-заполнитель попадает в скрытое поле — молча игнорируем */
+    if (d.get('_gotcha')) return;
+
+    /* Нет токена — открываем почтовый клиент */
+    if (!CONFIG.telegramBotToken || !CONFIG.telegramChatId) {
+        const subject = encodeURIComponent(`[Portfolio] ${d.get('name')}`);
+        const body = encodeURIComponent(`${d.get('message')}\n\n— ${d.get('name')} (${d.get('email')})`);
+        window.location.href = `mailto:${CONFIG.email}?subject=${subject}&body=${body}`;
+        showToast(I18N[currentLang].mail_open);
+        return;
+    }
+
+    formSubmit.disabled = true;
+    formSubmit.textContent = I18N[currentLang].f_sending;
+    try {
+        const res = await fetch(`https://api.telegram.org/bot${CONFIG.telegramBotToken}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                chat_id: CONFIG.telegramChatId,
+                text: formatTgMessage(d),
+            }),
+        });
+        const j = await res.json();
+        if (j && j.ok) {
+            contactForm.classList.add('sent');
+            formStatus.classList.add('success');
+            formStatus.textContent = I18N[currentLang].f_success;
+            contactForm.reset();
+        } else {
+            throw new Error(j && j.description ? j.description : 'telegram rejected');
+        }
+    } catch {
+        formStatus.classList.add('error');
+        formStatus.textContent = I18N[currentLang].f_error;
+    } finally {
+        formSubmit.disabled = false;
+        formSubmit.textContent = I18N[currentLang].f_send;
+    }
+});
+
+formAgain.addEventListener('click', () => {
+    contactForm.classList.remove('sent');
+    formStatus.className = 'form-status';
+    formStatus.textContent = '';
+});
+
+/* ============================================================
+   11. SEO: JSON-LD + HREFLANG (из CONFIG)
+   ============================================================ */
+function buildSeo() {
+    const sameAs = Object.values(CONFIG.socials)
+        .filter(u => u && u.startsWith('http') && !u.endsWith('/'));
+    const ld = {
+        '@context': 'https://schema.org',
+        '@type': 'Person',
+        name: currentLang === 'en' ? 'Daniil Dunaev' : 'Даниил Дунаев',
+        url: CONFIG.siteUrl || undefined,
+        image: CONFIG.siteUrl ? `${CONFIG.siteUrl.replace(/\/$/, '')}/og.png` : 'og.png',
+        jobTitle: 'Fullstack Analyst (Systems + Business) / Solution Architect',
+        sameAs: sameAs,
+        knowsAbout: CONFIG.knowsAbout,
+        alumniOf: CONFIG.education.map(e => ({ '@type': 'EducationalOrganization', name: I18N.ru[e.placeKey] })),
+        workLocation: 'Russia',
+    };
+    const s = document.createElement('script');
+    s.type = 'application/ld+json';
+    s.textContent = JSON.stringify(ld);
+    document.head.appendChild(s);
+
+    /* hreflang подключается автоматически, когда заполнен CONFIG.siteUrl */
+    if (CONFIG.siteUrl) {
+        const base = CONFIG.siteUrl.replace(/\/$/, '');
+        [['ru', base], ['en', `${base}?lang=en`], ['x-default', base]].forEach(([h, href]) => {
+            const l = document.createElement('link');
+            l.rel = 'alternate';
+            l.hreflang = h;
+            l.href = href;
+            document.head.appendChild(l);
+        });
+    }
+}
+
+/* ============================================================
+   12. ИНИЦИАЛИЗАЦИЯ
+   ============================================================ */
+applyConfig();
+
+/* Бегущая строка: дублируем содержимое для бесшовного цикла */
+document.getElementById('marquee-track').innerHTML +=
+    document.querySelector('.marquee-part').outerHTML;
+
+/* Восстанавливаем выбранный ранее язык */
+if (localStorage.getItem('dd_portfolio_lang') === 'en') {
+    currentLang = 'en';
+    document.getElementById('lang-en').classList.add('active');
+    document.getElementById('lang-ru').classList.remove('active');
+    document.documentElement.lang = 'en';
+}
+applyLang(currentLang);
+bindEffects();
+buildSeo();
