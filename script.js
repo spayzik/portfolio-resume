@@ -20,7 +20,7 @@ const CONFIG = {
         habr:      'https://career.habr.com/',
         getmatch:  'https://getmatch.ru/',
         linkedin:  'https://linkedin.com/',
-        telegram:  'https://t.me/',
+        telegram:  'https://t.me/sap4real',
     },
 
     /* Проекты: карточки + модальные окна с галереей рендерятся отсюда.
@@ -104,7 +104,7 @@ const CONFIG = {
             typeKey: 'exp2_type', locKey: 'exp2_loc',
             bullets: ['exp2_a1', 'exp2_a2', 'exp2_a3', 'exp2_a4'],
             logo: 'assets/companies/stoloto.webp',
-            brand: '#E30613', initials: 'СТ',
+            brand: '#E30613', initials: 'S8',
         },
         {
             dateKey: 'exp3_date', roleKey: 'exp3_role', companyKey: 'exp3_company',
@@ -116,8 +116,8 @@ const CONFIG = {
     ],
 
     education: [
-        { year: '2024', typeKey: 'edu1_type', specKey: 'edu1_spec', placeKey: 'edu1_place' },
         { year: '2028', typeKey: 'edu2_type', specKey: 'edu2_spec', placeKey: 'edu2_place' },
+        { year: '2024', typeKey: 'edu1_type', specKey: 'edu1_spec', placeKey: 'edu1_place' },
     ],
 
     knowsAbout: [
@@ -184,11 +184,11 @@ const I18N = {
 
         about_title: 'Обо мне',
         about_sub: 'Соединяю бизнес- и системный анализ: разбираю задачу до требований и архитектуры, которую команда может реализовать.',
-        about_text: '<p>Я — <strong>fullstack-аналитик</strong>: работаю на стыке бизнеса, продукта и разработки. Разбираю существующие системы на части, моделирую процессы (Event Storming, BPMN, UML, C4) и проектирую целевые решения — от постановки задачи до внедрения и метрик. Понимаю и «почему», и «как»: от юнит-экономики до строк кода.</p>',
-        stat_1: 'года в аналитике и архитектуре',
-        stat_2: 'продукта с нуля: FinGuard, EzLearn',
-        stat_3: 'автотестов (pytest + vitest)',
-        stat_4: 'уязвимостей закрыто в аудите безопасности',
+        about_text: '<p>Я — <strong>fullstack-аналитик</strong> (бизнес + системный анализ). Привык работать с высоконагруженными и интеграционно насыщенными системами, микросервисной архитектурой и строгими регуляторными требованиями (ФНС).</p><p>Разбираю задачи до требований и проектирую целевые решения — от архитектуры до контроля разработки. Вне работы увлекаюсь спортом и практикую погружения в холодную воду — это помогает сохранять абсолютный фокус, дисциплину и устойчивость к любым нагрузкам.</p>',
+        stat_1: 'года в системном анализе',
+        stat_2: 'систем в контуре интеграций (S8)',
+        stat_3: 'рост выручки от нового канала (WB)',
+        stat_4: 'AI-продукта, спроектированных с нуля',
 
         approach_title: 'Профессиональный подход',
         approach_sub: 'Полный цикл — от бизнес-проблемы до измеримого результата.',
@@ -244,28 +244,28 @@ const I18N = {
 
         career_title: 'Опыт работы',
         career_sub: 'Полный цикл — от сбора требований и архитектуры до внедрения и метрик.',
-        exp1_date: 'Февраль 2026 — н.в.', exp1_role: 'Системный аналитик / Архитектор', exp1_company: 'Аквариус',
+        exp1_date: 'Февраль 2026 — н.в.', exp1_role: 'Fullstack-аналитик', exp1_company: 'Производственная Компания Аквариус',
         exp1_type: 'Полная занятость', exp1_loc: 'Удалённо',
-        exp1_a1: 'Выстраиваю процесс сбора и приоритизации требований для продуктов',
-        exp1_a2: 'Проектирую целевые архитектуры и интеграции (C4, Event Storming)',
-        exp1_a3: 'Вожу полный цикл: требования → дизайн решения → внедрение → метрики',
-        exp2_date: '2024 — начало 2026', exp2_role: 'Middle Systems Analyst', exp2_company: 'ТК Центр (Столото)',
+        exp1_a1: 'Управляю сбором и декомпозицией требований для внутренних B2B-продуктов компании',
+        exp1_a2: 'Проектирую целевые архитектуры и системные интеграции (C4, Event Storming)',
+        exp1_a3: 'Отвечаю за полный цикл: от постановки задачи до контроля внедрения',
+        exp2_date: 'Февраль 2025 — Декабрь 2025', exp2_role: 'Системный аналитик', exp2_company: 'S8 Capital (Столото)',
         exp2_type: 'Полная занятость', exp2_loc: 'Москва · гибрид',
-        exp2_a1: 'Анализировал существующие системы и процессы, находил узкие места',
-        exp2_a2: 'Готовил ТЗ и моделировал решения (BPMN, UML, схемы данных)',
-        exp2_a3: 'Вёл требования в Jira, согласовывал решения между бизнесом и разработкой',
-        exp2_a4: 'Проектировал интеграции и API-контракты',
-        exp3_date: '2022 — 2024', exp3_role: 'Systems Analyst (freelance)', exp3_company: 'Телесеть+, Дубна',
-        exp3_type: 'Проектная работа', exp3_loc: 'Дубна · удалённо',
-        exp3_a1: 'Автоматизировал бизнес-процессы заказчиков малого и среднего бизнеса',
-        exp3_a2: 'Формализовал требования, моделировал состояния AS-IS / TO-BE',
-        exp3_a3: 'Проектировал API-интеграции и контролировал внедрение',
+        exp2_a1: 'Спроектировал интеграции с внешними системами (Kafka, RabbitMQ, REST) в высоконагруженной среде (более 500 систем)',
+        exp2_a2: 'Запустил продажу билетов на WB (C&C), что открыло новый канал и увеличило выручку направления на 10%',
+        exp2_a3: 'Разработал портал СБ с автоматизированными проверками, ускорив ручные процессы на 50%',
+        exp2_a4: 'Подготовил детальные ФТТ/ТЗ и описал потоки данных (PostgreSQL, ClickHouse), кратно снизив вопросы от разработки',
+        exp3_date: 'Ноябрь 2022 — Декабрь 2024', exp3_role: 'Системный аналитик', exp3_company: 'Телесеть+',
+        exp3_type: 'Полная занятость', exp3_loc: 'Дубна',
+        exp3_a1: 'Разработал чёткие API-контракты (JSON/XML) и документацию (SRS, ERD), снизив объём вопросов от разработки',
+        exp3_a2: 'Смоделировал бизнес-процессы (BPMN) и спроектировал структуры БД, ускорив согласование требований',
+        exp3_a3: 'Спроектировал интеграцию с мессенджерами и таск-трекером, автоматизировав обработку заявок техподдержки',
 
-        edu1_type: 'Среднее профессиональное',
+        edu1_type: 'СПО',
         edu1_spec: 'Сетевое и системное администрирование',
         edu1_place: 'Колледж государственного университета «Дубна»',
         edu2_type: 'Бакалавр',
-        edu2_spec: 'Менеджмент, предпринимательство и управление бизнесом',
+        edu2_spec: 'Менеджмент и управление бизнесом',
         edu2_place: 'Московский международный университет, Москва',
 
         contact_title: 'Обсудим задачу?',
@@ -303,11 +303,11 @@ const I18N = {
 
         about_title: 'About me',
         about_sub: 'I bridge business and systems analysis: breaking a challenge down into requirements and architecture a team can actually build.',
-        about_text: '<p>I am a <strong>fullstack analyst</strong> working at the intersection of business, product and engineering. I break existing systems apart, model processes (Event Storming, BPMN, UML, C4) and design target solutions — from problem framing to rollout and metrics. I understand both the "why" and the "how": from unit economics down to code.</p>',
-        stat_1: 'years in analysis & architecture',
-        stat_2: 'products built from scratch: FinGuard, EzLearn',
-        stat_3: 'automated tests (pytest + vitest)',
-        stat_4: 'vulnerabilities fixed in security audit',
+        about_text: '<p>I am a <strong>fullstack analyst</strong> (business + systems analysis). I am accustomed to working with highload, integration-heavy systems, microservice architectures, and strict regulatory requirements.</p><p>I break down challenges into requirements and design target solutions — from architecture to delivery oversight. Outside of work, I practice cold water immersion — this helps maintain absolute focus, discipline, and resilience to any pressure.</p>',
+        stat_1: 'years in systems analysis',
+        stat_2: 'systems in the integration loop (S8)',
+        stat_3: 'revenue growth via new WB channel',
+        stat_4: 'AI products designed from scratch',
 
         approach_title: 'Professional approach',
         approach_sub: 'The full cycle — from a business problem to a measurable result.',
@@ -364,28 +364,28 @@ const I18N = {
 
         career_title: 'Work experience',
         career_sub: 'The full cycle — from requirements and architecture to rollout and metrics.',
-        exp1_date: 'Feb 2026 — present', exp1_role: 'Systems Analyst / Architect', exp1_company: 'Aquarius',
+        exp1_date: 'Feb 2026 — present', exp1_role: 'Fullstack Analyst', exp1_company: 'Aquarius',
         exp1_type: 'Full-time', exp1_loc: 'Remote',
-        exp1_a1: 'Setting up requirements gathering and prioritization for products',
-        exp1_a2: 'Designing target architectures and integrations (C4, Event Storming)',
-        exp1_a3: 'Owning the full cycle: requirements → solution design → rollout → metrics',
-        exp2_date: '2024 — early 2026', exp2_role: 'Middle Systems Analyst', exp2_company: 'TK Center (Stoloto)',
+        exp1_a1: 'Setting up requirements gathering and prioritization for internal B2B products',
+        exp1_a2: 'Designing target architectures and system integrations (C4, Event Storming)',
+        exp1_a3: 'Owning the full cycle: from problem framing to delivery oversight',
+        exp2_date: 'Feb 2025 — Dec 2025', exp2_role: 'Systems Analyst', exp2_company: 'S8 Capital',
         exp2_type: 'Full-time', exp2_loc: 'Moscow · hybrid',
-        exp2_a1: 'Analyzed existing systems and processes, finding bottlenecks',
-        exp2_a2: 'Produced specs and solution models (BPMN, UML, data schemas)',
-        exp2_a3: 'Managed requirements in Jira, aligned decisions between business and engineering',
-        exp2_a4: 'Designed integrations and API contracts',
-        exp3_date: '2022 — 2024', exp3_role: 'Systems Analyst (freelance)', exp3_company: 'Teleset+, Dubna',
-        exp3_type: 'Contract', exp3_loc: 'Dubna · remote',
-        exp3_a1: 'Automated business processes for SMB clients',
-        exp3_a2: 'Formalized requirements, modeled AS-IS / TO-BE states',
-        exp3_a3: 'Designed API integrations and supervised delivery',
+        exp2_a1: 'Designed external integrations (Kafka, RabbitMQ, REST) in a highload environment (500+ systems)',
+        exp2_a2: 'Launched ticket sales on Wildberries (C&C), opening a new channel and boosting revenue by 10%',
+        exp2_a3: 'Developed a security portal with automated checks, speeding up manual processes by 50%',
+        exp2_a4: 'Produced detailed specs and data flow models (PostgreSQL, ClickHouse), drastically reducing dev questions',
+        exp3_date: 'Nov 2022 — Dec 2024', exp3_role: 'Systems Analyst', exp3_company: 'Teleset+',
+        exp3_type: 'Full-time', exp3_loc: 'Dubna',
+        exp3_a1: 'Created clear API contracts (JSON/XML) and documentation (SRS, ERD), reducing dev blockages',
+        exp3_a2: 'Modeled business processes (BPMN) and designed DB structures, accelerating requirements sign-off',
+        exp3_a3: 'Designed messenger and task-tracker integrations, fully automating tech support ticket handling',
 
         edu1_type: 'Secondary vocational',
         edu1_spec: 'Network & Systems Administration',
         edu1_place: 'College of Dubna State University',
         edu2_type: "Bachelor's degree",
-        edu2_spec: 'Management, Entrepreneurship and Business Administration',
+        edu2_spec: 'Management and Business Administration',
         edu2_place: 'Moscow International University, Moscow',
 
         contact_title: "Let's discuss your project?",
@@ -788,15 +788,16 @@ document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 /* Анимированные счётчики статистики */
 function animateCounter(el) {
     const target = parseFloat(el.dataset.count);
+    const prefix = el.dataset.prefix || '';
     const suffix = el.dataset.suffix || '';
-    if (prefersReduced) { el.textContent = target + suffix; return; }
+    if (prefersReduced) { el.textContent = prefix + target + suffix; return; }
     const dur = 1300;
     let t0 = null;
     function frame(t) {
         if (!t0) t0 = t;
         const p = Math.min((t - t0) / dur, 1);
         const eased = 1 - Math.pow(1 - p, 3);
-        el.textContent = Math.round(target * eased) + suffix;
+        el.textContent = prefix + Math.round(target * eased) + suffix;
         if (p < 1) requestAnimationFrame(frame);
     }
     requestAnimationFrame(frame);
