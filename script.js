@@ -513,7 +513,7 @@ function renderDynamic() {
             : 'rgba(0, 210, 255, 0.12)';
         const initials = ex.initials || (d[ex.companyKey] || '?').slice(0, 2).toUpperCase();
         const logo = ex.logo
-            ? `<img src="${ex.logo}" alt="" width="64" height="64" loading="lazy" decoding="async" onerror="this.remove()">`
+            ? `<img src="${ex.logo}" alt="" width="80" height="80" loading="lazy" decoding="async" onerror="this.remove()">`
             : '';
         const meta = [ex.typeKey && d[ex.typeKey], ex.locKey && d[ex.locKey]].filter(Boolean);
         return `
@@ -521,11 +521,15 @@ function renderDynamic() {
             <div class="exp-logo" aria-hidden="true"><span>${initials}</span>${logo}</div>
             <div class="exp-body">
                 <div class="exp-head">
-                    <h3 class="exp-role">${d[ex.roleKey]}</h3>
-                    <time class="exp-date">${d[ex.dateKey]}</time>
+                    <div class="exp-head-main">
+                        <h3 class="exp-role">${d[ex.roleKey]}</h3>
+                        <p class="exp-company">${d[ex.companyKey]}</p>
+                    </div>
+                    <div class="exp-head-meta">
+                        <time class="exp-date">${d[ex.dateKey]}</time>
+                        ${meta.length ? `<div class="exp-tags">${meta.map(m => `<span>${m}</span>`).join('')}</div>` : ''}
+                    </div>
                 </div>
-                <p class="exp-company">${d[ex.companyKey]}</p>
-                ${meta.length ? `<div class="exp-meta">${meta.map(m => `<span>${m}</span>`).join('')}</div>` : ''}
                 <ul class="exp-bullets">
                     ${ex.bullets.map(b => `<li>${d[b]}</li>`).join('')}
                 </ul>
@@ -534,7 +538,7 @@ function renderDynamic() {
     }).join('');
 
     document.getElementById('skills-grid').innerHTML = CONFIG.skills.map((s, i) => `
-        <div class="skill-card tilt reveal" style="--delay:${(0.05 + i * 0.07).toFixed(2)}s">
+        <div class="skill-card reveal" style="--delay:${(0.05 + i * 0.07).toFixed(2)}s">
             <div class="skill-icon">${s.icon}</div>
             <h3>${d[s.titleKey]}</h3>
             <ul>
@@ -543,7 +547,7 @@ function renderDynamic() {
         </div>`).join('');
 
     document.getElementById('projects-grid').innerHTML = CONFIG.projects.map((p, i) => `
-        <article class="project-card tilt reveal" style="--delay:${(0.1 + i * 0.1).toFixed(2)}s"
+        <article class="project-card reveal" style="--delay:${(0.1 + i * 0.1).toFixed(2)}s"
                  data-project="${p.id}" tabindex="0" role="button"
                  aria-haspopup="dialog" aria-label="${p.name}: ${d.view_more}">
             <div class="project-visual">
@@ -927,23 +931,14 @@ if (!isTouch && !prefersReduced) {
 /* Навешивает эффекты на элементы, отрендеренные динамически (data-fx — защита от повторов) */
 function bindEffects() {
     if (isTouch || prefersReduced) return;
-    document.querySelectorAll('.tilt:not([data-fx])').forEach(card => {
+    document.querySelectorAll('.project-card:not([data-fx]), .exp-card:not([data-fx]), .skill-card:not([data-fx])').forEach(card => {
         card.dataset.fx = '1';
         card.addEventListener('mousemove', (e) => {
             const r = card.getBoundingClientRect();
             const px = (e.clientX - r.left) / r.width;
             const py = (e.clientY - r.top) / r.height;
-            const rotY = (px - 0.5) * 2 * 7;
-            const rotX = (0.5 - py) * 2 * 7;
-            card.style.transform =
-                `perspective(1100px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-4px)`;
             card.style.setProperty('--mx', `${px * 100}%`);
             card.style.setProperty('--my', `${py * 100}%`);
-        });
-        card.addEventListener('mouseleave', () => {
-            card.style.transition = 'transform 0.6s cubic-bezier(0.22,1,0.36,1), border-color .4s ease, box-shadow .4s ease, background .4s ease';
-            card.style.transform = 'perspective(1100px) rotateX(0) rotateY(0)';
-            setTimeout(() => card.style.transition = '', 600);
         });
     });
     document.querySelectorAll('.btn, .social-link, .contact-email').forEach(el => {

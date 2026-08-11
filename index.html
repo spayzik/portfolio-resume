@@ -37,39 +37,38 @@
    ============================================================ */
 :root {
     color-scheme: dark;
-    --bg:            #08080C;
-    --bg-soft:       #0C0D12;
-    --surface:       rgba(14, 15, 20, 0.75);
-    --surface-hover: rgba(20, 22, 28, 0.85);
-    --surface-soft:  rgba(14, 15, 20, 0.65);
-    --surface-mid:   rgba(20, 22, 28, 0.7);
-    --surface-strong:rgba(30, 34, 42, 0.8);
-    --border:        rgba(255, 255, 255, 0.12);
-    --border-hover:  rgba(0, 210, 255, 0.4);
-    --nav-border:    rgba(255, 255, 255, 0.08);
+    --bg:            #050505;
+    --bg-soft:       #0A0A0A;
+    --surface:       rgba(20, 20, 20, 0.6);
+    --surface-hover: rgba(30, 30, 30, 0.8);
+    --surface-soft:  rgba(20, 20, 20, 0.4);
+    --surface-mid:   rgba(30, 30, 30, 0.5);
+    --surface-strong:rgba(40, 40, 40, 0.8);
+    --border:        rgba(255, 255, 255, 0.06);
+    --border-hover:  rgba(255, 255, 255, 0.15);
+    --nav-border:    rgba(255, 255, 255, 0.04);
 
-    --text:          #FFFFFF;
-    --text-muted:    #B4BBD0;
-    --text-dim:      #828A9F;
+    --text:          #F9FAFB;
+    --text-muted:    #9CA3AF;
+    --text-dim:      #6B7280;
 
-    --accent-1:      #00D2FF;
-    --accent-2:      #3A7BD5;
-    --accent-3:      #8B5CF6;
+    --accent-1:      #0ea5e9;
+    --accent-2:      #6366f1;
+    --accent-3:      #a855f7;
     --gradient:      linear-gradient(120deg, var(--accent-1), var(--accent-2));
 
-    /* Подложки и свечения: токены, чтобы светлая тема могла их переопределить */
-    --grid-line:     rgba(255, 255, 255, 0.015);
+    --grid-line:     rgba(255, 255, 255, 0.02);
     --blend-mode:    screen;
-    --blob-1-bg:     rgba(0, 210, 255, 0.12);
-    --blob-2-bg:     rgba(58, 123, 213, 0.14);
-    --blob-3-bg:     rgba(139, 92, 246, 0.10);
-    --blob-4-bg:     rgba(0, 190, 255, 0.08);
-    --blob-5-bg:     rgba(90, 140, 255, 0.10);
-    --shadow-card:   0 20px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(0, 210, 255, 0.08);
-    --shadow-btn:    0 8px 30px rgba(0, 210, 255, 0.22);
-    --shadow-btn-hover: 0 14px 44px rgba(0, 210, 255, 0.35);
-    --shadow-chip:   0 12px 34px rgba(0, 210, 255, 0.18);
-    --muted-icon:    rgba(255, 255, 255, 0.35);
+    --blob-1-bg:     rgba(14, 165, 233, 0.15);
+    --blob-2-bg:     rgba(99, 102, 241, 0.15);
+    --blob-3-bg:     rgba(168, 85, 247, 0.12);
+    --blob-4-bg:     rgba(14, 165, 233, 0.1);
+    --blob-5-bg:     rgba(99, 102, 241, 0.1);
+    --shadow-card:   0 20px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(14, 165, 233, 0.05);
+    --shadow-btn:    0 8px 30px rgba(14, 165, 233, 0.2);
+    --shadow-btn-hover: 0 14px 44px rgba(14, 165, 233, 0.35);
+    --shadow-chip:   0 12px 34px rgba(255, 255, 255, 0.05);
+    --muted-icon:    rgba(255, 255, 255, 0.25);
 
     --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-mono: 'JetBrains Mono', 'Consolas', monospace;
@@ -84,37 +83,37 @@
    ============================================================ */
 :root[data-theme="light"] {
     color-scheme: light;
-    --bg:            #F4F6FA;
-    --bg-soft:       #EBEEF5;
-    --surface:       rgba(255, 255, 255, 0.85);
-    --surface-hover: rgba(255, 255, 255, 0.95);
-    --surface-soft:  rgba(255, 255, 255, 0.75);
-    --surface-mid:   rgba(255, 255, 255, 0.85);
-    --surface-strong:rgba(255, 255, 255, 1);
-    --border:        rgba(16, 24, 40, 0.12);
-    --border-hover:  rgba(0, 120, 180, 0.45);
-    --nav-border:    rgba(16, 24, 40, 0.08);
+    --bg:            #F9FAFB;
+    --bg-soft:       #F3F4F6;
+    --surface:       #FFFFFF;
+    --surface-hover: #FFFFFF;
+    --surface-soft:  #F9FAFB;
+    --surface-mid:   #F3F4F6;
+    --surface-strong:#F3F4F6;
+    --border:        rgba(0, 0, 0, 0.06);
+    --border-hover:  rgba(0, 0, 0, 0.12);
+    --nav-border:    rgba(0, 0, 0, 0.05);
 
-    --text:          #111318;
-    --text-muted:    #3E4658;
-    --text-dim:      #6A738A;
+    --text:          #111827;
+    --text-muted:    #4B5563;
+    --text-dim:      #9CA3AF;
 
-    --accent-1:      #0085B3;
-    --accent-2:      #2159BA;
-    --accent-3:      #5B39CC;
+    --accent-1:      #0284C7;
+    --accent-2:      #2563EB;
+    --accent-3:      #7C3AED;
 
-    --grid-line:     rgba(16, 24, 40, 0.035);
-    --blend-mode:    multiply;
-    --blob-1-bg:     rgba(0, 151, 196, 0.06);
-    --blob-2-bg:     rgba(42, 108, 214, 0.06);
-    --blob-3-bg:     rgba(109, 74, 224, 0.05);
-    --blob-4-bg:     rgba(0, 160, 210, 0.04);
-    --blob-5-bg:     rgba(60, 110, 220, 0.05);
-    --shadow-card:   0 12px 40px rgba(16, 24, 40, 0.08);
-    --shadow-btn:    0 6px 20px rgba(0, 120, 180, 0.18);
-    --shadow-btn-hover: 0 10px 30px rgba(0, 120, 180, 0.28);
-    --shadow-chip:   0 8px 22px rgba(0, 120, 180, 0.14);
-    --muted-icon:    rgba(16, 24, 40, 0.35);
+    --grid-line:     rgba(0, 0, 0, 0.03);
+    --blend-mode:    normal;
+    --blob-1-bg:     rgba(2, 132, 199, 0.04);
+    --blob-2-bg:     rgba(37, 99, 235, 0.04);
+    --blob-3-bg:     rgba(124, 58, 237, 0.04);
+    --blob-4-bg:     rgba(2, 132, 199, 0.03);
+    --blob-5-bg:     rgba(37, 99, 235, 0.03);
+    --shadow-card:   0 10px 30px -4px rgba(0, 0, 0, 0.05), 0 4px 10px -2px rgba(0, 0, 0, 0.02);
+    --shadow-btn:    0 4px 14px rgba(2, 132, 199, 0.15);
+    --shadow-btn-hover: 0 8px 24px rgba(2, 132, 199, 0.25);
+    --shadow-chip:   0 4px 12px rgba(0, 0, 0, 0.03);
+    --muted-icon:    rgba(0, 0, 0, 0.25);
 }
 
 /* ============================================================
@@ -660,11 +659,16 @@ body::before {
 }
 
 .hero-tagline {
-    font-size: clamp(1.15rem, 2.4vw, 1.6rem);
+    font-size: clamp(1.15rem, 2vw, 1.5rem);
     font-weight: 400;
-    max-width: 640px;
+    max-width: 680px;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+.hero-tagline em {
+    font-style: normal;
     color: var(--text);
-    line-height: 1.45;
+    font-weight: 500;
 }
 .hero-tagline em {
     font-style: normal;
@@ -795,10 +799,11 @@ body::before {
     margin-bottom: 14px;
 }
 .section-title {
-    font-size: clamp(2rem, 4.5vw, 3.4rem);
-    font-weight: 700;
-    letter-spacing: -0.02em;
+    font-size: clamp(2.4rem, 4.5vw, 3.6rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
     line-height: 1.1;
+    color: var(--text);
 }
 .section-title .gradient-text {
     background: var(--gradient);
@@ -850,9 +855,9 @@ body::before {
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 26px 24px;
-    transition: border-color 0.4s ease, background 0.4s ease, transform 0.4s var(--ease);
+    transition: border-color 0.4s ease, background 0.4s ease, transform 0.4s var(--ease), box-shadow 0.4s ease;
 }
-.stat:hover { border-color: var(--border-hover); background: var(--surface-hover); transform: translateY(-4px); }
+.stat:hover { border-color: var(--border-hover); background: var(--surface-hover); transform: translateY(-4px); box-shadow: var(--shadow-card); }
 .stat .num {
     font-size: clamp(1.8rem, 3vw, 2.4rem);
     font-weight: 700;
@@ -960,27 +965,28 @@ body::before {
     display: flex;
     flex-direction: column;
     gap: 22px;
-    transform-style: preserve-3d;
-    transform: perspective(1100px);
-    transition: border-color 0.4s ease, box-shadow 0.4s ease;
-    will-change: transform;
+    transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s var(--ease);
     overflow: hidden;
 }
+
 .project-card:hover {
     border-color: var(--border-hover);
     box-shadow: var(--shadow-card);
+    transform: translateY(-2px);
 }
-/* Блик, следящий за курсором */
 .project-card::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(0, 210, 255, 0.08), transparent 55%);
+    background: radial-gradient(600px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.04), transparent 40%);
     opacity: 0;
     transition: opacity 0.5s ease;
     pointer-events: none;
+    z-index: 1;
 }
+:root[data-theme="light"] .project-card::before { background: radial-gradient(600px circle at var(--mx, 50%) var(--my, 50%), rgba(0, 0, 0, 0.03), transparent 40%); }
 .project-card:hover::before { opacity: 1; }
+.project-card > * { position: relative; z-index: 2; }
 
 .project-tag {
     font-family: var(--font-mono);
@@ -1029,33 +1035,52 @@ body::before {
    ============================================================ */
 .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 .skill-card {
+    position: relative;
+    overflow: hidden;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 32px 26px;
-    transition: transform 0.45s var(--ease), border-color 0.4s ease, background 0.4s ease;
-    transform-style: preserve-3d;
-    will-change: transform;
+    transition: transform 0.45s var(--ease), border-color 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
 }
-.skill-card:hover { border-color: var(--border-hover); background: var(--surface-hover); }
+.skill-card:hover {
+    border-color: var(--border-hover);
+    background: var(--surface-hover);
+    box-shadow: var(--shadow-card);
+    transform: translateY(-2px);
+}
+.skill-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(400px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.04), transparent 50%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+:root[data-theme="light"] .skill-card::before { background: radial-gradient(400px circle at var(--mx, 50%) var(--my, 50%), rgba(0, 0, 0, 0.03), transparent 50%); }
+.skill-card:hover::before { opacity: 1; }
+.skill-card > * { position: relative; z-index: 2; }
 .skill-icon {
-    width: 46px; height: 46px;
-    border-radius: 13px;
-    background: linear-gradient(135deg, rgba(0,210,255,0.14), rgba(139,92,246,0.14));
-    border: 1px solid rgba(0, 210, 255, 0.2);
+    width: 48px; height: 48px;
+    border-radius: 14px;
+    background: var(--surface-soft);
+    border: 1px solid var(--border);
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 22px;
+    margin-bottom: 24px;
     color: var(--accent-1);
+    box-shadow: var(--shadow-chip);
 }
 .skill-icon svg { width: 22px; height: 22px; }
-.skill-card h3 { font-size: 17px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 14px; }
-.skill-card ul { list-style: none; }
+.skill-card h3 { font-size: 19px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 16px; color: var(--text); }
+.skill-card ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
 .skill-card li {
-    font-size: 14px;
+    font-size: 15px;
     color: var(--text-muted);
-    line-height: 2;
+    line-height: 1.6;
     padding-left: 16px;
     position: relative;
 }
@@ -1064,6 +1089,7 @@ body::before {
     position: absolute;
     left: 0;
     color: var(--accent-1);
+    font-weight: 800;
 }
 
 /* ============================================================
@@ -1076,63 +1102,72 @@ body::before {
 }
 .exp-card {
     display: grid;
-    grid-template-columns: 64px 1fr;
-    gap: 20px 22px;
-    padding: 26px 28px;
+    grid-template-columns: 80px 1fr;
+    gap: 24px 32px;
+    padding: 32px 36px;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
     transition: border-color 0.35s ease, background 0.35s ease, transform 0.35s var(--ease), box-shadow 0.35s ease;
     position: relative;
     overflow: hidden;
-}
-.exp-card:hover {
-    border-color: var(--border-hover);
-    box-shadow: var(--shadow-card);
-    transform: translateY(-2px);
 }
 .exp-card::before {
     content: '';
     position: absolute;
     inset: 0 auto 0 0;
-    width: 3px;
+    width: 4px;
     background: var(--exp-brand, var(--gradient));
-    opacity: 0.85;
+    opacity: 1;
+    z-index: 2;
 }
+.exp-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(600px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.04), transparent 40%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+:root[data-theme="light"] .exp-card::after { background: radial-gradient(600px circle at var(--mx, 50%) var(--my, 50%), rgba(0, 0, 0, 0.03), transparent 40%); }
+.exp-card:hover::after { opacity: 1; }
+.exp-card > * { position: relative; z-index: 2; }
 .exp-card:hover {
     border-color: var(--border-hover);
     background: var(--surface-hover);
+    box-shadow: var(--shadow-card);
     transform: translateY(-2px);
 }
 .exp-logo {
-    width: 64px;
-    height: 64px;
-    border-radius: 16px;
-    background: var(--exp-brand-soft, rgba(0, 210, 255, 0.12));
+    width: 80px;
+    height: 80px;
+    border-radius: 20px;
+    background: var(--surface-soft);
     border: 1px solid var(--border);
-    display: grid;
-    place-items: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     overflow: hidden;
     flex-shrink: 0;
     position: relative;
+    padding: 12px;
 }
 .exp-logo span {
     font-family: var(--font-mono);
-    font-size: 20px;
+    font-size: 26px;
     font-weight: 700;
     letter-spacing: -0.02em;
     color: var(--exp-brand, var(--accent-1));
     line-height: 1;
 }
 .exp-logo img {
-    position: absolute;
-    inset: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    background: #0c0c12;
+    object-fit: contain;
 }
 .exp-body { min-width: 0; }
 .exp-head {
@@ -1140,45 +1175,57 @@ body::before {
     flex-wrap: wrap;
     align-items: flex-start;
     justify-content: space-between;
-    gap: 8px 20px;
-    margin-bottom: 6px;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+.exp-head-main {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.exp-head-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    text-align: right;
 }
 .exp-role {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 700;
     letter-spacing: -0.02em;
     line-height: 1.3;
     margin: 0;
-}
-.exp-date {
-    font-family: var(--font-mono);
-    font-size: 13.5px;
-    letter-spacing: 0.04em;
-    color: var(--accent-1);
-    white-space: nowrap;
-    padding-top: 4px;
+    color: var(--text);
 }
 .exp-company {
     font-size: 16px;
-    font-weight: 600;
-    color: var(--text);
-    margin: 0 0 12px;
+    font-weight: 500;
+    color: var(--accent-1);
+    margin: 0;
 }
-.exp-meta {
+.exp-date {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+.exp-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 14px;
+    justify-content: flex-end;
+    gap: 6px;
 }
-.exp-meta span {
+.exp-tags span {
     font-family: var(--font-mono);
-    font-size: 11.5px;
+    font-size: 11px;
     letter-spacing: 0.04em;
     color: var(--text-dim);
     background: var(--surface-soft);
     border: 1px solid var(--border);
     border-radius: 100px;
-    padding: 5px 12px;
+    padding: 4px 10px;
 }
 .exp-bullets {
     list-style: none;
@@ -1191,8 +1238,8 @@ body::before {
     font-size: 16px;
     color: var(--text-muted);
     font-weight: 400;
-    line-height: 1.7;
-    padding-left: 20px;
+    line-height: 1.6;
+    padding-left: 18px;
     position: relative;
 }
 .exp-bullets li::before {
@@ -1201,10 +1248,10 @@ body::before {
     left: 0;
     top: 10px;
     width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--gradient);
-    opacity: 0.75;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--text-dim);
+    opacity: 0.8;
 }
 
 /* Образование (рендерится из CONFIG.education) */
@@ -1392,11 +1439,13 @@ body::before {
     .nav { display: none; }
     .burger { display: flex; }
     .projects-grid { grid-template-columns: 1fr; }
-    .exp-card { grid-template-columns: 52px 1fr; gap: 14px 16px; padding: 20px 18px; }
-    .exp-logo { width: 52px; height: 52px; border-radius: 14px; }
-    .exp-logo span { font-size: 17px; }
-    .exp-role { font-size: 16.5px; }
-    .exp-head { flex-direction: column; gap: 4px; }
+    .exp-card { grid-template-columns: 56px 1fr; gap: 14px 16px; padding: 24px 20px; }
+    .exp-logo { width: 56px; height: 56px; border-radius: 14px; padding: 8px; }
+    .exp-logo span { font-size: 20px; }
+    .exp-role { font-size: 18px; }
+    .exp-head { flex-direction: column; gap: 12px; margin-bottom: 16px; }
+    .exp-head-meta { align-items: flex-start; text-align: left; }
+    .exp-tags { justify-content: flex-start; }
     .project-footer { flex-direction: column; align-items: flex-start; }
     .to-top { right: 18px; bottom: 18px; }
 }
@@ -1838,9 +1887,9 @@ body::before {
     <div class="container header-inner">
         <a href="#" class="logo">dd<span>.</span>dev</a>
         <nav class="nav">
+            <a href="#career"    data-i18n="nav_career"></a>
             <a href="#about"     data-i18n="nav_about"></a>
             <a href="#approach"  data-i18n="nav_approach"></a>
-            <a href="#career"    data-i18n="nav_career"></a>
             <a href="#skills"    data-i18n="nav_skills"></a>
             <a href="#projects"  data-i18n="nav_projects"></a>
             <a href="#contact"   data-i18n="nav_contact"></a>
@@ -1863,9 +1912,9 @@ body::before {
 
 <!-- Мобильное меню -->
 <nav class="mobile-nav" id="mobile-nav">
+    <a href="#career"    data-i18n="nav_career"></a>
     <a href="#about"     data-i18n="nav_about"></a>
     <a href="#approach"  data-i18n="nav_approach"></a>
-    <a href="#career"    data-i18n="nav_career"></a>
     <a href="#skills"    data-i18n="nav_skills"></a>
     <a href="#projects"  data-i18n="nav_projects"></a>
     <a href="#contact"   data-i18n="nav_contact"></a>
@@ -1935,11 +1984,26 @@ body::before {
     </div>
 </section>
 
+<!-- ================= ОПЫТ ================= -->
+<section id="career">
+    <div class="container">
+        <div class="section-head reveal">
+            <span class="section-index">01</span>
+            <h2 class="section-title" data-i18n="career_title"></h2>
+        </div>
+        <!-- Карточки опыта рендерятся из CONFIG.experience -->
+        <div class="exp-list" id="timeline"></div>
+
+        <!-- Образование (рендерится из CONFIG.education) -->
+        <div class="education-list reveal" style="--delay:.15s" id="education-list"></div>
+    </div>
+</section>
+
 <!-- ================= ОБО МНЕ ================= -->
 <section id="about">
     <div class="container">
         <div class="section-head reveal">
-            <span class="section-index">01</span>
+            <span class="section-index">02</span>
             <h2 class="section-title" data-i18n="about_title"></h2>
             <p class="section-sub" data-i18n="about_sub"></p>
         </div>
@@ -1960,7 +2024,7 @@ body::before {
 <section id="approach">
     <div class="container">
         <div class="section-head reveal">
-            <span class="section-index">02</span>
+            <span class="section-index">03</span>
             <h2 class="section-title" data-i18n="approach_title"></h2>
             <p class="section-sub" data-i18n="approach_sub"></p>
         </div>
@@ -1983,20 +2047,6 @@ body::before {
     </div>
 </section>
 
-<!-- ================= ОПЫТ ================= -->
-<section id="career">
-    <div class="container">
-        <div class="section-head reveal">
-            <span class="section-index">03</span>
-            <h2 class="section-title" data-i18n="career_title"></h2>
-        </div>
-        <!-- Карточки опыта рендерятся из CONFIG.experience -->
-        <div class="exp-list" id="timeline"></div>
-
-        <!-- Образование (рендерится из CONFIG.education) -->
-        <div class="education-list reveal" style="--delay:.15s" id="education-list"></div>
-    </div>
-</section>
 
 <!-- ================= КОМПЕТЕНЦИИ ================= -->
 <section id="skills">
