@@ -677,10 +677,6 @@ const RING_C = 138.23; // длина окружности прогресс-ко�
 
 function lerp(a, b, t) { return a + (b - a) * t; }
 
-
-// Вызов для установки правильных цветов при загрузке до первого скролла
-applyBgGradient(document.documentElement.scrollTop / Math.max(1, (document.documentElement.scrollHeight - document.documentElement.clientHeight)));
-
 window.addEventListener('scroll', () => {
     const doc = document.documentElement;
     const p = doc.scrollTop / (doc.scrollHeight - doc.clientHeight);
@@ -701,8 +697,6 @@ window.addEventListener('scroll', () => {
         doc.style.setProperty('--s4y', (6 - 14 * t) + 'vh');
         doc.style.setProperty('--s5y', (5 + 11 * t) + 'vh');
         doc.style.setProperty('--shue', Math.round(18 * Math.sin(t * Math.PI)) + 'deg');
-        // Плавная смена градиента фона между палитрами по мере прокрутки
-        
     }
 }, { passive: true });
 
@@ -905,33 +899,6 @@ if (!isTouch && !prefersReduced) {
 /* Навешивает эффекты на элементы, отрендеренные динамически (data-fx — защита от повторов) */
 function bindEffects() {}
 
-/* Кастомный курсор (точка + кольцо с инерцией) */
-const cursorDot = document.getElementById('cursor-dot');
-const cursorRing = document.getElementById('cursor-ring');
-
-if (!isTouch && !prefersReduced) {
-    let mx = 0, my = 0, rx = 0, ry = 0, shown = false;
-    document.addEventListener('mousemove', (e) => {
-        mx = e.clientX; my = e.clientY;
-        if (!shown) {
-            shown = true;
-            cursorDot.style.opacity = 1;
-            cursorRing.style.opacity = 1;
-        }
-        cursorDot.style.transform = `translate3d(${mx - 3}px, ${my - 3}px, 0)`;
-    });
-    (function loop() {
-        rx += (mx - rx) * 0.16;
-        ry += (my - ry) * 0.16;
-        cursorRing.style.transform = `translate3d(${rx - 18}px, ${ry - 18}px, 0)`;
-        requestAnimationFrame(loop);
-    })();
-    /* Увеличение кольца над интерактивными элементами */
-    document.addEventListener('mouseover', (e) => {
-        cursorRing.classList.toggle('hover', !!e.target.closest('a, button, .tilt, input, textarea, .lang-switch'));
-    });
-}
-
 /* ============================================================
    9. ЧАСТИЦЫ НА КАНВАСЕ (динамическая плотность + пауза вне экрана)
    ============================================================ */
@@ -1016,97 +983,6 @@ if (!isTouch && !prefersReduced) {
         }, { threshold: 0.01 });
         heroIO.observe(heroSection);
         start();
-    }
-})();
-
-/* ============================================================
-   9.5. ФОН: цифровая сетка узлов + импульсы данных (canvas)
-   ============================================================ */
-(function bgGrid() {
-    const canvas = document.getElementById('bg-canvas');
-    const ctx = canvas.getContext('2d');
-    let w, h, nodes;
-    const GAP = 64;                 // шаг сетки
-    const MAX_PULSES = 16;          // одновременных импульсов
-    const RIPPLE_DIST = 170;        // радиус подсветки узлов у курсора
-    const pulses = [];
-    const mouse = { x: null, y: null };
-
-    function resize() {
-        w = canvas.width = canvas.offsetWidth;
-        h = canvas.height = canvas.offsetHeight;
-        nodes = [];
-        for (let x = GAP / 2; x < w; x += GAP)
-            for (let y = GAP / 2; y < h; y += GAP)
-                nodes.push({ x, y });
-    }
-
-    /* Импульс: бежит от узла по прямой, затухая в конце пути */
-    function spawnPulse() {
-        const n = nodes[(Math.random() * nodes.length) | 0];
-        const dirs = [[1, 0], [-1, 0], [0, 1], [0, -1]];
-        const [dx, dy] = dirs[(Math.random() * 4) | 0];
-        pulses.push({
-            x: n.x, y: n.y, sx: n.x, sy: n.y,
-            dx, dy,
-            speed: 1.4 + Math.random() * 1.8,
-            dist: 0,
-            maxDist: GAP * (2 + ((Math.random() * 3) | 0)),
-            hue: Math.random() < 0.55 ? '0, 210, 255' : '139, 92, 246',
-        });
-    }
-
-    function drawNodes() {
-        for (const n of nodes) {
-            let a = 0.10;
-            if (mouse.x !== null) {
-                const d = Math.hypot(mouse.x - n.x, mouse.y - n.y);
-                if (d < RIPPLE_DIST) a = 0.10 + (1 - d / RIPPLE_DIST) * 0.42;
-            }
-            ctx.beginPath();
-            ctx.arc(n.x, n.y, 1.1, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(130, 175, 255, ${a})`;
-            ctx.fill();
-        }
-    }
-
-    function step() {
-        ctx.clearRect(0, 0, w, h);
-        drawNodes();
-
-        if (pulses.length < MAX_PULSES && Math.random() < 0.35) spawnPulse();
-        for (let i = pulses.length - 1; i >= 0; i--) {
-            const p = pulses[i];
-            p.x += p.dx * p.speed;
-            p.y += p.dy * p.speed;
-            p.dist += p.speed;
-            const fade = Math.sin(Math.min(p.dist / p.maxDist, 1) * Math.PI); // плавное появление-затухание
-            ctx.beginPath();
-            ctx.moveTo(p.sx, p.sy);
-            ctx.lineTo(p.x, p.y);
-            ctx.strokeStyle = `rgba(${p.hue}, ${0.16 * fade})`;
-            ctx.lineWidth = 1;
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, 2.1, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(${p.hue}, ${0.55 * fade})`;
-            ctx.fill();
-            if (p.dist >= p.maxDist) pulses.splice(i, 1);
-        }
-        rafId = requestAnimationFrame(step);
-    }
-
-    window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; }, { passive: true });
-    window.addEventListener('mouseleave', () => { mouse.x = mouse.y = null; });
-    window.addEventListener('resize', resize);
-
-    let rafId = null;
-    resize();
-    if (prefersReduced) {
-        ctx.clearRect(0, 0, w, h);
-        drawNodes();           // статичная сетка без импульсов
-    } else {
-        step();
     }
 })();
 
