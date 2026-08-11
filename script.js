@@ -149,11 +149,7 @@ function toggleTheme() {
     localStorage.setItem(THEME_KEY, next);
     applyTheme(next);
     /* Обновляем палитру фона под новую тему (функция уже определена к моменту клика) */
-    if (typeof applyBgGradient === 'function') {
-        const doc = document.documentElement;
-        const p = doc.scrollTop / Math.max(1, (doc.scrollHeight - doc.clientHeight));
-        applyBgGradient(Math.max(0, Math.min(p, 1)));
-    }
+    
 }
 applyTheme(getTheme());
 document.querySelectorAll('.theme-toggle').forEach((b) => b.addEventListener('click', toggleTheme));
@@ -677,36 +673,11 @@ const RING_C = 138.23; // длина окружности прогресс-ко�
 /* Палитры фона: 4 ключевые позиции (t=0..1), каждая — три стопа градиента [r,g,b].
    Очень тёмные: близки к базовому #08080C, чтобы фон оставался таким же глубоким,
    а градиент лишь едва-едва переливался оттенком при скролле. */
-const BG_PALETTES_DARK = [
-    { g1: [9, 13, 22],  g2: [11, 13, 26], g3: [18, 12, 28] },   // начало: глубокий сине-фиолет
-    { g1: [8, 16, 20],  g2: [12, 13, 30], g3: [20, 12, 32] },   // 1/3: бирюзово-индиго
-    { g1: [10, 14, 24], g2: [16, 12, 32], g3: [26, 10, 30] },   // 2/3: сине-пурпурный
-    { g1: [9, 15, 24],  g2: [12, 12, 28], g3: [22, 12, 32] },   // конец: морской градиент
-];
-const BG_PALETTES_LIGHT = [
-    { g1: [244, 246, 250], g2: [235, 242, 255], g3: [246, 240, 255] },
-    { g1: [240, 248, 255], g2: [238, 244, 255], g3: [250, 242, 255] },
-    { g1: [245, 248, 255], g2: [242, 242, 255], g3: [252, 240, 255] },
-    { g1: [242, 250, 255], g2: [238, 242, 255], g3: [248, 242, 255] },
-];
+
+
 function lerp(a, b, t) { return a + (b - a) * t; }
-function mixPalette(A, B, t) {
-    return {
-        g1: [lerp(A.g1[0], B.g1[0], t), lerp(A.g1[1], B.g1[1], t), lerp(A.g1[2], B.g1[2], t)],
-        g2: [lerp(A.g2[0], B.g2[0], t), lerp(A.g2[1], B.g2[1], t), lerp(A.g2[2], B.g2[2], t)],
-        g3: [lerp(A.g3[0], B.g3[0], t), lerp(A.g3[1], B.g3[1], t), lerp(A.g3[2], B.g3[2], t)],
-    };
-}
-function applyBgGradient(t) {
-    const pals = document.documentElement.dataset.theme === 'light' ? BG_PALETTES_LIGHT : BG_PALETTES_DARK;
-    const seg = t * (pals.length - 1);
-    const i = Math.min(Math.floor(seg), pals.length - 2);
-    const f = seg - i;
-    const c = mixPalette(pals[i], pals[i + 1], f);
-    document.documentElement.style.setProperty('--gf-1', `rgb(${c.g1.map(Math.round).join(',')})`);
-    document.documentElement.style.setProperty('--gf-2', `rgb(${c.g2.map(Math.round).join(',')})`);
-    document.documentElement.style.setProperty('--gf-3', `rgb(${c.g3.map(Math.round).join(',')})`);
-}
+
+
 // Вызов для установки правильных цветов при загрузке до первого скролла
 applyBgGradient(document.documentElement.scrollTop / Math.max(1, (document.documentElement.scrollHeight - document.documentElement.clientHeight)));
 
@@ -714,6 +685,8 @@ window.addEventListener('scroll', () => {
     const doc = document.documentElement;
     const p = doc.scrollTop / (doc.scrollHeight - doc.clientHeight);
     header.classList.toggle('scrolled', doc.scrollTop > 40);
+    const headerCta = document.querySelector('.header-cta');
+    if (headerCta) headerCta.style.display = doc.scrollTop > window.innerHeight * 0.8 ? 'inline-flex' : 'none';
     scrollHint.classList.toggle('hidden', doc.scrollTop > 120);
     progressBar.style.transform = `scaleX(${Math.min(p, 1)})`;
     toTop.classList.toggle('visible', doc.scrollTop > 600);
@@ -729,7 +702,7 @@ window.addEventListener('scroll', () => {
         doc.style.setProperty('--s5y', (5 + 11 * t) + 'vh');
         doc.style.setProperty('--shue', Math.round(18 * Math.sin(t * Math.PI)) + 'deg');
         // Плавная смена градиента фона между палитрами по мере прокрутки
-        applyBgGradient(t);
+        
     }
 }, { passive: true });
 
@@ -930,34 +903,7 @@ if (!isTouch && !prefersReduced) {
 }
 
 /* Навешивает эффекты на элементы, отрендеренные динамически (data-fx — защита от повторов) */
-function bindEffects() {
-    if (isTouch || prefersReduced) return;
-    document.querySelectorAll('.project-card:not([data-fx]), .exp-card:not([data-fx]), .skill-card:not([data-fx])').forEach(card => {
-        card.dataset.fx = '1';
-        card.addEventListener('mousemove', (e) => {
-            const r = card.getBoundingClientRect();
-            const px = (e.clientX - r.left) / r.width;
-            const py = (e.clientY - r.top) / r.height;
-            card.style.setProperty('--mx', `${px * 100}%`);
-            card.style.setProperty('--my', `${py * 100}%`);
-        });
-    });
-    document.querySelectorAll('.btn, .social-link, .contact-email').forEach(el => {
-        if (el.dataset.fx) return;
-        el.dataset.fx = '1';
-        el.addEventListener('mousemove', (e) => {
-            const r = el.getBoundingClientRect();
-            const dx = e.clientX - (r.left + r.width / 2);
-            const dy = e.clientY - (r.top + r.height / 2);
-            el.style.setProperty('--mx', `${dx * 0.18}px`);
-            el.style.setProperty('--my', `${dy * 0.18}px`);
-        });
-        el.addEventListener('mouseleave', () => {
-            el.style.removeProperty('--mx');
-            el.style.removeProperty('--my');
-        });
-    });
-}
+function bindEffects() {}
 
 /* Кастомный курсор (точка + кольцо с инерцией) */
 const cursorDot = document.getElementById('cursor-dot');
