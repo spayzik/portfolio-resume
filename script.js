@@ -280,8 +280,6 @@ const I18N = {
         f_error: 'Не удалось отправить. Попробуйте ещё раз или напишите на почту.',
         f_again: 'Написать ещё',
 
-        footer_title: 'Открыт к <span class="gradient-text">новым проектам</span>',
-        footer_sub: 'Системный и бизнес-аналитик — от требований до архитектуры и контроля внедрения.',
         footer_name: 'Даниил Дунаев', footer_built: 'сделано на чистом HTML/CSS/JS',
     },
     en: {
@@ -401,8 +399,6 @@ const I18N = {
         f_error: 'Failed to send. Please try again or email me directly.',
         f_again: 'Write again',
 
-        footer_title: 'Open to a <span class="gradient-text">new role</span>',
-        footer_sub: 'Systems & business analyst — from requirements to architecture and delivery oversight.',
         footer_name: 'Daniil Dunaev', footer_built: 'built with pure HTML/CSS/JS',
     }
 };
@@ -899,7 +895,24 @@ if (!isTouch && !prefersReduced) {
 }
 
 /* Навешивает эффекты на элементы, отрендеренные динамически (data-fx — защита от повторов) */
-function bindEffects() {}
+function bindEffects() {
+    if (isTouch) return;
+    document.querySelectorAll('.project-card, .exp-card').forEach(el => {
+        el.addEventListener('mousemove', e => {
+            const r = el.getBoundingClientRect();
+            const cx = r.width / 2;
+            const cy = r.height / 2;
+            const rx = -(e.clientY - r.top - cy) / (cy / 4);
+            const ry = (e.clientX - r.left - cx) / (cx / 4);
+            el.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) scale3d(1.02, 1.02, 1.02)`;
+            el.style.zIndex = '10';
+        });
+        el.addEventListener('mouseleave', () => {
+            el.style.transform = '';
+            el.style.zIndex = '1';
+        });
+    });
+}
 
 /* ============================================================
    9. ЧАСТИЦЫ НА КАНВАСЕ (динамическая плотность + пауза вне экрана)
