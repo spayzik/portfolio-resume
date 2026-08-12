@@ -91,11 +91,11 @@ const CONFIG = {
     ],
 
     /* Опыт работы (карточки HH/GetMatch-style; лого — assets/companies/*.webp|png|svg) */
-    experience: [
+        experience: [
         {
             dateKey: 'exp1_date', roleKey: 'exp1_role', companyKey: 'exp1_company',
             typeKey: 'exp1_type', locKey: 'exp1_loc',
-            bullets: ['exp1_a1', 'exp1_a2', 'exp1_a3'],
+            bullets: ['exp1_a1', 'exp1_a2', 'exp1_a3', 'exp1_a4'],
             logo: 'assets/companies/aquarius.webp',
             brand: '#00A3E0', initials: 'AQ',
         },
@@ -170,7 +170,7 @@ const I18N = {
 
         hero_label: 'Портфолио · Анализ & Архитектура',
         hero_name: 'Даниил Дунаев',
-        hero_tagline: 'Проектирую ИТ-системы полного цикла: от сбора бизнес-требований до микросервисной архитектуры и точных API-контрактов.',
+        hero_tagline: 'Fullstack-аналитик. Активно погружаюсь в смежные области (архитектуру, разработку, DevOps), чтобы говорить с инженерами на одном языке и превращать задачи бизнеса в предельно понятные требования.',
         hero_cta_projects: 'Смотреть проекты', hero_cta_contact: 'Связаться',
         hero_cta_resume: 'Скачать резюме',
         scroll: 'скролл',
@@ -179,8 +179,8 @@ const I18N = {
         docTitle: 'Даниил Дунаев — Fullstack Analyst (Systems + Business) → Solution Architect',
 
         about_title: 'Обо мне',
-        about_sub: 'Соединяю бизнес-контекст и системную инженерию: перевожу сложные процессы на язык масштабируемой архитектуры.',
-        about_text: '<p>Системный и бизнес-аналитик с опытом в высоконагруженных интеграционных системах, микросервисной архитектуре и работе в условиях регуляторных ограничений (ФНС).</p><p>Умею не просто написать ТЗ — умею разобрать задачу до корня, выстроить архитектуру и не потерять её в процессе разработки. Вне работы занимаюсь спортом и практикую погружения в холодную воду — помогает держать фокус и темп при любых нагрузках.</p>',
+        about_sub: 'Помимо сбора требований и проектирования архитектуры, я создаю собственные сервисы и погружаюсь в инфраструктуру (Docker, K8s).',
+        about_text: '<p>Понимание кода, баз данных и устройства стендов помогает мне видеть архитектурные ограничения еще на этапе обсуждения задачи.</p><p>В результате я готовлю решения (UML, BPMN, ArchiMate, C4) и пишу ФТТ, которые разработчики и DevOps забирают в работу без лишних вопросов.</p>',
         stat_1: 'года в системном анализе',
         stat_2: 'систем в контуре интеграций (S8)',
         stat_3: 'рост выручки от нового канала (WB)',
@@ -243,9 +243,10 @@ const I18N = {
         career_sub: 'Полный цикл — от сбора требований и архитектуры до внедрения и метрик.',
         exp1_date: 'Февраль 2026 — н.в.', exp1_role: 'Fullstack-аналитик', exp1_company: 'Производственная Компания Аквариус',
         exp1_type: 'Полная занятость', exp1_loc: 'Удалённо',
-        exp1_a1: 'Управляю сбором и декомпозицией требований для внутренних B2B-продуктов компании',
-        exp1_a2: 'Проектирую целевые архитектуры и системные интеграции (C4, Event Storming)',
-        exp1_a3: 'Отвечаю за полный цикл: от постановки задачи до контроля внедрения',
+        exp1_a1: 'Совместно с РП выстроил процессы аналитики в новом подразделении: настроил базу знаний в Confluence, добавил глоссарий, структуру и шаблоны ФТТ',
+        exp1_a2: 'Организовал онбординг и выступал наставником для двух системных аналитиков: курировал задачи, проводил ревью документации',
+        exp1_a3: 'Собираю бизнес-требования и проектирую целевые архитектуры для внутренних B2B-систем (включая контур 1С)',
+        exp1_a4: 'Оцениваю технические ограничения и риски на старте, обеспечивая гладкую передачу требований в команду разработки',
         exp2_date: 'Февраль 2025 — Декабрь 2025', exp2_role: 'Системный аналитик', exp2_company: 'S8 Capital (Столото)',
         exp2_type: 'Полная занятость', exp2_loc: 'Москва · гибрид',
         exp2_a1: 'Спроектировал интеграции с внешними системами (Kafka, RabbitMQ, REST) в высоконагруженной среде (более 500 систем)',
@@ -268,13 +269,13 @@ const I18N = {
         contact_title: 'Открыт к новым проектам',
         contact_sub: '',
         wish_label: 'Ищу роль',
-        wish_text: '<b>Senior Systems Analyst → Solution Architect</b> · удалённо / гибрид · г. Дубна, готова к переезду',
+        wish_text: '<b>Senior Systems Analyst / Solution Architect</b> · гибрид / удаленно · г. Москва',
         copy_done: 'Email скопирован', copy_fail: 'Не удалось скопировать',
         mail_open: 'Открываю почтовый клиент…',
         resume_hint: 'PDF добавлю позже — пока доступна печать (Ctrl+P)',
         f_name: 'Имя', f_name_ph: 'Как к вам обращаться',
         f_email: 'Email', f_email_ph: 'you@company.com',
-        f_msg: 'Сообщение', f_msg_ph: 'Коротко о задаче: домен, сроки, цели…',
+        f_msg: 'Сообщение', f_msg_ph: 'Ваше предложение...',
         f_send: 'Отправить', f_sending: 'Отправка…',
         f_success: 'Сообщение отправлено — отвечу в течение дня.',
         f_error: 'Не удалось отправить. Попробуйте ещё раз или напишите на почту.',
@@ -288,7 +289,7 @@ const I18N = {
 
         hero_label: 'Portfolio · Analysis & Architecture',
         hero_name: 'Daniil Dunaev',
-        hero_tagline: "I design full-cycle IT systems: from gathering business requirements to microservice architecture and strict API contracts.",
+        hero_tagline: "Fullstack Analyst. I actively dive into adjacent fields (architecture, engineering, DevOps) to speak the same language with engineers and turn business goals into clear requirements.",
         hero_cta_projects: 'View projects', hero_cta_contact: 'Get in touch',
         hero_cta_resume: 'Download CV',
         scroll: 'scroll',
@@ -297,8 +298,8 @@ const I18N = {
         docTitle: 'Daniil Dunaev — Fullstack Analyst (Systems + Business) → Solution Architect',
 
         about_title: 'About me',
-        about_sub: 'Bridging business context and systems engineering: translating complex processes into clear, scalable architecture.',
-        about_text: '<p>Systems and business analyst with experience in highload integration systems, microservice architecture, and regulatory environments (FTS).</p><p>I do not just write specs — I get to the root of the problem, design the architecture and make sure it survives the development process. Outside work I train and practice cold water immersion — keeps focus sharp and pace consistent under any load.</p>',
+        about_sub: 'Beyond gathering requirements and designing architecture, I build my own services and dive into infrastructure (Docker, K8s).',
+        about_text: '<p>Understanding codebases, databases, and environments helps me spot architectural constraints right at the discussion phase.</p><p>As a result, I design solutions (UML, BPMN, ArchiMate, C4) and write specs that developers and DevOps engineers can take straight into production without friction.</p>',
         stat_1: 'years in systems analysis',
         stat_2: 'systems in the integration loop (S8)',
         stat_3: 'revenue growth via new WB channel',
@@ -362,9 +363,10 @@ const I18N = {
         career_sub: 'The full cycle — from requirements and architecture to rollout and metrics.',
         exp1_date: 'Feb 2026 — present', exp1_role: 'Fullstack Analyst', exp1_company: 'Aquarius',
         exp1_type: 'Full-time', exp1_loc: 'Remote',
-        exp1_a1: 'Setting up requirements gathering and prioritization for internal B2B products',
-        exp1_a2: 'Designing target architectures and system integrations (C4, Event Storming)',
-        exp1_a3: 'Owning the full cycle: from problem framing to delivery oversight',
+        exp1_a1: 'Collaborated with the PM to build analytics processes in a new unit: set up the Confluence knowledge base, glossary, structure, and spec templates',
+        exp1_a2: 'Onboarded and mentored two systems analysts: supervised tasks and reviewed documentation',
+        exp1_a3: 'Gather business requirements and design target architectures for internal B2B systems (including 1C environments)',
+        exp1_a4: 'Evaluate technical constraints and risks upfront, ensuring a smooth handover of requirements to the dev team',
         exp2_date: 'Feb 2025 — Dec 2025', exp2_role: 'Systems Analyst', exp2_company: 'S8 Capital',
         exp2_type: 'Full-time', exp2_loc: 'Moscow · hybrid',
         exp2_a1: 'Designed external integrations (Kafka, RabbitMQ, REST) in a highload environment (500+ systems)',
@@ -387,13 +389,13 @@ const I18N = {
         contact_title: 'Open to new projects',
         contact_sub: '',
         wish_label: 'Looking for',
-        wish_text: '<b>Senior Systems Analyst → Solution Architect</b> · remote / hybrid · Dubna, open to relocation',
+        wish_text: '<b>Senior Systems Analyst / Solution Architect</b> · hybrid / remote · Moscow',
         copy_done: 'Email copied', copy_fail: 'Copy failed',
         mail_open: 'Opening your mail client…',
         resume_hint: 'PDF coming soon — printable version available (Ctrl+P)',
         f_name: 'Name', f_name_ph: 'What should I call you',
         f_email: 'Email', f_email_ph: 'you@company.com',
-        f_msg: 'Message', f_msg_ph: 'Briefly about the task: domain, timeline, goals…',
+        f_msg: 'Message', f_msg_ph: 'Your proposal...',
         f_send: 'Send', f_sending: 'Sending…',
         f_success: "Message sent — I'll reply within a day.",
         f_error: 'Failed to send. Please try again or email me directly.',
@@ -506,13 +508,13 @@ function renderDynamic() {
             ? `color-mix(in srgb, ${brand} 18%, transparent)`
             : 'rgba(0, 210, 255, 0.12)';
         const initials = ex.initials || (d[ex.companyKey] || '?').slice(0, 2).toUpperCase();
-        const logo = ex.logo
-            ? `<img src="${ex.logo}" alt="" width="80" height="80" loading="lazy" decoding="async" onerror="this.remove()">`
-            : '';
+        const logoInner = ex.logo
+            ? `<img src="${ex.logo}" alt="" loading="lazy" decoding="async" onerror="this.outerHTML='<span>${initials}</span>'">`
+            : `<span>${initials}</span>`;
         const meta = [ex.typeKey && d[ex.typeKey], ex.locKey && d[ex.locKey]].filter(Boolean);
         return `
         <article class="exp-card reveal" style="--delay:${(0.05 + i * 0.1).toFixed(2)}s; --exp-brand:${brand}; --exp-brand-soft:${soft}">
-            <div class="exp-logo" aria-hidden="true"><span>${initials}</span>${logo}</div>
+            <div class="exp-logo" aria-hidden="true">${logoInner}</div>
             <div class="exp-body">
                 <div class="exp-head">
                     <div class="exp-head-main">
