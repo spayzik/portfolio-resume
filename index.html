@@ -1911,8 +1911,8 @@ body::before {
         <nav class="nav">
             <a href="#career"    data-i18n="nav_career"></a>
             <a href="#about"     data-i18n="nav_about"></a>
-            <a href="#approach"  data-i18n="nav_approach"></a>
             <a href="#skills"    data-i18n="nav_skills"></a>
+            <a href="#approach"  data-i18n="nav_approach"></a>
             <a href="#projects"  data-i18n="nav_projects"></a>
             <a href="#contact"   data-i18n="nav_contact"></a>
         </nav>
@@ -1939,8 +1939,8 @@ body::before {
 <nav class="mobile-nav" id="mobile-nav">
     <a href="#career"    data-i18n="nav_career"></a>
     <a href="#about"     data-i18n="nav_about"></a>
-    <a href="#approach"  data-i18n="nav_approach"></a>
     <a href="#skills"    data-i18n="nav_skills"></a>
+    <a href="#approach"  data-i18n="nav_approach"></a>
     <a href="#projects"  data-i18n="nav_projects"></a>
     <a href="#contact"   data-i18n="nav_contact"></a>
     <div class="mobile-nav-extra">
@@ -2042,10 +2042,22 @@ body::before {
 </section>
 
 <!-- ================= ПРОФЕССИОНАЛЬНЫЙ ПОДХОД ================= -->
-<section id="approach">
+<section id="skills">
     <div class="container">
         <div class="section-head reveal">
             <span class="section-index">03</span>
+            <h2 class="section-title" data-i18n="skills_title"></h2>
+        </div>
+
+        <!-- Карточки компетенций рендерятся из CONFIG.skills -->
+        <div class="skills-grid" id="skills-grid"></div>
+    </div>
+</section>
+
+<section id="approach">
+    <div class="container">
+        <div class="section-head reveal">
+            <span class="section-index">04</span>
             <h2 class="section-title" data-i18n="approach_title"></h2>
             <p class="section-sub" data-i18n="approach_sub"></p>
         </div>
@@ -2064,20 +2076,6 @@ body::before {
                 <div class="cycle-step"><span class="cycle-num">07</span><h4 data-i18n="c7_t"></h4><p data-i18n="c7_s"></p></div>
             </div>
         </div>
-    </div>
-</section>
-
-
-<!-- ================= КОМПЕТЕНЦИИ ================= -->
-<section id="skills">
-    <div class="container">
-        <div class="section-head reveal">
-            <span class="section-index">04</span>
-            <h2 class="section-title" data-i18n="skills_title"></h2>
-        </div>
-
-        <!-- Карточки компетенций рендерятся из CONFIG.skills -->
-        <div class="skills-grid" id="skills-grid"></div>
     </div>
 </section>
 

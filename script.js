@@ -170,7 +170,7 @@ const I18N = {
 
         hero_label: 'Портфолио · Анализ & Архитектура',
         hero_name: 'Даниил Дунаев',
-        hero_tagline: 'Системный и бизнес-аналитик. Беру задачу бизнеса — и довожу её до архитектуры, которую команда может строить.',
+        hero_tagline: 'Проектирую ИТ-системы полного цикла: от сбора бизнес-требований до микросервисной архитектуры и точных API-контрактов.',
         hero_cta_projects: 'Смотреть проекты', hero_cta_contact: 'Связаться',
         hero_cta_resume: 'Скачать резюме',
         scroll: 'скролл',
@@ -179,7 +179,7 @@ const I18N = {
         docTitle: 'Даниил Дунаев — Fullstack Analyst (Systems + Business) → Solution Architect',
 
         about_title: 'Обо мне',
-        about_sub: 'Работаю на стыке бизнеса и технологий: вхожу в задачу через процессы, выхожу через архитектуру и требования, которые разработка понимает с первого раза.',
+        about_sub: 'Соединяю бизнес-контекст и системную инженерию: перевожу сложные процессы на язык масштабируемой архитектуры.',
         about_text: '<p>Системный и бизнес-аналитик с опытом в высоконагруженных интеграционных системах, микросервисной архитектуре и работе в условиях регуляторных ограничений (ФНС).</p><p>Умею не просто написать ТЗ — умею разобрать задачу до корня, выстроить архитектуру и не потерять её в процессе разработки. Вне работы занимаюсь спортом и практикую погружения в холодную воду — помогает держать фокус и темп при любых нагрузках.</p>',
         stat_1: 'года в системном анализе',
         stat_2: 'систем в контуре интеграций (S8)',
@@ -290,7 +290,7 @@ const I18N = {
 
         hero_label: 'Portfolio · Analysis & Architecture',
         hero_name: 'Daniil Dunaev',
-        hero_tagline: "Systems & business analyst. I take a business problem and turn it into architecture the team can actually build.",
+        hero_tagline: "I design full-cycle IT systems: from gathering business requirements to microservice architecture and strict API contracts.",
         hero_cta_projects: 'View projects', hero_cta_contact: 'Get in touch',
         hero_cta_resume: 'Download CV',
         scroll: 'scroll',
@@ -299,7 +299,7 @@ const I18N = {
         docTitle: 'Daniil Dunaev — Fullstack Analyst (Systems + Business) → Solution Architect',
 
         about_title: 'About me',
-        about_sub: 'I work at the intersection of business and technology: I come in through processes, come out through architecture and requirements that engineering understands first time.',
+        about_sub: 'Bridging business context and systems engineering: translating complex processes into clear, scalable architecture.',
         about_text: '<p>Systems and business analyst with experience in highload integration systems, microservice architecture, and regulatory environments (FTS).</p><p>I do not just write specs — I get to the root of the problem, design the architecture and make sure it survives the development process. Outside work I train and practice cold water immersion — keeps focus sharp and pace consistent under any load.</p>',
         stat_1: 'years in systems analysis',
         stat_2: 'systems in the integration loop (S8)',
