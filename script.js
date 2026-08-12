@@ -32,7 +32,7 @@ const CONFIG = {
             tag: 'FinTech / AI',
             roleKey: 'p1_role',
             descKey: 'p1_desc',
-            hlKeys: ['p1_h1', 'p1_h2', 'p1_h3', 'p1_h4'],
+            hlKeys: ['p1_h1', 'p1_h2', 'p1_h3', 'p1_h4', 'p1_h5', 'p1_h6'],
             metrics: 'CAC · LTV · ROI',
             repo: 'https://github.com/spayzik/finguard-platform',
             stack: ['Python', 'FastAPI', 'Kafka', 'gRPC', 'GraphQL', 'Qdrant', 'Qwen 2.5', 'Kubernetes', 'Keycloak', 'Prometheus', 'Grafana'],
@@ -170,7 +170,7 @@ const I18N = {
 
         hero_label: 'Портфолио · Анализ & Архитектура',
         hero_name: 'Даниил Дунаев',
-        hero_tagline: 'Разбираю бизнес-процессы и системы до требований — и проектирую <em>архитектуру</em>, которую команда может реализовать',
+        hero_tagline: 'Системный и бизнес-аналитик. Беру задачу бизнеса — и довожу её до архитектуры, которую команда может строить.',
         hero_cta_projects: 'Смотреть проекты', hero_cta_contact: 'Связаться',
         hero_cta_resume: 'Скачать резюме',
         scroll: 'скролл',
@@ -179,8 +179,8 @@ const I18N = {
         docTitle: 'Даниил Дунаев — Fullstack Analyst (Systems + Business) → Solution Architect',
 
         about_title: 'Обо мне',
-        about_sub: 'Соединяю бизнес- и системный анализ: разбираю задачу до требований и архитектуры, которую команда может реализовать.',
-        about_text: '<p>Я — <strong>fullstack-аналитик</strong> (бизнес + системный анализ). Привык работать с высоконагруженными и интеграционно насыщенными системами, микросервисной архитектурой и строгими регуляторными требованиями (ФНС).</p><p>Разбираю задачи до требований и проектирую целевые решения — от архитектуры до контроля разработки. Вне работы увлекаюсь спортом и практикую погружения в холодную воду — это помогает сохранять абсолютный фокус, дисциплину и устойчивость к любым нагрузкам.</p>',
+        about_sub: 'Работаю на стыке бизнеса и технологий: вхожу в задачу через процессы, выхожу через архитектуру и требования, которые разработка понимает с первого раза.',
+        about_text: '<p>Системный и бизнес-аналитик с опытом в высоконагруженных интеграционных системах, микросервисной архитектуре и работе в условиях регуляторных ограничений (ФНС).</p><p>Умею не просто написать ТЗ — умею разобрать задачу до корня, выстроить архитектуру и не потерять её в процессе разработки. Вне работы занимаюсь спортом и практикую погружения в холодную воду — помогает держать фокус и темп при любых нагрузках.</p>',
         stat_1: 'года в системном анализе',
         stat_2: 'систем в контуре интеграций (S8)',
         stat_3: 'рост выручки от нового канала (WB)',
@@ -192,26 +192,27 @@ const I18N = {
         approach_text: 'Моя сильная сторона — <strong>полный цикл</strong>: от бизнес-проблемы до работающего решения. Объединяю бизнес-анализ, системное проектирование и контроль внедрения — поэтому готовлю не просто ТЗ, а довожу решение до работающего продукта с измеримым эффектом.',
         c1_t: 'Business Problem', c1_s: 'проблема бизнеса как стартовая точка',
         c2_t: 'Requirements', c2_s: 'сбор и формализация требований',
-        c3_t: 'Architecture', c3_s: 'проектирование архитектуры решения',
-        c4_t: 'Solution Design', c4_s: 'дизайн решения, API-контракты, интеграции',
-        c5_t: 'Integration', c5_s: 'интеграции и согласование с командами разработки',
-        c6_t: 'Deployment', c6_s: 'внедрение в продакшен',
-        c7_t: 'Monitoring', c7_s: 'метрики, наблюдаемость и эксплуатация',
-        c8_t: 'Business Result', c8_s: 'измеримый бизнес-эффект',
+        c3_t: 'Architecture & Design', c3_s: 'архитектура решения, API-контракты, потоки данных, интеграции',
+        c4_t: 'Alignment', c4_s: 'согласование с командой разработки, уточнение и корректировки',
+        c5_t: 'Production support', c5_s: 'сопровождение на всех этапах выхода в прод: комментарии, адаптации',
+        c6_t: 'Monitoring', c6_s: 'метрики, наблюдаемость и эксплуатация',
+        c7_t: 'Business Result', c7_s: 'измеримый бизнес-эффект',
 
         projects_title: 'Ключевые проекты',
         projects_sub: 'Два продукта, которые я спроектировал и собрал с нуля — от требований до релиза.',
         p1_role: 'Роль: Solution Architect / Systems Analyst',
-        p1_desc: 'Платформа мониторинга транзакций с <b>ML-скорингом</b> и AI-ассистентом для банков. Спроектировал микросервисную архитектуру (<b>Kafka, gRPC, GraphQL</b>), внедрил идемпотентность, обучил модель антифрода, построил <b>RAG-пайплайн с локальным LLM</b>, настроил CI/CD в Kubernetes и рассчитал юнит-экономику: CAC, LTV, ROI.',
+        p1_desc: 'Платформа мониторинга транзакций с <b>ML-скорингом</b> и AI-ассистентом для банков. Самостоятельно описал проект и составил <b>документ ФТТ</b> со всеми состояниями, to-be диаграммами, user stories, use cases, БТ/ФТ/НФТ/AC, потоками данных с атрибутными составами. Спроектировал <b>архитектуру C4 и ArchiMate</b>, микросервисную интеграцию (Kafka, gRPC, GraphQL), построил RAG-пайплайн с локальным LLM, настроил CI/CD в Kubernetes. Подготовил <b>презентацию проекта</b> и рассчитал юнит-экономику: CAC, LTV, ROI.',
         p2_role: 'Роль: Full-stack Architect & AI Engineer',
         p2_desc: 'AI-нативная LMS с <b>мультиагентной оркестрацией</b>, RAG, ролевыми тренажёрами и маркетплейсом. Разработал с нуля: бэкенд (FastAPI), фронтенд (React), AI-оркестратор на Qwen 2.5, <b>гибридный поиск</b> (ChromaDB + FTS), геймификацию и сертификации. Покрытие тестами — <b>115+ pytest, 41+ vitest</b>, аудит безопасности: 35/37 уязвимостей закрыто.',
         view_more: 'Подробнее',
         modal_hl_title: 'Ключевые результаты',
         close_btn: 'Закрыть',
-        p1_h1: 'Микросервисная архитектура: Kafka-пайплайны, gRPC-контракты, GraphQL-шлюз',
-        p1_h2: 'Идемпотентная обработка транзакций — без дублей и потери событий',
-        p1_h3: 'ML-модель антифрода + RAG-ассистент на локальном LLM (Qwen 2.5)',
-        p1_h4: 'Kubernetes-деплой, наблюдаемость (Prometheus/Grafana), юнит-экономика CAC / LTV / ROI',
+        p1_h1: 'Составил ФТТ: состояния, to-be диаграммы, user stories, use cases, БТ/ФТ/НФТ/AC, потоки данных',
+        p1_h2: 'Архитектура C4 и ArchiMate — микросервисы: Kafka-пайплайны, gRPC-контракты, GraphQL-шлюз',
+        p1_h3: 'Идемпотентная обработка транзакций — без дублей и потери событий',
+        p1_h4: 'ML-модель антифрода + RAG-ассистент на локальном LLM (Qwen 2.5)',
+        p1_h5: 'Kubernetes-деплой, наблюдаемость (Prometheus/Grafana), юнит-экономика CAC / LTV / ROI',
+        p1_h6: 'Подготовлена презентация проекта',
         p2_h1: 'Мультиагентный AI-оркестратор на Qwen 2.5 с ролевыми тренажёрами',
         p2_h2: 'Гибридный поиск: ChromaDB + FTS — ответы, опирающиеся на материалы курса',
         p2_h3: '115+ pytest и 41+ vitest; аудит безопасности: 35/37 уязвимостей закрыто',
@@ -264,8 +265,8 @@ const I18N = {
         edu2_spec: 'Менеджмент и управление бизнесом',
         edu2_place: 'Московский международный университет, Москва',
 
-        contact_title: 'Обсудим задачу?',
-        contact_sub: 'Расскажите о задаче — разберу процессы и системы, соберу требования, предложу архитектуру и оценю юнит-экономику решения.',
+        contact_title: 'Открыт к новым проектам',
+        contact_sub: '',
         wish_label: 'Ищу роль',
         wish_text: '<b>Senior Systems Analyst → Solution Architect</b> · удалённо / гибрид · г. Дубна, готова к переезду',
         copy_done: 'Email скопирован', copy_fail: 'Не удалось скопировать',
@@ -280,7 +281,7 @@ const I18N = {
         f_again: 'Написать ещё',
 
         footer_title: 'Открыт к <span class="gradient-text">новым проектам</span>',
-        footer_sub: 'Fullstack-аналитик (системный + бизнес) с опытом архитектурного проектирования в FinTech и EdTech.',
+        footer_sub: 'Системный и бизнес-аналитик — от требований до архитектуры и контроля внедрения.',
         footer_name: 'Даниил Дунаев', footer_built: 'сделано на чистом HTML/CSS/JS',
     },
     en: {
@@ -289,7 +290,7 @@ const I18N = {
 
         hero_label: 'Portfolio · Analysis & Architecture',
         hero_name: 'Daniil Dunaev',
-        hero_tagline: "I break business processes and systems down into requirements — and design <em>architecture</em> a team can actually build",
+        hero_tagline: "Systems & business analyst. I take a business problem and turn it into architecture the team can actually build.",
         hero_cta_projects: 'View projects', hero_cta_contact: 'Get in touch',
         hero_cta_resume: 'Download CV',
         scroll: 'scroll',
@@ -298,8 +299,8 @@ const I18N = {
         docTitle: 'Daniil Dunaev — Fullstack Analyst (Systems + Business) → Solution Architect',
 
         about_title: 'About me',
-        about_sub: 'I bridge business and systems analysis: breaking a challenge down into requirements and architecture a team can actually build.',
-        about_text: '<p>I am a <strong>fullstack analyst</strong> (business + systems analysis). I am accustomed to working with highload, integration-heavy systems, microservice architectures, and strict regulatory requirements.</p><p>I break down challenges into requirements and design target solutions — from architecture to delivery oversight. Outside of work, I practice cold water immersion — this helps maintain absolute focus, discipline, and resilience to any pressure.</p>',
+        about_sub: 'I work at the intersection of business and technology: I come in through processes, come out through architecture and requirements that engineering understands first time.',
+        about_text: '<p>Systems and business analyst with experience in highload integration systems, microservice architecture, and regulatory environments (FTS).</p><p>I do not just write specs — I get to the root of the problem, design the architecture and make sure it survives the development process. Outside work I train and practice cold water immersion — keeps focus sharp and pace consistent under any load.</p>',
         stat_1: 'years in systems analysis',
         stat_2: 'systems in the integration loop (S8)',
         stat_3: 'revenue growth via new WB channel',
@@ -311,27 +312,28 @@ const I18N = {
         approach_text: 'My strength is the <strong>full cycle</strong>: from a business problem to a working solution. I combine business analysis, systems design and delivery oversight — so I do not just write a spec, I deliver a working product with measurable impact.',
         c1_t: 'Business Problem', c1_s: 'the business problem as the starting point',
         c2_t: 'Requirements', c2_s: 'gathering and formalizing requirements',
-        c3_t: 'Architecture', c3_s: 'designing the solution architecture',
-        c4_t: 'Solution Design', c4_s: 'solution design, API contracts, integrations',
-        c5_t: 'Integration', c5_s: 'integrations and alignment with engineering teams',
-        c6_t: 'Deployment', c6_s: 'rolling out to production',
-        c7_t: 'Monitoring', c7_s: 'metrics, observability and operations',
-        c8_t: 'Business Result', c8_s: 'measurable business impact',
+        c3_t: 'Architecture & Design', c3_s: 'solution architecture, API contracts, data flows, integrations',
+        c4_t: 'Alignment', c4_s: 'alignment with the engineering team, clarifications and adjustments',
+        c5_t: 'Production support', c5_s: 'accompanying the project through all go-live stages: comments, adaptations',
+        c6_t: 'Monitoring', c6_s: 'metrics, observability and operations',
+        c7_t: 'Business Result', c7_s: 'measurable business impact',
 
         
         projects_title: 'Key projects',
         projects_sub: 'Two products I designed and built from scratch — from requirements to release.',
         p1_role: 'Role: Solution Architect / Systems Analyst',
-        p1_desc: 'A transaction monitoring platform with <b>ML scoring</b> and an AI assistant for banks. Designed a microservice architecture (<b>Kafka, gRPC, GraphQL</b>), implemented idempotency, trained a fraud-detection model, built a <b>RAG pipeline with a local LLM</b>, set up CI/CD in Kubernetes and worked out the unit economics: CAC, LTV, ROI.',
+        p1_desc: 'A transaction monitoring platform with <b>ML scoring</b> and an AI assistant for banks. Independently authored the project and produced a <b>FTR document</b> covering all states, to-be diagrams, user stories, use cases, BRs/FRs/NFRs/ACs, and data flows with attribute sets. Designed <b>C4 and ArchiMate architecture</b>, microservice integrations (Kafka, gRPC, GraphQL), built a RAG pipeline with a local LLM, set up CI/CD in Kubernetes. Prepared a <b>project presentation</b> and calculated unit economics: CAC, LTV, ROI.',
         p2_role: 'Role: Full-stack Architect & AI Engineer',
         p2_desc: 'An AI-native LMS with <b>multi-agent orchestration</b>, RAG, role-based simulators and a marketplace. Built from scratch: backend (FastAPI), frontend (React), AI orchestrator on Qwen 2.5, <b>hybrid search</b> (ChromaDB + FTS), gamification and certification. Test coverage — <b>115+ pytest, 41+ vitest</b>; security audit: 35/37 vulnerabilities fixed.',
         view_more: 'Details',
         modal_hl_title: 'Key results',
         close_btn: 'Close',
-        p1_h1: 'Microservice architecture: Kafka pipelines, gRPC contracts, GraphQL gateway',
-        p1_h2: 'Idempotent transaction handling — no duplicates, no lost events',
-        p1_h3: 'Fraud-detection ML model + RAG assistant on a local LLM (Qwen 2.5)',
-        p1_h4: 'Kubernetes deployment, observability (Prometheus/Grafana), CAC / LTV / ROI unit economics',
+        p1_h1: 'Authored FTR doc: states, to-be diagrams, user stories, use cases, BR/FR/NFR/AC, data flows',
+        p1_h2: 'C4 & ArchiMate architecture — microservices: Kafka pipelines, gRPC contracts, GraphQL gateway',
+        p1_h3: 'Idempotent transaction handling — no duplicates, no lost events',
+        p1_h4: 'Fraud-detection ML model + RAG assistant on a local LLM (Qwen 2.5)',
+        p1_h5: 'Kubernetes deployment, observability (Prometheus/Grafana), CAC / LTV / ROI unit economics',
+        p1_h6: 'Project presentation prepared',
         p2_h1: 'Multi-agent AI orchestrator on Qwen 2.5 with role-based simulators',
         p2_h2: 'Hybrid search: ChromaDB + FTS — answers grounded in course materials',
         p2_h3: '115+ pytest and 41+ vitest; security audit: 35/37 vulnerabilities fixed',
@@ -384,8 +386,8 @@ const I18N = {
         edu2_spec: 'Management and Business Administration',
         edu2_place: 'Moscow International University, Moscow',
 
-        contact_title: "Let's discuss your project?",
-        contact_sub: "Tell me about the challenge — I'll break down the processes and systems, gather requirements, propose an architecture and estimate the unit economics.",
+        contact_title: 'Open to new projects',
+        contact_sub: '',
         wish_label: 'Looking for',
         wish_text: '<b>Senior Systems Analyst → Solution Architect</b> · remote / hybrid · Dubna, open to relocation',
         copy_done: 'Email copied', copy_fail: 'Copy failed',
@@ -400,7 +402,7 @@ const I18N = {
         f_again: 'Write again',
 
         footer_title: 'Open to a <span class="gradient-text">new role</span>',
-        footer_sub: "Fullstack analyst (systems + business) with architecture design experience across FinTech and EdTech.",
+        footer_sub: 'Systems & business analyst — from requirements to architecture and delivery oversight.',
         footer_name: 'Daniil Dunaev', footer_built: 'built with pure HTML/CSS/JS',
     }
 };
@@ -808,14 +810,14 @@ function openProjectModal(id) {
                     </figure>`).join('')}
             </div>
             <p class="modal-desc">${d[p.descKey]}</p>
-            <h4 class="modal-hl-title">${d.modal_hl_title}</h4>
-            <ul class="modal-hl">
-                ${p.hlKeys.map(k => `<li>${d[k]}</li>`).join('')}
-            </ul>
             <div class="modal-stack">
                 <span class="modal-label">Stack</span>
                 <ul class="stack">${p.stack.map(t => `<li>${t}</li>`).join('')}</ul>
             </div>
+            <h4 class="modal-hl-title">${d.modal_hl_title}</h4>
+            <ul class="modal-hl">
+                ${p.hlKeys.map(k => `<li>${d[k]}</li>`).join('')}
+            </ul>
             <p class="modal-metrics">${p.metrics}</p>
             <div class="modal-footer">
                 <a href="${p.repo}" target="_blank" rel="noopener" class="btn btn--primary">${GITHUB_SVG} GitHub</a>
