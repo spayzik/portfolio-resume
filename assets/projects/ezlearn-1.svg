@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="750" viewBox="0 0 1200 750">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0e0a1a"/>
+      <stop offset="1" stop-color="#111018"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="0.8" cy="0.2" r="0.6">
+      <stop offset="0" stop-color="#a855f7" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#a855f7" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="0.15" cy="0.85" r="0.6">
+      <stop offset="0" stop-color="#0ea5e9" stop-opacity="0.25"/>
+      <stop offset="1" stop-color="#0ea5e9" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="title" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#38bdf8"/>
+      <stop offset="0.55" stop-color="#6366f1"/>
+      <stop offset="1" stop-color="#a855f7"/>
+    </linearGradient>
+    <pattern id="grid" width="64" height="64" patternUnits="userSpaceOnUse">
+      <path d="M 64 0 L 0 0 0 64" fill="none" stroke="#ffffff" stroke-opacity="0.05" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="750" fill="url(#bg)"/>
+  <rect width="1200" height="750" fill="url(#grid)"/>
+  <rect width="1200" height="750" fill="url(#glow1)"/>
+  <rect width="1200" height="750" fill="url(#glow2)"/>
+
+  <g transform="translate(80,70)" font-family="Consolas, monospace">
+    <rect x="0" y="0" width="150" height="30" rx="15" fill="#ffffff" fill-opacity="0.06"/>
+    <text x="75" y="20" font-size="13" fill="#c4b5fd" text-anchor="middle" letter-spacing="2">EDTECH / AI</text>
+  </g>
+
+  <text x="80" y="400" font-family="Inter, sans-serif" font-size="92" font-weight="800" fill="url(#title)" letter-spacing="-2">EzLearn</text>
+
+  <g font-family="Inter, sans-serif" font-size="20" fill="#94a3b8">
+    <text x="80" y="452">AI-native LMS · Multi-agent orchestrator · Role-play</text>
+    <text x="80" y="486">FastAPI · React · Qwen 2.5 · ChromaDB · RAG</text>
+  </g>
+
+  <g font-family="Consolas, monospace" font-size="16" fill="#64748b">
+    <text x="80" y="650" letter-spacing="1">115+ PYTEST · 41+ VITEST · 35/37 SEC AUDIT</text>
+  </g>
+  <rect x="80" y="668" width="460" height="3" rx="1.5" fill="url(#title)" opacity="0.8"/>
+</svg>

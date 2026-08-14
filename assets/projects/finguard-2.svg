@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="750" viewBox="0 0 1200 750">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#0d1117"/>
+      <stop offset="1" stop-color="#0a0e1a"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="0.15" cy="0.15" r="0.55">
+      <stop offset="0" stop-color="#6366f1" stop-opacity="0.4"/>
+      <stop offset="1" stop-color="#6366f1" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="0.9" cy="0.85" r="0.55">
+      <stop offset="0" stop-color="#0ea5e9" stop-opacity="0.3"/>
+      <stop offset="1" stop-color="#0ea5e9" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="64" height="64" patternUnits="userSpaceOnUse">
+      <path d="M 64 0 L 0 0 0 64" fill="none" stroke="#ffffff" stroke-opacity="0.05" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="lg" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#38bdf8"/>
+      <stop offset="1" stop-color="#a855f7"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="750" fill="url(#bg)"/>
+  <rect width="1200" height="750" fill="url(#grid)"/>
+  <rect width="1200" height="750" fill="url(#glow1)"/>
+  <rect width="1200" height="750" fill="url(#glow2)"/>
+
+  <g transform="translate(80,70)" font-family="Consolas, monospace">
+    <rect x="0" y="0" width="240" height="30" rx="15" fill="#ffffff" fill-opacity="0.06"/>
+    <text x="120" y="20" font-size="13" fill="#7dd3fc" text-anchor="middle" letter-spacing="2">TRANSACTION FLOW · C4</text>
+  </g>
+
+  <g transform="translate(200,330)" font-family="Inter, sans-serif">
+    <rect x="0" y="0" width="260" height="120" rx="14" fill="#ffffff" fill-opacity="0.05" stroke="#38bdf8" stroke-opacity="0.4" stroke-width="1.5"/>
+    <text x="130" y="46" font-size="20" fill="#e2e8f0" text-anchor="middle" font-weight="600">API Gateway</text>
+    <text x="130" y="74" font-size="13" fill="#64748b" text-anchor="middle">GraphQL</text>
+
+    <rect x="330" y="0" width="260" height="120" rx="14" fill="#ffffff" fill-opacity="0.05" stroke="#6366f1" stroke-opacity="0.4" stroke-width="1.5"/>
+    <text x="460" y="46" font-size="20" fill="#e2e8f0" text-anchor="middle" font-weight="600">Scoring</text>
+    <text x="460" y="74" font-size="13" fill="#64748b" text-anchor="middle">ML · Qdrant</text>
+
+    <rect x="660" y="0" width="260" height="120" rx="14" fill="#ffffff" fill-opacity="0.05" stroke="#a855f7" stroke-opacity="0.4" stroke-width="1.5"/>
+    <text x="790" y="46" font-size="20" fill="#e2e8f0" text-anchor="middle" font-weight="600">RAG Assistant</text>
+    <text x="790" y="74" font-size="13" fill="#64748b" text-anchor="middle">Qwen 2.5</text>
+
+    <line x1="260" y1="60" x2="330" y2="60" stroke="#38bdf8" stroke-opacity="0.5" stroke-width="2" marker-end="url(#arr)"/>
+    <line x1="590" y1="60" x2="660" y2="60" stroke="#6366f1" stroke-opacity="0.5" stroke-width="2" marker-end="url(#arr)"/>
+    <defs>
+      <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+        <path d="M0,0 L6,3 L0,6 Z" fill="#94a3b8"/>
+      </marker>
+    </defs>
+  </g>
+
+  <g font-family="Consolas, monospace" font-size="16" fill="#64748b">
+    <text x="80" y="650" letter-spacing="1">KAFKA PIPELINES · IDEMPOTENCY · K8S</text>
+  </g>
+  <rect x="80" y="668" width="380" height="3" rx="1.5" fill="url(#lg)" opacity="0.8"/>
+</svg>
