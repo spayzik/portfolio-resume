@@ -37,10 +37,8 @@ const CONFIG = {
             repo: 'https://github.com/spayzik/finguard-platform',
             stack: ['Python', 'FastAPI', 'Kafka', 'gRPC', 'GraphQL', 'Qdrant', 'Qwen 2.5', 'Kubernetes', 'Keycloak', 'Prometheus', 'Grafana'],
             shots: [
-                'assets/projects/finguard-1.webp',
-                'assets/projects/finguard-2.webp',
-                'assets/projects/finguard-3.webp',
-                'assets/projects/finguard-4.webp',
+                'assets/projects/finguard-1.svg',
+                'assets/projects/finguard-2.svg',
             ],
         },
         {
@@ -54,10 +52,8 @@ const CONFIG = {
             repo: 'https://github.com/spayzik/ezlearn',
             stack: ['Python', 'FastAPI', 'React', 'TypeScript', 'SQLAlchemy', 'LM Studio', 'Qwen 2.5', 'ChromaDB', 'Docker', 'GitHub Actions'],
             shots: [
-                'assets/projects/ezlearn-1.webp',
-                'assets/projects/ezlearn-2.webp',
-                'assets/projects/ezlearn-3.webp',
-                'assets/projects/ezlearn-4.webp',
+                'assets/projects/ezlearn-1.svg',
+                'assets/projects/ezlearn-2.svg',
             ],
         },
     ],
@@ -200,6 +196,15 @@ const I18N = {
 
         projects_title: 'Ключевые проекты',
         projects_sub: 'Два продукта, которые я спроектировал и собрал с нуля — от требований до релиза.',
+        artifacts_title: 'Что я готовлю как аналитик — документы и модели',
+        art_ftr_title: 'ФТТ',
+        art_ftr_sub: 'Состояния, сценарии, БТ/ФТ/НФТ/AC, потоки данных',
+        art_c4_title: 'C4 Model',
+        art_c4_sub: 'Контекст, контейнеры, компоненты и код',
+        art_archimate_title: 'ArchiMate',
+        art_archimate_sub: 'Архитектура: бизнес, данные, приложения, инфраструктура',
+        art_pitch_title: 'Презентация',
+        art_pitch_sub: 'Материалы для демонстрации и защиты решения',
         p1_role: 'Роль: Solution Architect / Systems Analyst',
         p1_desc: 'Платформа мониторинга транзакций с <b>ML-скорингом</b> и AI-ассистентом для банков. Самостоятельно описал проект и составил <b>документ ФТТ</b> со всеми состояниями, to-be диаграммами, user stories, use cases, БТ/ФТ/НФТ/AC, потоками данных с атрибутными составами. Спроектировал <b>архитектуру C4 и ArchiMate</b>, микросервисную интеграцию (Kafka, gRPC, GraphQL), построил RAG-пайплайн с локальным LLM, настроил CI/CD в Kubernetes. Подготовил <b>презентацию проекта</b> и рассчитал юнит-экономику: CAC, LTV, ROI.',
         p2_role: 'Роль: Full-stack Architect & AI Engineer',
@@ -320,6 +325,15 @@ const I18N = {
         
         projects_title: 'Key projects',
         projects_sub: 'Two products I designed and built from scratch — from requirements to release.',
+        artifacts_title: 'What I produce as an analyst — documents and models',
+        art_ftr_title: 'FTR',
+        art_ftr_sub: 'States, scenarios, BR/FR/NFR/AC, data flows',
+        art_c4_title: 'C4 Model',
+        art_c4_sub: 'Context, containers, components and code',
+        art_archimate_title: 'ArchiMate',
+        art_archimate_sub: 'Architecture: business, data, application, infrastructure',
+        art_pitch_title: 'Presentation',
+        art_pitch_sub: 'Materials for demo and solution sign-off',
         p1_role: 'Role: Solution Architect / Systems Analyst',
         p1_desc: 'A transaction monitoring platform with <b>ML scoring</b> and an AI assistant for banks. Independently authored the project and produced a <b>FTR document</b> covering all states, to-be diagrams, user stories, use cases, BRs/FRs/NFRs/ACs, and data flows with attribute sets. Designed <b>C4 and ArchiMate architecture</b>, microservice integrations (Kafka, gRPC, GraphQL), built a RAG pipeline with a local LLM, set up CI/CD in Kubernetes. Prepared a <b>project presentation</b> and calculated unit economics: CAC, LTV, ROI.',
         p2_role: 'Role: Full-stack Architect & AI Engineer',
@@ -899,7 +913,7 @@ if (!isTouch && !prefersReduced) {
 /* Навешивает эффекты на элементы, отрендеренные динамически (data-fx — защита от повторов) */
 function bindEffects() {
     if (isTouch) return;
-    document.querySelectorAll('.project-card, .exp-card').forEach(el => {
+    document.querySelectorAll('.project-card, .exp-card, .artifact-card').forEach(el => {
         el.addEventListener('mousemove', e => {
             const r = el.getBoundingClientRect();
             const cx = r.width / 2;
@@ -908,10 +922,14 @@ function bindEffects() {
             const ry = (e.clientX - r.left - cx) / (cx / 4);
             el.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) scale3d(1.02, 1.02, 1.02)`;
             el.style.zIndex = '10';
+            el.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+            el.style.setProperty('--my', (e.clientY - r.top) + 'px');
         });
         el.addEventListener('mouseleave', () => {
             el.style.transform = '';
             el.style.zIndex = '1';
+            el.style.removeProperty('--mx');
+            el.style.removeProperty('--my');
         });
     });
 }
@@ -1004,12 +1022,154 @@ function bindEffects() {
 })();
 
 /* ============================================================
+   9.5. СВЕТЛЯЧКИ + СВЕТОВОЙ СЛЕД ЗА КУРСОРОМ (hero)
+   ============================================================ */
+(function heroAmbience() {
+    if (isTouch || prefersReduced) return;
+    const hero = document.getElementById('hero');
+    const fireCanvas = document.getElementById('hero-fireflies');
+    const light = document.getElementById('hero-light');
+    if (!hero || !fireCanvas || !light) return;
+    const fctx = fireCanvas.getContext('2d');
+
+    let w, h, flies = [];
+    const FLY_COUNT = 26;
+    const mouse = { x: -9999, y: -9999, tx: -9999, ty: -9999 };
+    const lightPos = { x: -9999, y: -9999 };
+    let rafId = null;
+    let running = false;
+
+    function resize() {
+        w = fireCanvas.width = hero.offsetWidth;
+        h = fireCanvas.height = hero.offsetHeight;
+        flies = Array.from({ length: FLY_COUNT }, () => ({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            r: Math.random() * 1.6 + 0.6,
+            base: 0.10 + Math.random() * 0.22,
+            tw: Math.random() * Math.PI * 2,
+            tws: 0.004 + Math.random() * 0.012,
+            vx: (Math.random() - 0.5) * 0.14,
+            vy: (Math.random() - 0.5) * 0.14,
+            hue: Math.random() < 0.6 ? '56, 189, 248' : (Math.random() < 0.5 ? '139, 92, 246' : '99, 102, 241'),
+        }));
+    }
+
+    hero.addEventListener('mousemove', (e) => {
+        const r = hero.getBoundingClientRect();
+        mouse.tx = e.clientX - r.left;
+        mouse.ty = e.clientY - r.top;
+        light.classList.add('visible');
+    }, { passive: true });
+    hero.addEventListener('mouseleave', () => {
+        mouse.tx = mouse.ty = -9999;
+        light.classList.remove('visible');
+    });
+
+    function step() {
+        fctx.clearRect(0, 0, w, h);
+        mouse.x += (mouse.tx - mouse.x) * 0.08;
+        mouse.y += (mouse.ty - mouse.y) * 0.08;
+        lightPos.x += (mouse.x - lightPos.x) * 0.10;
+        lightPos.y += (mouse.y - lightPos.y) * 0.10;
+        if (mouse.x > -100 && mouse.y > -100) {
+            light.style.transform = `translate3d(${lightPos.x - 260}px, ${lightPos.y - 260}px, 0) scale(1)`;
+        }
+
+        for (const f of flies) {
+            f.x += f.vx;
+            f.y += f.vy;
+            if (f.x < -10) f.x = w + 10; else if (f.x > w + 10) f.x = -10;
+            if (f.y < -10) f.y = h + 10; else if (f.y > h + 10) f.y = -10;
+            f.tw += f.tws;
+            const a = f.base * (0.55 + 0.45 * Math.sin(f.tw));
+            const dx = mouse.x - f.x, dy = mouse.y - f.y;
+            const d = Math.hypot(dx, dy);
+            if (d < 180 && d > 0.001) { f.x -= (dx / d) * 0.12; f.y -= (dy / d) * 0.12; }
+            fctx.beginPath();
+            fctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
+            fctx.fillStyle = `rgba(${f.hue}, ${a})`;
+            fctx.fill();
+        }
+        rafId = requestAnimationFrame(step);
+    }
+
+    function start() { if (!running) { running = true; step(); } }
+    function stop() { running = false; if (rafId) { cancelAnimationFrame(rafId); rafId = null; } }
+
+    resize();
+    const heroIO = new IntersectionObserver((entries) => {
+        entries.forEach(en => en.isIntersecting ? start() : stop());
+    }, { threshold: 0.01 });
+    heroIO.observe(hero);
+    start();
+})();
+
+/* ============================================================
    10. ФОРМА: Telegram Bot API или mailto-фолбэк
    ============================================================ */
 const contactForm = document.getElementById('contact-form');
 const formStatus = document.getElementById('form-status');
 const formSubmit = document.getElementById('form-submit');
 const formAgain = document.getElementById('form-again');
+
+/* ============================================================
+   9.6. ТЕРМИНАЛЬНОЕ ИНТРО В HERO (печать команд по кругу)
+   ============================================================ */
+(function heroTerminal() {
+    const lineEl = document.getElementById('term-line');
+    if (!lineEl) return;
+    const commands = [
+        'whoami',
+        'cat role',
+        'ls projects',
+        'git log --oneline',
+    ];
+    const outputs = {
+        'whoami': 'Fullstack Analyst (Systems + Business)',
+        'cat role': 'Requirements → Architecture → Delivery',
+        'ls projects': 'FinGuard  EzLearn',
+        'git log --oneline': '4+ years · 500+ systems · highload · FinTech',
+    };
+    let cmdIdx = 0, charIdx = 0, phase = 'typing';
+    let timer = null;
+
+    // При prefers-reduced-motion сразу показываем первую команду без анимации
+    if (prefersReduced) {
+        lineEl.textContent = outputs[commands[0]];
+        return;
+    }
+
+    const TYPING_MS = 46;
+    const HOLD_MS = 1800;
+    const PAUSE_MS = 900;
+
+    function typeChar() {
+        if (charIdx <= commands[cmdIdx].length) {
+            lineEl.textContent = commands[cmdIdx].slice(0, charIdx++);
+            timer = setTimeout(typeChar, TYPING_MS);
+        } else {
+            phase = 'exec';
+            timer = setTimeout(clearLine, HOLD_MS);
+        }
+    }
+
+    function clearLine() {
+        if (charIdx > 0) {
+            lineEl.textContent = commands[cmdIdx].slice(0, --charIdx);
+            timer = setTimeout(clearLine, TYPING_MS);
+        } else {
+            lineEl.textContent = outputs[commands[cmdIdx]];
+            phase = 'show';
+            cmdIdx = (cmdIdx + 1) % commands.length;
+            charIdx = 0;
+            timer = setTimeout(typeChar, PAUSE_MS);
+        }
+    }
+
+    // Начинаем после появления hero
+    setTimeout(typeChar, 1200);
+})();
 
 /* Формирует текст сообщения в Telegram */
 function formatTgMessage(d) {
