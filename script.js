@@ -40,6 +40,31 @@ const CONFIG = {
                 'assets/projects/finguard-1.svg',
                 'assets/projects/finguard-2.svg',
             ],
+            c4: {
+                context: [
+                    { id: 'user', x: 470, y: 16, w: 220, h: 78, kind: 'person', t: ['Fraud Analyst', 'Аналитик по фрод-мониторингу'], s: ['Reviews alerts in the UI', 'Работает с алертами в интерфейсе'] },
+                    { id: 'platform', x: 405, y: 150, w: 350, h: 120, kind: 'sys', t: ['FinGuard Platform', 'Платформа FinGuard'], s: ['Transaction monitoring, ML scoring, AI assistant', 'Мониторинг транзакций, ML-скоринг, AI-ассистент'] },
+                    { id: 'bank', x: 60, y: 140, w: 230, h: 96, kind: 'ext', t: ['Bank Core', 'Банковское ядро'], s: ['Transaction feed (ISO 8583)', 'Поток транзакций (ISO 8583)'] },
+                    { id: 'aml', x: 830, y: 140, w: 230, h: 96, kind: 'ext', t: ['AML / Compliance', 'АМЛ / Комплаенс'], s: ['Case management & reporting', 'Кейс-менеджмент и отчётность'] },
+                    { id: 'k8s', x: 405, y: 340, w: 350, h: 84, kind: 'infra', t: ['Kubernetes / Cloud', 'Kubernetes / облако'], s: ['CI/CD, Helm, observability', 'CI/CD, Helm, наблюдаемость'] },
+                ],
+                containers: [
+                    { id: 'gw', x: 410, y: 20, w: 340, h: 84, kind: 'app', t: ['API Gateway', 'API-шлюз'], s: ['GraphQL · gRPC · REST', 'GraphQL · gRPC · REST'] },
+                    { id: 'txn', x: 70, y: 180, w: 250, h: 96, kind: 'app', t: ['Transaction Service', 'Сервис транзакций'], s: ['Idempotency · state machine', 'Идемпотентность · конечный автомат'] },
+                    { id: 'score', x: 410, y: 180, w: 250, h: 96, kind: 'app', t: ['Scoring Service', 'Сервис скоринга'], s: ['ML model · Qdrant', 'ML-модель · Qdrant'] },
+                    { id: 'rag', x: 790, y: 180, w: 250, h: 96, kind: 'app', t: ['RAG Assistant', 'RAG-ассистент'], s: ['Qwen 2.5 · retrieval', 'Qwen 2.5 · retrieval'] },
+                    { id: 'kafka', x: 70, y: 360, w: 250, h: 78, kind: 'data', t: ['Kafka', 'Kafka'], s: ['Event pipelines', 'Событийные пайплайны'] },
+                    { id: 'pg', x: 410, y: 360, w: 250, h: 78, kind: 'data', t: ['PostgreSQL', 'PostgreSQL'], s: ['System of record', 'Система записи'] },
+                    { id: 'qd', x: 790, y: 360, w: 250, h: 78, kind: 'data', t: ['Qdrant', 'Qdrant'], s: ['Vector search', 'Векторный поиск'] },
+                ],
+                components: [
+                    { id: 'gw-c', x: 30, y: 30, w: 280, h: 200, kind: 'app', t: ['API Gateway', 'API-шлюз'], s: ['Auth (Keycloak) · rate limiting · schema stitching', 'Авторизация (Keycloak) · rate limiting · stitching'] },
+                    { id: 'txn-c', x: 360, y: 30, w: 280, h: 200, kind: 'app', t: ['Transaction Service', 'Сервис транзакций'], s: ['Idempotency keys · status machine · event publish', 'Ключи идемпотентности · статусы · публикация событий'] },
+                    { id: 'score-c', x: 690, y: 30, w: 280, h: 200, kind: 'app', t: ['Scoring Service', 'Сервис скоринга'], s: ['Feature store · ML score · Qdrant retrieval', 'Фичевое хранилище · ML-скоринг · Qdrant'] },
+                    { id: 'rag-c', x: 30, y: 300, w: 280, h: 150, kind: 'app', t: ['RAG Assistant', 'RAG-ассистент'], s: ['Ingest · embed · generate on Qwen 2.5', 'Индексация · эмбеддинги · генерация на Qwen 2.5'] },
+                    { id: 'data-c', x: 360, y: 300, w: 610, h: 150, kind: 'data', t: ['Data & Infra', 'Данные и инфраструктура'], s: ['Kafka topics · PostgreSQL · Qdrant · K8s cluster', 'Топики Kafka · PostgreSQL · Qdrant · кластер K8s'] },
+                ],
+            },
         },
         {
             id: 'ezlearn',
@@ -801,6 +826,102 @@ const photoViewer = document.getElementById('photo-viewer');
 const photoViewerImg = document.getElementById('photo-viewer-img');
 let currentProject = null;
 
+/* ============================================================
+   7.5. ИНТЕРАКТИВНАЯ C4-ДИАГРАММА (Context/Containers/Components)
+   ============================================================ */
+const C4_KIND_LABEL = {
+    person: 'Person',
+    ext: 'External',
+    sys: 'System',
+    app: 'Container',
+    data: 'Data store',
+    infra: 'Infra',
+};
+
+function c4BoxHtml(b, lang) {
+    const idx = lang === 'ru' ? 1 : 0;
+    return `
+    <div class="c4-box c4-box--${b.kind}" data-id="${b.id}" data-title="${b.t[idx]}" data-desc="${b.s[idx]}" style="left:${b.x}px;top:${b.y}px;width:${b.w}px;height:${b.h}px">
+        <span class="c4-box-kind">${C4_KIND_LABEL[b.kind]}</span>
+        <strong>${b.t[idx]}</strong>
+        <em>${b.s[idx]}</em>
+    </div>`;
+}
+
+function renderC4(c4, lang) {
+    const levels = [
+        { key: 'context', label: 'Context', boxes: c4.context },
+        { key: 'containers', label: 'Containers', boxes: c4.containers },
+        { key: 'components', label: 'Components', boxes: c4.components },
+    ];
+    const tabs = levels.map((l, i) =>
+        `<button type="button" class="c4-tab${i === 0 ? ' active' : ''}" data-level="${l.key}">${l.label}</button>`).join('');
+    const panels = levels.map((l, i) => `
+        <div class="c4-stage c4-stage--${l.key}${i === 0 ? ' active' : ''}" data-stage="${l.key}">
+            <div class="c4-canvas">
+                ${l.boxes.map(b => c4BoxHtml(b, lang)).join('')}
+            </div>
+        </div>`).join('');
+    return `
+    <div class="c4-wrap">
+        <div class="c4-head">
+            <span class="modal-label">C4 Architecture</span>
+            <div class="c4-tabs" role="tablist">${tabs}</div>
+        </div>
+        ${panels}
+        <div class="c4-panel" id="c4-panel">
+            <span class="c4-panel-kicker">Component</span>
+            <strong class="c4-panel-title"></strong>
+            <p class="c4-panel-desc"></p>
+        </div>
+    </div>`;
+}
+
+function bindC4() {
+    const wrap = document.querySelector('.c4-wrap');
+    if (!wrap) return;
+    const panelTitle = wrap.querySelector('.c4-panel-title');
+    const panelDesc = wrap.querySelector('.c4-panel-desc');
+    const defaultBox = wrap.querySelector('.c4-box');
+    if (defaultBox) selectC4Box(defaultBox, panelTitle, panelDesc);
+
+    wrap.querySelectorAll('.c4-box').forEach(box => {
+        box.addEventListener('click', () => {
+            wrap.querySelectorAll('.c4-box').forEach(x => x.classList.remove('active'));
+            box.classList.add('active');
+            selectC4Box(box, panelTitle, panelDesc);
+        });
+    });
+
+    wrap.querySelectorAll('.c4-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            wrap.querySelectorAll('.c4-tab').forEach(t => t.classList.remove('active'));
+            wrap.querySelectorAll('.c4-stage').forEach(s => s.classList.remove('active'));
+            tab.classList.add('active');
+            const stage = wrap.querySelector(`.c4-stage[data-stage="${tab.dataset.level}"]`);
+            if (stage) {
+                stage.classList.add('active');
+                scaleC4Stage(stage);
+            }
+        });
+    });
+
+    function scaleC4Stage(stage) {
+        const canvas = stage.querySelector('.c4-canvas');
+        if (!canvas) return;
+        const scale = Math.min(stage.clientWidth / 1100, 1);
+        canvas.style.transform = `scale(${scale})`;
+        stage.style.height = Math.round(480 * scale) + 'px';
+    }
+    wrap.querySelectorAll('.c4-stage').forEach(scaleC4Stage);
+    requestAnimationFrame(() => wrap.querySelectorAll('.c4-stage').forEach(scaleC4Stage));
+}
+
+function selectC4Box(box, titleEl, descEl) {
+    titleEl.textContent = box.dataset.title;
+    descEl.textContent = box.dataset.desc;
+}
+
 function openProjectModal(id) {
     const p = CONFIG.projects.find(x => x.id === id);
     if (!p) return;
@@ -821,6 +942,7 @@ function openProjectModal(id) {
                         <figcaption>${i + 1} / ${p.shots.length}</figcaption>
                     </figure>`).join('')}
             </div>
+            ${p.c4 ? renderC4(p.c4, currentLang) : ''}
             <p class="modal-desc">${d[p.descKey]}</p>
             <div class="modal-stack">
                 <span class="modal-label">Stack</span>
@@ -839,6 +961,7 @@ function openProjectModal(id) {
     projectModal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('locked');
     projectModal.querySelector('.modal-dialog').scrollTop = 0;
+    if (p.c4) bindC4();
 }
 
 function closeProjectModal() {

@@ -1830,6 +1830,111 @@ body::before {
 .modal-role { font-size: 14px; font-weight: 500; color: var(--accent-3); margin-bottom: 22px; }
 .modal-desc { font-size: 16px; line-height: 1.8; color: var(--text-muted); margin-bottom: 24px; }
 .modal-desc b { color: var(--text); font-weight: 500; }
+
+/* --- Интерактивная C4-диаграмма --- */
+.c4-wrap { margin-bottom: 28px; }
+.c4-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+}
+.c4-tabs { display: inline-flex; gap: 6px; background: var(--surface-soft); padding: 4px; border-radius: 12px; border: 1px solid var(--border); }
+.c4-tab {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    background: transparent;
+    border: 0;
+    border-radius: 9px;
+    padding: 7px 14px;
+    cursor: pointer;
+    transition: color 0.3s ease, background 0.3s ease;
+}
+.c4-tab:hover { color: var(--text); }
+.c4-tab.active { background: var(--surface-strong); color: var(--text); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); }
+.c4-stage {
+    position: relative;
+    width: 100%;
+    height: 480px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background:
+        radial-gradient(1200px circle at 50% 0%, rgba(14, 165, 233, 0.06), transparent 45%),
+        var(--surface-soft);
+    overflow: hidden;
+    display: none;
+}
+.c4-stage.active { display: block; }
+.c4-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1100px;
+    height: 480px;
+    transform-origin: top left;
+}
+.c4-box {
+    position: absolute;
+    border-radius: 12px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: transform 0.25s var(--ease), border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    user-select: none;
+}
+.c4-box:hover { border-color: var(--border-hover); transform: translateY(-2px); }
+.c4-box.active { border-color: var(--accent-1); box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.18), var(--shadow-card); }
+.c4-box-kind {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+}
+.c4-box strong { font-size: 14px; font-weight: 600; color: var(--text); line-height: 1.2; }
+.c4-box em { font-size: 12px; font-style: normal; color: var(--text-muted); line-height: 1.35; }
+.c4-box--person { border-color: rgba(14, 165, 233, 0.35); }
+.c4-box--ext { border-color: rgba(148, 163, 184, 0.35); }
+.c4-box--sys { border-color: rgba(99, 102, 241, 0.4); }
+.c4-box--app { border-color: rgba(56, 189, 248, 0.35); }
+.c4-box--data { border-color: rgba(139, 92, 246, 0.35); }
+.c4-box--infra { border-style: dashed; border-color: rgba(148, 163, 184, 0.4); }
+.c4-panel {
+    margin-top: 14px;
+    padding: 16px 18px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    min-height: 88px;
+}
+.c4-panel-kicker {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-1);
+    display: block;
+    margin-bottom: 6px;
+}
+.c4-panel-title { font-size: 16px; font-weight: 600; color: var(--text); display: block; margin-bottom: 4px; }
+.c4-panel-desc { font-size: 13.5px; color: var(--text-muted); line-height: 1.55; margin: 0; }
+@media (max-width: 600px) {
+    .c4-stage { height: 400px; }
+    .c4-box strong { font-size: 12px; }
+    .c4-box em { font-size: 10.5px; }
+    .c4-box { padding: 8px 10px; }
+}
+
 .modal-hl-title {
     font-family: var(--font-mono);
     font-size: 11.5px;
