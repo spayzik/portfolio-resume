@@ -668,23 +668,6 @@ section[id]::before {
     z-index: 2;
     padding-bottom: 92px;
 }
-.hero-watermark {
-    position: absolute;
-    right: -0.03em;
-    bottom: 6%;
-    font-family: var(--font-mono);
-    font-size: clamp(3.5rem, 10vw, 9rem);
-    font-weight: 600;
-    letter-spacing: -0.03em;
-    color: transparent;
-    -webkit-text-stroke: 1px var(--border);
-    opacity: 0.22;
-    pointer-events: none;
-    user-select: none;
-    white-space: nowrap;
-    z-index: 0;
-}
-@media (max-width: 720px) { .hero-watermark { display: none; } }
 
 /* Канвас с частицами */
 #hero-canvas {
@@ -750,6 +733,115 @@ section[id]::before {
 
 .hero-content { position: relative; z-index: 2; will-change: transform; }
 
+/* Тех-панель в hero (dashboard-карточка справа) */
+.hero-main .container {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    align-items: center;
+    gap: clamp(40px, 6vw, 96px);
+}
+.hero-panel {
+    position: relative;
+    z-index: 2;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 26px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+}
+.hero-panel::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-1), transparent);
+}
+.hp-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 22px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+}
+.hp-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #34d399;
+    box-shadow: 0 0 12px rgba(52, 211, 153, 0.9);
+    animation: hpPulse 2s ease-in-out infinite;
+}
+@keyframes hpPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+.hp-rows {
+    display: grid;
+    gap: 14px;
+    margin-bottom: 22px;
+}
+.hp-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed var(--border);
+}
+.hp-row span {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+}
+.hp-row b {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    text-align: right;
+}
+.hp-row b.hp-ok { color: #34d399; }
+.hp-bars { display: grid; gap: 12px; }
+.hp-bar {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+}
+.hp-bar i {
+    position: relative;
+    display: block;
+    height: 4px;
+    border-radius: 4px;
+    background: var(--surface-strong);
+    overflow: hidden;
+    grid-row: 1;
+}
+.hp-bar i::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gradient);
+    border-radius: 4px;
+    transform-origin: left;
+    animation: hpGrow 1.4s var(--ease) 0.4s both;
+}
+@keyframes hpGrow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@media (max-width: 1024px) {
+    .hero-main .container { grid-template-columns: 1fr; gap: 32px; }
+    .hero-panel { max-width: 460px; }
+}
+@media (max-width: 720px) { .hero-panel { display: none; } }
+
 /* Каскадное появление блоков героя (класс hero.playing добавляет JS) */
 .hero-anim {
     opacity: 0;
@@ -761,11 +853,11 @@ section[id]::before {
 
 .hero-label {
     font-family: var(--font-mono);
-    font-size: 14px;
+    font-size: 13px;
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--accent-1);
-    margin-bottom: 30px;
+    margin-bottom: 28px;
     display: inline-flex;
     align-items: center;
 }
@@ -801,11 +893,11 @@ section[id]::before {
 
 .hero-title {
     font-family: var(--font-display);
-    font-size: clamp(3.2rem, 9.5vw, 8.5rem);
+    font-size: clamp(2.6rem, 8vw, 6.8rem);
     font-weight: 800;
-    line-height: 1.02;
-    letter-spacing: -0.025em;
-    margin-bottom: 32px;
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    margin-bottom: 28px;
 }
 /* Градиентная заливка имени */
 .hero-title .gradient-text {
@@ -827,11 +919,11 @@ section[id]::before {
 
 .hero-role {
     font-family: var(--font-mono);
-    font-size: clamp(0.95rem, 2vw, 1.2rem);
+    font-size: clamp(0.85rem, 1.8vw, 1.05rem);
     font-weight: 500;
     color: var(--text-muted);
     letter-spacing: 0.02em;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
 }
 .hero-role b {
     background: var(--gradient);
@@ -846,26 +938,26 @@ section[id]::before {
 .hero-chips {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 38px;
+    gap: 10px;
+    margin-bottom: 34px;
 }
 .hero-chips span {
     font-family: var(--font-mono);
-    font-size: 12.5px;
+    font-size: 11px;
     letter-spacing: 0.08em;
     color: var(--text-muted);
     border: 1px solid var(--border);
     border-radius: 100px;
-    padding: 9px 18px;
+    padding: 7px 14px;
     background: var(--surface);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
 }
 
 .hero-tagline {
-    font-size: clamp(1.3rem, 2.4vw, 1.8rem);
+    font-size: clamp(1.15rem, 2vw, 1.5rem);
     font-weight: 400;
-    max-width: 780px;
+    max-width: 680px;
     color: var(--text-muted);
     line-height: 1.6;
 }
@@ -2385,7 +2477,7 @@ section[id]::before {
     body { background: #fff !important; color: #111; }
     body::before, body::after, .bg-aurora, .preloader, .progress-bar, .cursor-dot, .cursor-ring,
     .to-top, .header, .mobile-nav, .burger, .lang-switch, .marquee, .scroll-hint,
-    #hero-canvas, .hero-glow, .hero-watermark, .contact-form, .footer-glow, .footer-watermark, .toast,
+    #hero-canvas, .hero-glow, .hero-panel, .contact-form, .footer-glow, .footer-watermark, .toast,
     .btn svg, .social-link,
     .project-visual, .view-badge, .project-modal, .photo-viewer,
     .form-status, .form-again, .resume-hint { display: none !important; }
@@ -2505,9 +2597,27 @@ section[id]::before {
         <div class="preloader-meta">
             <span class="preloader-status">loading<span class="preloader-dots">...</span></span>
             <span class="preloader-count" id="preloader-count">0%</span>
+                </div>
+            </div>
+
+            <aside class="hero-panel hero-anim" style="--i:7" aria-hidden="true">
+                <div class="hp-head">
+                    <span class="hp-dot"></span>
+                    <span class="hp-title">status: active</span>
+                </div>
+                <div class="hp-rows">
+                    <div class="hp-row"><span>stack</span><b>Python · React · K8s</b></div>
+                    <div class="hp-row"><span>domain</span><b>FinTech · E-com</b></div>
+                    <div class="hp-row"><span>focus</span><b>Architecture · AI</b></div>
+                    <div class="hp-row"><span>availability</span><b class="hp-ok">open to offers</b></div>
+                </div>
+                <div class="hp-bars">
+                    <div class="hp-bar"><i style="width:90%"></i><span>analysis</span></div>
+                    <div class="hp-bar"><i style="width:82%"></i><span>architecture</span></div>
+                    <div class="hp-bar"><i style="width:75%"></i><span>engineering</span></div>
+                </div>
+            </aside>
         </div>
-    </div>
-</div>
 
 <!-- ============ СКРОЛЛ-ПРОГРЕСС ============ -->
 <div class="progress-bar" id="progress-bar"></div>
@@ -2564,7 +2674,6 @@ section[id]::before {
 <section class="hero" id="hero">
     <canvas id="hero-canvas" aria-hidden="true"></canvas>
     <div class="hero-main">
-        <span class="hero-watermark" aria-hidden="true">//&nbsp;system.online</span>
         <div class="container">
             <div class="hero-content" id="hero-content">
                 <span class="hero-label hero-anim" style="--i:0" data-i18n="hero_label"></span>
