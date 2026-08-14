@@ -673,12 +673,30 @@ function splitHeroName() {
    5. ПРЕЛОАДЕР + РЕЗЮМЕ
    ============================================================ */
 const preloader = document.getElementById('preloader');
+const preloaderCount = document.getElementById('preloader-count');
 function hidePreloader() {
     preloader.classList.add('done');
     document.body.classList.remove('locked');
     heroSection.classList.add('playing'); // каскадное появление блоков героя
     if (!prefersReduced) splitHeroName();
 }
+
+/* Анимированный процент загрузки в прелоадере */
+(function preloaderProgress() {
+    const el = preloaderCount;
+    if (!el) return;
+    const dur = 1400;
+    let t0 = null;
+    function frame(t) {
+        if (!t0) t0 = t;
+        const p = Math.min((t - t0) / dur, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(eased * 100) + '%';
+        if (p < 1) requestAnimationFrame(frame);
+        else el.textContent = '100%';
+    }
+    requestAnimationFrame(frame);
+})();
 window.addEventListener('load', () => setTimeout(hidePreloader, 600));
 setTimeout(hidePreloader, 2500); // страховка, если load не сработал
 

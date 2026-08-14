@@ -26,9 +26,8 @@
 <!-- Шрифты: Inter (текст) + JetBrains Mono (тех. детали), display=swap — мгновенный рендер текста -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap">
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="script.js" defer></script>
 
 <style>
@@ -73,6 +72,7 @@
 
     --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-mono: 'JetBrains Mono', 'Consolas', monospace;
+    --font-display: 'Space Grotesk', 'Inter', sans-serif;
 
     --radius:    20px;
     --container: 1200px;
@@ -186,6 +186,64 @@ body::before {
     z-index: 0;
 }
 
+/* Тонкая плёночная текстура поверх свечения (не даёт фону быть «плоским») */
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/></svg>");
+    background-size: 140px 140px;
+}
+
+/* Морфные разделители между секциями */
+section[id]::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: min(620px, 84vw);
+    height: 2px;
+    border-radius: 999px;
+    background: linear-gradient(90deg,
+        transparent,
+        var(--accent-1) 30%,
+        var(--accent-3) 70%,
+        transparent);
+    background-size: 200% 100%;
+    opacity: 0.35;
+    filter: blur(0.4px);
+    transform: translateX(-50%);
+    pointer-events: none;
+    animation: dividerMorph 7s ease-in-out infinite;
+}
+section[id]::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 50%;
+    width: min(200px, 40vw);
+    height: 6px;
+    transform: translateX(-50%);
+    border-radius: 999px;
+    background: var(--gradient);
+    opacity: 0;
+    filter: blur(14px);
+    pointer-events: none;
+    animation: dividerGlow 7s ease-in-out infinite;
+}
+@keyframes dividerMorph {
+    0%, 100% { width: min(320px, 52vw); opacity: 0.25; background-position: 0% 0; }
+    50% { width: min(640px, 84vw); opacity: 0.5; background-position: 100% 0; }
+}
+@keyframes dividerGlow {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 0.7; }
+}
+
 /* ============================================================
    2.5. АУРОРА-ФОН (в стиле marble.studio, попрозрачнее)
    ============================================================ */
@@ -254,20 +312,63 @@ body::before {
     transition: opacity 0.6s ease, visibility 0.6s ease;
 }
 .preloader.done { opacity: 0; visibility: hidden; }
+.preloader-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+}
+.preloader-badge {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .preloader-logo {
     font-family: var(--font-mono);
     font-size: 26px;
     font-weight: 600;
     letter-spacing: 0.1em;
     color: var(--text);
+    animation: preloaderPulse 1.8s ease-in-out infinite;
 }
 .preloader-logo .accent { color: var(--accent-1); }
+.preloader-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+}
+.preloader-ring::before,
+.preloader-ring::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1.5px solid transparent;
+}
+.preloader-ring::before {
+    border-top-color: var(--accent-1);
+    border-right-color: rgba(14, 165, 233, 0.25);
+    animation: preloaderSpin 1.4s linear infinite;
+}
+.preloader-ring::after {
+    inset: 10px;
+    border-bottom-color: var(--accent-3);
+    border-left-color: rgba(139, 92, 246, 0.25);
+    animation: preloaderSpin 1.9s linear infinite reverse;
+}
+@keyframes preloaderSpin { to { transform: rotate(360deg); } }
+@keyframes preloaderPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.55; }
+}
 .preloader-bar {
-    margin-top: 18px;
-    width: 180px;
-    height: 2px;
+    width: 200px;
+    height: 3px;
     background: var(--surface-strong);
-    border-radius: 2px;
+    border-radius: 3px;
     overflow: hidden;
 }
 .preloader-bar i {
@@ -275,9 +376,28 @@ body::before {
     height: 100%;
     width: 0;
     background: var(--gradient);
+    border-radius: 3px;
     animation: preloadBar 0.7s var(--ease) forwards;
 }
 @keyframes preloadBar { to { width: 100%; } }
+.preloader-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    width: 200px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+}
+.preloader-dots::after {
+    content: '';
+    animation: preloaderDots 1.2s steps(4, end) infinite;
+}
+@keyframes preloaderDots { 0% { content: ''; } 25% { content: '.'; } 50% { content: '..'; } 75% { content: '...'; } }
+.preloader-count { color: var(--text-muted); font-variant-numeric: tabular-nums; }
 
 /* ============================================================
    4. СКРОЛЛ-ПРОГРЕСС + КАСТОМНЫЙ КУРСОР + BACK-TO-TOP
@@ -319,7 +439,7 @@ body::before {
 /* Кнопка наверх с прогресс-кольцом */
 .to-top {
     position: fixed;
-    right: 26px; bottom: 26px;
+    left: 26px; bottom: 26px;
     width: 52px; height: 52px;
     z-index: 200;
     border-radius: 50%;
@@ -663,10 +783,11 @@ body::before {
 }
 
 .hero-title {
-    font-size: clamp(3rem, 9vw, 7.5rem);
+    font-family: var(--font-display);
+    font-size: clamp(2.6rem, 8vw, 6.8rem);
     font-weight: 800;
-    line-height: 1.02;
-    letter-spacing: -0.03em;
+    line-height: 1.04;
+    letter-spacing: -0.02em;
     margin-bottom: 28px;
 }
 /* Градиентная заливка имени */
@@ -879,9 +1000,10 @@ body::before {
     margin-bottom: 14px;
 }
 .section-title {
-    font-size: clamp(2.4rem, 4.5vw, 3.6rem);
-    font-weight: 800;
-    letter-spacing: -0.03em;
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4vw, 3.4rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
     line-height: 1.1;
     color: var(--text);
 }
@@ -1617,9 +1739,10 @@ body::before {
 }
 .footer-inner { text-align: center; position: relative; z-index: 1; }
 .footer-title {
+    font-family: var(--font-display);
     font-size: clamp(2.2rem, 5.5vw, 4rem);
-    font-weight: 800;
-    letter-spacing: -0.03em;
+    font-weight: 700;
+    letter-spacing: -0.02em;
     margin-bottom: 18px;
     line-height: 1.1;
 }
@@ -1672,7 +1795,7 @@ body::before {
     .exp-head-meta { align-items: flex-start; text-align: left; }
     .exp-tags { justify-content: flex-start; }
     .project-footer { flex-direction: column; align-items: flex-start; }
-    .to-top { right: 18px; bottom: 18px; }
+    .to-top { left: 18px; bottom: 18px; }
 }
 @media (max-width: 520px) {
     .skills-grid { grid-template-columns: 1fr; }
@@ -1692,7 +1815,7 @@ body::before {
     .hero { padding-top: 100px; }
     .section-head { margin-bottom: 32px; }
     .stat { padding: 20px 18px; }
-    .to-top { width: 46px; height: 46px; right: 14px; bottom: 14px; }
+    .to-top { width: 46px; height: 46px; left: 14px; bottom: 14px; }
 }
 
 /* Короткие экраны: ужимаем hero, чтобы контент не наезжал на полосу */
@@ -1826,7 +1949,7 @@ body::before {
     transition: color 0.3s ease, border-color 0.3s ease, transform 0.3s var(--ease);
 }
 .modal-close:hover { color: var(--text); border-color: var(--border-hover); transform: rotate(90deg); }
-.modal-title { font-size: clamp(1.7rem, 4vw, 2.4rem); font-weight: 700; letter-spacing: -0.02em; margin: 10px 0 6px; }
+.modal-title { font-family: var(--font-display); font-size: clamp(1.7rem, 4vw, 2.4rem); font-weight: 700; letter-spacing: -0.02em; margin: 10px 0 6px; }
 .modal-role { font-size: 14px; font-weight: 500; color: var(--accent-3); margin-bottom: 22px; }
 .modal-desc { font-size: 16px; line-height: 1.8; color: var(--text-muted); margin-bottom: 24px; }
 .modal-desc b { color: var(--text); font-weight: 500; }
@@ -2099,7 +2222,7 @@ body::before {
    ============================================================ */
 @media print {
     body { background: #fff !important; color: #111; }
-    body::before, .bg-aurora, .preloader, .progress-bar, .cursor-dot, .cursor-ring,
+    body::before, body::after, .bg-aurora, .preloader, .progress-bar, .cursor-dot, .cursor-ring,
     .to-top, .header, .mobile-nav, .burger, .lang-switch, .marquee, .scroll-hint,
     #hero-canvas, .hero-glow, .contact-form, .footer-glow, .toast,
     .btn svg, .social-link,
@@ -2109,6 +2232,7 @@ body::before {
     .hero { min-height: auto; padding: 0 0 18px; }
     .hero-main { display: block; padding: 0; }
     section { padding: 14px 0; }
+    section[id]::before, section[id]::after { display: none !important; }
     .container { width: 100%; max-width: none; }
     .reveal, .hero-anim, .hero-title .char { opacity: 1 !important; transform: none !important; transition: none !important; }
     .hero-title { font-size: 32pt; margin-bottom: 10px; }
@@ -2202,9 +2326,16 @@ body::before {
 
 <!-- ============ ПРЕЛОАДЕР ============ -->
 <div class="preloader" id="preloader" aria-hidden="true">
-    <div>
-        <span class="preloader-logo">dd<span class="accent">.</span>dev</span>
+    <div class="preloader-inner">
+        <div class="preloader-badge">
+            <span class="preloader-logo">dd<span class="accent">.</span>dev</span>
+            <div class="preloader-ring"><i></i></div>
+        </div>
         <div class="preloader-bar"><i></i></div>
+        <div class="preloader-meta">
+            <span class="preloader-status">loading<span class="preloader-dots">...</span></span>
+            <span class="preloader-count" id="preloader-count">0%</span>
+        </div>
     </div>
 </div>
 
@@ -2217,9 +2348,9 @@ body::before {
     <div class="container header-inner">
         <a href="#" class="logo">dd<span>.</span>dev</a>
         <nav class="nav">
-            <a href="#career"    data-i18n="nav_career"></a>
-            <a href="#about"     data-i18n="nav_about"></a>
-            <a href="#skills"    data-i18n="nav_skills"></a>
+<a href="#about"     data-i18n="nav_about"></a>
+<a href="#career"    data-i18n="nav_career"></a>
+<a href="#skills"    data-i18n="nav_skills"></a>
             <a href="#approach"  data-i18n="nav_approach"></a>
             <a href="#projects"  data-i18n="nav_projects"></a>
             <a href="#contact"   data-i18n="nav_contact"></a>
@@ -2245,8 +2376,8 @@ body::before {
 
 <!-- Мобильное меню -->
 <nav class="mobile-nav" id="mobile-nav">
-    <a href="#career"    data-i18n="nav_career"></a>
     <a href="#about"     data-i18n="nav_about"></a>
+    <a href="#career"    data-i18n="nav_career"></a>
     <a href="#skills"    data-i18n="nav_skills"></a>
     <a href="#approach"  data-i18n="nav_approach"></a>
     <a href="#projects"  data-i18n="nav_projects"></a>
@@ -2318,26 +2449,11 @@ body::before {
     </div>
 </section>
 
-<!-- ================= ОПЫТ ================= -->
-<section id="career">
-    <div class="container">
-        <div class="section-head reveal">
-            <span class="section-index">01</span>
-            <h2 class="section-title" data-i18n="career_title"></h2>
-        </div>
-        <!-- Карточки опыта рендерятся из CONFIG.experience -->
-        <div class="exp-list" id="timeline"></div>
-
-        <!-- Образование (рендерится из CONFIG.education) -->
-        <div class="education-list reveal" style="--delay:.15s" id="education-list"></div>
-    </div>
-</section>
-
 <!-- ================= ОБО МНЕ ================= -->
 <section id="about">
     <div class="container">
         <div class="section-head reveal">
-            <span class="section-index">02</span>
+            <span class="section-index">01</span>
             <h2 class="section-title" data-i18n="about_title"></h2>
             <p class="section-sub" data-i18n="about_sub"></p>
         </div>
@@ -2367,6 +2483,21 @@ body::before {
             </div>
         </div>
 
+    </div>
+</section>
+
+<!-- ================= ОПЫТ РАБОТЫ ================= -->
+<section id="career">
+    <div class="container">
+        <div class="section-head reveal">
+            <span class="section-index">02</span>
+            <h2 class="section-title" data-i18n="career_title"></h2>
+        </div>
+        <!-- Карточки опыта рендерятся из CONFIG.experience -->
+        <div class="exp-list" id="timeline"></div>
+
+        <!-- Образование (рендерится из CONFIG.education) -->
+        <div class="education-list reveal" style="--delay:.15s" id="education-list"></div>
     </div>
 </section>
 
