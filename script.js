@@ -755,6 +755,15 @@ window.addEventListener('scroll', () => {
         doc.style.setProperty('--s5y', (5 + 11 * t) + 'vh');
         doc.style.setProperty('--shue', Math.round(18 * Math.sin(t * Math.PI)) + 'deg');
     }
+
+    // Таймлайн подхода: линия заполняется по мере прохождения секции
+    const tl = document.getElementById('approach-timeline');
+    if (tl) {
+        const rect = tl.getBoundingClientRect();
+        const total = rect.height;
+        const passed = Math.max(0, Math.min(window.innerHeight * 0.72 - rect.top, total));
+        tl.style.setProperty('--tl-fill', Math.min(passed / total, 1));
+    }
 }, { passive: true });
 
 toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
@@ -797,6 +806,18 @@ const spy = new IntersectionObserver((entries) => {
     });
 }, { rootMargin: '-45% 0px -50% 0px' });
 document.querySelectorAll('section[id], footer[id]').forEach(s => spy.observe(s));
+
+/* Таймлайн подхода: подсветка активного шага */
+const tlSteps = document.querySelectorAll('.t-step');
+const tlSpy = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+        if (e.isIntersecting) {
+            tlSteps.forEach(s => s.classList.remove('active'));
+            e.target.classList.add('active');
+        }
+    });
+}, { rootMargin: '-55% 0px -40% 0px' });
+tlSteps.forEach(s => tlSpy.observe(s));
 
 /* Появление блоков при скролле */
 const revealObserver = new IntersectionObserver((entries) => {

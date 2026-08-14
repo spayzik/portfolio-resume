@@ -1118,33 +1118,82 @@ section[id]::before {
     color: var(--text-muted);
 }
 .approach-intro strong { color: var(--text); font-weight: 600; }
-.cycle-grid {
+
+/* Вертикальный таймлайн подхода */
+.approach-timeline {
+    position: relative;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 14px;
+    gap: 26px;
 }
-.cycle-step {
+.t-line {
+    position: absolute;
+    top: 8px;
+    bottom: 8px;
+    left: 17px;
+    width: 2px;
+    background: var(--surface-strong);
+    border-radius: 2px;
+    overflow: hidden;
+}
+.t-line i {
+    position: absolute;
+    inset: 0;
+    background: var(--gradient);
+    transform-origin: top;
+    transform: scaleY(var(--tl-fill, 0));
+    border-radius: 2px;
+}
+.t-step {
+    position: relative;
+    display: grid;
+    grid-template-columns: 36px 1fr;
+    gap: 18px;
+    align-items: start;
+}
+.t-node {
+    position: relative;
+    z-index: 1;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 20px 22px;
-    transition: border-color 0.35s ease, transform 0.35s var(--ease), background 0.35s ease;
+    transition: border-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s var(--ease);
 }
-.cycle-step:hover { border-color: var(--border-hover); background: var(--surface-hover); transform: translateY(-3px); }
-.cycle-num {
+.t-node::after {
+    content: '';
+    position: absolute;
+    inset: -7px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    opacity: 0;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+}
+.t-num {
     font-family: var(--font-mono);
-    font-size: 24px;
+    font-size: 12px;
     font-weight: 600;
-    line-height: 1;
     background: var(--gradient);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    color: transparent;
-    display: block;
-    margin-bottom: 12px;
 }
-.cycle-step h4 {
+.t-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 18px 22px;
+    transition: border-color 0.35s ease, transform 0.35s var(--ease), background 0.35s ease;
+}
+.t-card:hover {
+    border-color: var(--border-hover);
+    background: var(--surface-hover);
+    transform: translateX(4px);
+}
+.t-card h4 {
     font-family: var(--font-mono);
     font-size: 12px;
     letter-spacing: 0.14em;
@@ -1152,17 +1201,30 @@ section[id]::before {
     color: var(--text);
     margin-bottom: 6px;
 }
-.cycle-step p {
+.t-card p {
     font-size: 14.5px;
     line-height: 1.55;
     color: var(--text-muted);
     margin: 0;
 }
+.t-step.active .t-node {
+    border-color: var(--accent-1);
+    box-shadow: 0 0 0 6px rgba(14, 165, 233, 0.14), var(--shadow-card);
+    transform: scale(1.08);
+}
+.t-step.active .t-node::after {
+    opacity: 0.6;
+    transform: scale(1.15);
+    border-color: var(--accent-3);
+}
 @media (max-width: 900px) {
     .approach-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 560px) {
-    .cycle-grid { grid-template-columns: 1fr; }
+    .t-line { left: 15px; }
+    .t-step { grid-template-columns: 30px 1fr; gap: 14px; }
+    .t-node { width: 30px; height: 30px; }
+    .t-card { padding: 14px 16px; }
 }
 
 /* ============================================================
@@ -2247,6 +2309,12 @@ section[id]::before {
     .section-title { font-size: 16pt; }
     .section-index { color: #555; }
     .about-grid { grid-template-columns: 1fr; gap: 6px; }
+    .t-line { display: none; }
+    .approach-timeline { display: block; }
+    .t-step { display: block; margin-bottom: 10px; }
+    .t-node { display: none; }
+    .t-card { background: #fff; border: 1px solid #ccc; }
+    .t-card h4, .t-card p { color: #333; }
     .about-text p, .project-desc, .exp-company, .exp-bullets li, .exp-meta span,
     .contact-sub { color: #333; }
     .about-stats { grid-template-columns: repeat(2, 1fr); gap: 6px; }
@@ -2526,14 +2594,36 @@ section[id]::before {
                 <span class="approach-kicker" data-i18n="approach_kicker"></span>
                 <p data-i18n-html="approach_text"></p>
             </div>
-            <div class="cycle-grid reveal" style="--delay:.15s">
-                <div class="cycle-step"><span class="cycle-num">01</span><h4 data-i18n="c1_t"></h4><p data-i18n="c1_s"></p></div>
-                <div class="cycle-step"><span class="cycle-num">02</span><h4 data-i18n="c2_t"></h4><p data-i18n="c2_s"></p></div>
-                <div class="cycle-step"><span class="cycle-num">03</span><h4 data-i18n="c3_t"></h4><p data-i18n="c3_s"></p></div>
-                <div class="cycle-step"><span class="cycle-num">04</span><h4 data-i18n="c4_t"></h4><p data-i18n="c4_s"></p></div>
-                <div class="cycle-step"><span class="cycle-num">05</span><h4 data-i18n="c5_t"></h4><p data-i18n="c5_s"></p></div>
-                <div class="cycle-step"><span class="cycle-num">06</span><h4 data-i18n="c6_t"></h4><p data-i18n="c6_s"></p></div>
-                <div class="cycle-step"><span class="cycle-num">07</span><h4 data-i18n="c7_t"></h4><p data-i18n="c7_s"></p></div>
+            <div class="approach-timeline reveal" style="--delay:.15s" id="approach-timeline">
+                <div class="t-line"><i></i></div>
+                <div class="t-step">
+                    <div class="t-node"><span class="t-num">01</span></div>
+                    <div class="t-card"><h4 data-i18n="c1_t"></h4><p data-i18n="c1_s"></p></div>
+                </div>
+                <div class="t-step">
+                    <div class="t-node"><span class="t-num">02</span></div>
+                    <div class="t-card"><h4 data-i18n="c2_t"></h4><p data-i18n="c2_s"></p></div>
+                </div>
+                <div class="t-step">
+                    <div class="t-node"><span class="t-num">03</span></div>
+                    <div class="t-card"><h4 data-i18n="c3_t"></h4><p data-i18n="c3_s"></p></div>
+                </div>
+                <div class="t-step">
+                    <div class="t-node"><span class="t-num">04</span></div>
+                    <div class="t-card"><h4 data-i18n="c4_t"></h4><p data-i18n="c4_s"></p></div>
+                </div>
+                <div class="t-step">
+                    <div class="t-node"><span class="t-num">05</span></div>
+                    <div class="t-card"><h4 data-i18n="c5_t"></h4><p data-i18n="c5_s"></p></div>
+                </div>
+                <div class="t-step">
+                    <div class="t-node"><span class="t-num">06</span></div>
+                    <div class="t-card"><h4 data-i18n="c6_t"></h4><p data-i18n="c6_s"></p></div>
+                </div>
+                <div class="t-step">
+                    <div class="t-node"><span class="t-num">07</span></div>
+                    <div class="t-card"><h4 data-i18n="c7_t"></h4><p data-i18n="c7_s"></p></div>
+                </div>
             </div>
         </div>
     </div>
