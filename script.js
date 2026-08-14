@@ -1022,14 +1022,13 @@ function bindEffects() {
 })();
 
 /* ============================================================
-   9.5. СВЕТЛЯЧКИ + СВЕТОВОЙ СЛЕД ЗА КУРСОРОМ (hero)
+   9.5. СВЕТЛЯЧКИ + СВЕТОВОЙ СЛЕД ЗА КУРСОРОМ (на весь сайт)
    ============================================================ */
 (function heroAmbience() {
     if (isTouch || prefersReduced) return;
-    const hero = document.getElementById('hero');
     const fireCanvas = document.getElementById('hero-fireflies');
     const light = document.getElementById('hero-light');
-    if (!hero || !fireCanvas || !light) return;
+    if (!fireCanvas || !light) return;
     const fctx = fireCanvas.getContext('2d');
 
     let w, h, flies = [];
@@ -1040,8 +1039,8 @@ function bindEffects() {
     let running = false;
 
     function resize() {
-        w = fireCanvas.width = hero.offsetWidth;
-        h = fireCanvas.height = hero.offsetHeight;
+        w = fireCanvas.width = window.innerWidth;
+        h = fireCanvas.height = window.innerHeight;
         flies = Array.from({ length: FLY_COUNT }, () => ({
             x: Math.random() * w,
             y: Math.random() * h,
@@ -1055,13 +1054,12 @@ function bindEffects() {
         }));
     }
 
-    hero.addEventListener('mousemove', (e) => {
-        const r = hero.getBoundingClientRect();
-        mouse.tx = e.clientX - r.left;
-        mouse.ty = e.clientY - r.top;
+    document.addEventListener('mousemove', (e) => {
+        mouse.tx = e.clientX;
+        mouse.ty = e.clientY;
         light.classList.add('visible');
     }, { passive: true });
-    hero.addEventListener('mouseleave', () => {
+    document.addEventListener('mouseleave', () => {
         mouse.tx = mouse.ty = -9999;
         light.classList.remove('visible');
     });
@@ -1073,7 +1071,7 @@ function bindEffects() {
         lightPos.x += (mouse.x - lightPos.x) * 0.10;
         lightPos.y += (mouse.y - lightPos.y) * 0.10;
         if (mouse.x > -100 && mouse.y > -100) {
-            light.style.transform = `translate3d(${lightPos.x - 260}px, ${lightPos.y - 260}px, 0) scale(1)`;
+            light.style.transform = `translate3d(${lightPos.x - 260}px, ${lightPos.y - 260}px, 0)`;
         }
 
         for (const f of flies) {
@@ -1098,10 +1096,10 @@ function bindEffects() {
     function stop() { running = false; if (rafId) { cancelAnimationFrame(rafId); rafId = null; } }
 
     resize();
-    const heroIO = new IntersectionObserver((entries) => {
-        entries.forEach(en => en.isIntersecting ? start() : stop());
-    }, { threshold: 0.01 });
-    heroIO.observe(hero);
+    window.addEventListener('resize', resize);
+    document.addEventListener('visibilitychange', () => {
+        document.hidden ? stop() : start();
+    });
     start();
 })();
 
