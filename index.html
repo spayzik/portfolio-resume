@@ -2120,122 +2120,6 @@ section[id]::before {
 .contact-email:hover { border-color: var(--border-hover); background: var(--surface-hover); transform: translate(var(--mx, 0), var(--my, 0)) translateY(-3px); }
 .contact-email svg { width: 18px; height: 18px; color: var(--accent-1); }
 
-/* --- Прямые каналы связи (без формы) --- */
-.channels {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 18px;
-}
-.channel-card {
-    position: relative;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 4px 16px;
-    align-items: center;
-    padding: 24px 26px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-    transition: border-color 0.35s ease, background 0.35s ease, transform 0.35s var(--ease), box-shadow 0.35s ease;
-}
-.channel-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(600px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.04), transparent 40%);
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    pointer-events: none;
-    z-index: 0;
-}
-:root[data-theme="light"] .channel-card::before { background: radial-gradient(600px circle at var(--mx, 50%) var(--my, 50%), rgba(0, 0, 0, 0.03), transparent 40%); }
-.channel-card:hover::before { opacity: 1; }
-.channel-card:hover {
-    border-color: var(--border-hover);
-    background: var(--surface-hover);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-card);
-}
-.channel-card > * { position: relative; z-index: 1; }
-.channel-icon {
-    grid-row: span 2;
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(160deg, rgba(56, 189, 248, 0.14), rgba(139, 92, 246, 0.14));
-    border: 1px solid var(--border);
-    color: var(--accent-1);
-}
-.channel-icon svg { width: 22px; height: 22px; }
-.channel-body { display: flex; flex-direction: column; gap: 2px; }
-.channel-label {
-    font-family: var(--font-mono);
-    font-size: 10.5px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-}
-.channel-value {
-    font-family: var(--font-mono);
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--text);
-    word-break: break-all;
-}
-.channel-hint {
-    grid-column: 2;
-    font-size: 12.5px;
-    color: var(--text-muted);
-    line-height: 1.5;
-}
-@media (max-width: 768px) {
-    .channels { grid-template-columns: 1fr; }
-}
-
-/* --- Блок PDF-резюме --- */
-.resume-block {
-    margin-top: 64px;
-    padding-top: 48px;
-    border-top: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-}
-.resume-kicker {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--accent-3);
-}
-.resume-title {
-    font-family: var(--font-display);
-    font-size: clamp(1.5rem, 3vw, 2.2rem);
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    color: var(--text);
-    margin: 0;
-}
-.resume-sub {
-    font-size: 14.5px;
-    color: var(--text-muted);
-    line-height: 1.6;
-    margin: 0;
-    max-width: 480px;
-}
-.resume-btn {
-    margin-top: 8px;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-}
-.resume-btn svg { width: 18px; height: 18px; }
-
 /* Блок «Что я ищу» */
 .wish-row {
     display: flex;
@@ -3417,68 +3301,72 @@ section[id]::before {
         <div class="section-head reveal" data-index="06">
             <span class="section-index">06</span>
             <h2 class="section-title" data-i18n="contact_title"></h2>
-            <p class="section-sub" data-i18n="contact_sub"></p>
         </div>
-
-        <!-- Прямые каналы связи: без формы сбора персональных данных -->
-        <div class="channels reveal" style="--delay:.1s">
-            <a data-href="socials.telegram" target="_blank" rel="noopener" class="channel-card" aria-label="Telegram">
-                <span class="channel-icon">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.94 4.41c.27-1.1-.4-1.54-1.13-1.27L2.7 10.06c-1.23.48-1.21 1.17-.22 1.48l4.6 1.44 10.68-6.74c.5-.33.96-.15.58.18l-8.65 7.81-.33 4.76c.48 0 .69-.22.94-.47l2.27-2.19 4.71 3.48c.87.48 1.49.23 1.71-.8l3.03-14.6zM8.3 13.13l10.02-6.32c.49-.3.06-.46-.26-.25L7.4 13.28l.9-.15z"/></svg>
-                </span>
-                <span class="channel-body">
-                    <span class="channel-label" data-i18n="ch_tg_lbl"></span>
-                    <span class="channel-value">@sap4real</span>
-                </span>
-                <span class="channel-hint" data-i18n="ch_tg_hint"></span>
-            </a>
-
-            <a data-href="email" data-copy="email" class="channel-card" aria-label="Email">
-                <span class="channel-icon">
+        <div class="contact-grid">
+            <div class="contact-info reveal" style="--delay:.1s">
+                <a data-href="email" data-copy="email" class="contact-email" title="Copy">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m2 7 10 6 10-6"/></svg>
-                </span>
-                <span class="channel-body">
-                    <span class="channel-label" data-i18n="ch_email_lbl"></span>
-                    <span class="channel-value" data-email-text>spayz.53crew@mail.ru</span>
-                </span>
-                <span class="channel-hint" data-i18n="ch_email_hint"></span>
-            </a>
+                    <span data-email-text>[your@email.com]</span>
+                </a>
+                <div class="resume-row">
+                    <a data-href="resumePdf" data-resume class="btn btn--ghost">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v13M7 11l5 5 5-5M4 21h16"/></svg>
+                        <span data-i18n="hero_cta_resume"></span>
+                    </a>
+                </div>
+                <p class="resume-hint" id="resume-hint" data-i18n="resume_hint"></p>
 
-            <a data-href="socials.github" target="_blank" rel="noopener" class="channel-card" aria-label="GitHub">
-                <span class="channel-icon">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.17c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.53-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.25 5.67.41.35.77 1.05.77 2.12v3.14c0 .3.21.66.8.55A11.52 11.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
-                </span>
-                <span class="channel-body">
-                    <span class="channel-label" data-i18n="ch_gh_lbl"></span>
-                    <span class="channel-value">spayzik</span>
-                </span>
-                <span class="channel-hint" data-i18n="ch_gh_hint"></span>
-            </a>
-
-            <a data-href="socials.hh" target="_blank" rel="noopener" class="channel-card" aria-label="hh.ru">
-                <span class="channel-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4v16M4 12h6V4M10 20v-8M14 4v16M14 12h6V4M20 20v-8"/></svg>
-                </span>
-                <span class="channel-body">
-                    <span class="channel-label" data-i18n="ch_hh_lbl"></span>
-                    <span class="channel-value" data-i18n="ch_hh_value"></span>
-                </span>
-                <span class="channel-hint" data-i18n="ch_hh_hint"></span>
-            </a>
-        </div>
-
-        <!-- PDF-резюме -->
-        <div class="resume-block reveal" style="--delay:.2s">
-            <div class="resume-head">
-                <span class="resume-kicker" data-i18n="resume_kicker"></span>
-                <p class="resume-title" data-i18n="resume_name"></p>
-                <p class="resume-sub" data-i18n="resume_sub"></p>
+                <!-- Что я ищу (для рекрутеров) -->
+                <div class="wish-row">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1"/></svg>
+                    <div>
+                        <span class="wish-label" data-i18n="wish_label"></span>
+                        <p class="wish-text" data-i18n-html="wish_text"></p>
+                    </div>
+                </div>
+                <div class="socials" style="justify-content:flex-start; margin-bottom:0;">
+                    <a data-href="socials.github" target="_blank" rel="noopener" class="social-link" aria-label="GitHub">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.17c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.53-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.25 5.67.41.35.77 1.05.77 2.12v3.14c0 .3.21.66.8.55A11.52 11.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+                    </a>
+                    <a data-href="socials.hh" target="_blank" rel="noopener" class="social-link" aria-label="hh.ru">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4v16M4 12h6V4M10 20v-8M14 4v16M14 12h6V4M20 20v-8"/></svg>
+                    </a>
+                    <a data-href="socials.habr" target="_blank" rel="noopener" class="social-link" aria-label="Habr Career">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4v16M4 12h7M11 4v16M5 20l15-16"/></svg>
+                    </a>
+                    <a data-href="socials.getmatch" target="_blank" rel="noopener" class="social-link" aria-label="Getmatch">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M21 12h-7a2 2 0 0 0-2 2v5"/></svg>
+                    </a>
+                    <a data-href="socials.linkedin" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05a3.74 3.74 0 0 1 3.37-1.85c3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.55V9h3.57v11.45z"/></svg>
+                    </a>
+                    <a data-href="socials.telegram" target="_blank" rel="noopener" class="social-link" aria-label="Telegram">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.94 4.41c.27-1.1-.4-1.54-1.13-1.27L2.7 10.06c-1.23.48-1.21 1.17-.22 1.48l4.6 1.44 10.68-6.74c.5-.33.96-.15.58.18l-8.65 7.81-.33 4.76c.48 0 .69-.22.94-.47l2.27-2.19 4.71 3.48c.87.48 1.49.23 1.71-.8l3.03-14.6zM8.3 13.13l10.02-6.32c.49-.3.06-.46-.26-.25L7.4 13.28l.9-.15z"/></svg>
+                    </a>
+                </div>
             </div>
-            <a data-href="resumePdf" data-resume class="btn btn--primary resume-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v13M7 11l5 5 5-5M4 21h16"/></svg>
-                <span data-i18n="hero_cta_resume"></span>
-            </a>
-            <p class="resume-hint" id="resume-hint" data-i18n="resume_hint"></p>
+
+            <!-- Форма: Telegram Bot API (CONFIG) или mailto-фолбэк -->
+            <form class="contact-form reveal" style="--delay:.2s" id="contact-form" method="POST">
+                <input type="text" name="_gotcha" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
+                <div class="row">
+                    <div class="field">
+                        <label for="f-name" data-i18n="f_name"></label>
+                        <input id="f-name" name="name" type="text" data-i18n-ph="f_name_ph" required>
+                    </div>
+                    <div class="field">
+                        <label for="f-email" data-i18n="f_email"></label>
+                        <input id="f-email" name="email" type="email" data-i18n-ph="f_email_ph" required>
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="f-msg" data-i18n="f_msg"></label>
+                    <textarea id="f-msg" name="message" rows="5" data-i18n-ph="f_msg_ph" required></textarea>
+                </div>
+                <button type="submit" id="form-submit" class="btn btn--primary" data-i18n="f_send"></button>
+                <div class="form-status" id="form-status" role="status" aria-live="polite"></div>
+            </form>
+            <button type="button" class="form-again" id="form-again" data-i18n="f_again"></button>
         </div>
     </div>
 </section>
