@@ -1458,6 +1458,122 @@ section[id]::before {
    ============================================================ */
 .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
 @media (min-width: 1200px) { .projects-grid { grid-template-columns: repeat(3, 1fr); } }
+.projects-head { margin: 56px 0 22px; }
+.projects-head:first-of-type { margin-top: 6px; }
+.projects-group-title {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text);
+}
+.projects-group-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--border), transparent);
+}
+.work-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+.work-card {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    overflow: hidden;
+    transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s var(--ease);
+}
+.work-card:hover {
+    border-color: var(--border-hover);
+    box-shadow: var(--shadow-card);
+    transform: translateY(-2px);
+}
+.work-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(600px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.04), transparent 40%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+:root[data-theme="light"] .work-card::before { background: radial-gradient(600px circle at var(--mx, 50%) var(--my, 50%), rgba(0, 0, 0, 0.03), transparent 40%); }
+.work-card:hover::before { opacity: 1; }
+.work-card > * { position: relative; z-index: 2; }
+.work-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+.work-company {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent-1);
+}
+.work-role {
+    font-size: 12px;
+    color: var(--text-dim);
+    font-family: var(--font-mono);
+    white-space: nowrap;
+}
+.work-title {
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--text);
+}
+.work-desc {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--text-muted);
+}
+.work-metric {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--accent-3);
+    padding: 7px 13px;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    background: var(--surface);
+    width: fit-content;
+}
+.work-metric::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent-2);
+    box-shadow: 0 0 8px rgba(139, 92, 246, 0.8);
+    flex: none;
+}
+.work-stack { display: flex; flex-wrap: wrap; gap: 8px; }
+.work-stack li {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 4px 10px;
+    background: var(--surface);
+    list-style: none;
+}
 
 /* --- Витрина артефактов (документы и модели) --- */
 .artifacts {
@@ -1631,6 +1747,7 @@ section[id]::before {
 .project-card > * { position: relative; z-index: 2; }
 
 /* HUD-уголки на карточках (появляются при наведении) */
+.work-card::after,
 .project-card::after,
 .skill-card::after,
 .t-card::after,
@@ -1654,6 +1771,7 @@ section[id]::before {
         linear-gradient(var(--accent-3), var(--accent-3)) bottom right / 1px 14px;
     background-repeat: no-repeat;
 }
+.work-card:hover::after,
 .project-card:hover::after,
 .skill-card:hover::after,
 .t-card:hover::after,
@@ -2606,7 +2724,7 @@ section[id]::before {
     .section-title { font-size: 16pt; }
     .section-index { color: #555; }
     .section-head::before { display: none; }
-    .project-card::after, .skill-card::after, .t-card::after, .artifact-card::after { display: none; }
+    .work-card::after, .project-card::after, .skill-card::after, .t-card::after, .artifact-card::after { display: none; }
     .about-grid { grid-template-columns: 1fr; gap: 6px; }
     .t-line { display: none; }
     .approach-timeline { display: block; }
@@ -2964,6 +3082,17 @@ section[id]::before {
         <div class="section-head reveal" data-index="05">
             <span class="section-index">05</span>
             <h2 class="section-title" data-i18n="projects_title"></h2>
+        </div>
+
+        <div class="projects-head reveal">
+            <h3 class="projects-group-title" data-i18n="wg1_title"></h3>
+        </div>
+
+        <!-- Рабочие проекты (кейсы из компаний, без публичных ссылок) -->
+        <div class="work-grid" id="work-grid"></div>
+
+        <div class="projects-head reveal">
+            <h3 class="projects-group-title" data-i18n="wg2_title"></h3>
         </div>
 
         <!-- Карточки проектов рендерятся из CONFIG.projects; клик по карточке открывает детали -->

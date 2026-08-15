@@ -99,6 +99,50 @@ const CONFIG = {
         },
     ],
 
+    /* Рабочие проекты из компаний (кейсы без публичных ссылок) */
+    workProjects: [
+        {
+            id: 'w1',
+            companyKey: 'wp1_company',
+            roleKey: 'wp1_role',
+            descKey: 'wp1_desc',
+            metrics: 'wp1_metric',
+            stack: ['Kafka', 'RabbitMQ', 'REST', 'PostgreSQL', 'ClickHouse'],
+        },
+        {
+            id: 'w2',
+            companyKey: 'wp2_company',
+            roleKey: 'wp2_role',
+            descKey: 'wp2_desc',
+            metrics: 'wp2_metric',
+            stack: ['C&C', 'E-commerce', 'Payment', 'Reporting'],
+        },
+        {
+            id: 'w3',
+            companyKey: 'wp3_company',
+            roleKey: 'wp3_role',
+            descKey: 'wp3_desc',
+            metrics: 'wp3_metric',
+            stack: ['Security', 'Automation', 'API', 'SQL'],
+        },
+        {
+            id: 'w4',
+            companyKey: 'wp4_company',
+            roleKey: 'wp4_role',
+            descKey: 'wp4_desc',
+            metrics: 'wp4_metric',
+            stack: ['Messengers', 'API', 'JSON', 'Task Tracker', 'BPMN'],
+        },
+        {
+            id: 'w5',
+            companyKey: 'wp5_company',
+            roleKey: 'wp5_role',
+            descKey: 'wp5_desc',
+            metrics: 'wp5_metric',
+            stack: ['1С', 'B2B', 'Confluence', 'ФТТ', 'ArchiMate'],
+        },
+    ],
+
     /* Компетенции: иконки + ключи текстов из I18N */
     skills: [
         {
@@ -292,6 +336,29 @@ const I18N = {
         p3_h4: 'Формы заявки и юнит-экономика: превращение трафика в лиды',
         p3_link: 'Открыть сайт',
 
+        wg1_title: 'Рабочие проекты',
+        wg2_title: 'Личные проекты',
+        wp1_company: 'S8 Capital · Столото',
+        wp1_role: 'Системный аналитик',
+        wp1_desc: 'Проектирование интеграций с внешними системами в высоконагруженной среде (500+ систем): Kafka, RabbitMQ, REST. Описание потоков данных и детальные ФТТ/ТЗ, которые кратно снизили вопросы от разработки.',
+        wp1_metric: '500+ систем',
+        wp2_company: 'S8 Capital · Столото',
+        wp2_role: 'Системный аналитик',
+        wp2_desc: 'Запуск продажи билетов на Wildberries (C&C): новый канал продаж, проектирование интеграции, обработка платежей и отчётность. Рост выручки направления на 10%.',
+        wp2_metric: '+10% к выручке',
+        wp3_company: 'S8 Capital · Столото',
+        wp3_role: 'Системный аналитик',
+        wp3_desc: 'Портал службы безопасности с автоматизированными проверками: аналитика требований, API-контракты, автоматизация рутинных процессов.',
+        wp3_metric: '−50% ручных операций',
+        wp4_company: 'Телесеть+',
+        wp4_role: 'Системный аналитик',
+        wp4_desc: 'Интеграция с мессенджерами и таск-трекером: автоматизация обработки заявок техподдержки. Моделирование процессов (BPMN), API-контракты (JSON/XML), структуры БД.',
+        wp4_metric: 'Полная автоматизация',
+        wp5_company: 'ПК Аквариус',
+        wp5_role: 'Fullstack-аналитик',
+        wp5_desc: 'Внутренние B2B-системы (включая контур 1С): сбор требований, целевые архитектуры, стандарты документации и база знаний для команды аналитиков.',
+        wp5_metric: 'Стандарты и база знаний',
+
         skills_title: 'Компетенции',
         skills_sub: 'Технологии и практики, с которыми работаю каждый день — от требований до продакшена.',
         sk1_title: 'Архитектура',
@@ -447,6 +514,29 @@ const I18N = {
         p3_h3: 'SEO and Open Graph: visible in search, shares correctly in social media',
         p3_h4: 'Request forms and unit economics: turning traffic into leads',
         p3_link: 'Visit site',
+
+        wg1_title: 'Work projects',
+        wg2_title: 'Personal projects',
+        wp1_company: 'S8 Capital · Stoloto',
+        wp1_role: 'Systems Analyst',
+        wp1_desc: 'Designed integrations with external systems in a highload environment (500+ systems): Kafka, RabbitMQ, REST. Documented data flows and detailed specs, drastically reducing questions from the dev team.',
+        wp1_metric: '500+ systems',
+        wp2_company: 'S8 Capital · Stoloto',
+        wp2_role: 'Systems Analyst',
+        wp2_desc: 'Launched ticket sales on Wildberries (C&C): a new sales channel — integration design, payment handling and reporting. Grew the line revenue by 10%.',
+        wp2_metric: '+10% revenue',
+        wp3_company: 'S8 Capital · Stoloto',
+        wp3_role: 'Systems Analyst',
+        wp3_desc: 'Security portal with automated checks: requirements analysis, API contracts, automating routine operations.',
+        wp3_metric: '−50% manual ops',
+        wp4_company: 'Teleset+',
+        wp4_role: 'Systems Analyst',
+        wp4_desc: 'Messenger and task-tracker integration: automating support ticket handling. Process modeling (BPMN), API contracts (JSON/XML), DB structures.',
+        wp4_metric: 'Full automation',
+        wp5_company: 'Aquarius',
+        wp5_role: 'Fullstack Analyst',
+        wp5_desc: 'Internal B2B systems (including 1C): requirements gathering, target architectures, documentation standards and a knowledge base for the analytics team.',
+        wp5_metric: 'Standards & KB',
 
         skills_title: 'Core skills',
         skills_sub: 'Technologies and practices I work with every day — from requirements to production.',
@@ -654,6 +744,17 @@ function renderDynamic() {
                 ${s.items.map(k => `<li>${d[k]}</li>`).join('')}
             </ul>
         </div>`).join('');
+
+    document.getElementById('work-grid').innerHTML = CONFIG.workProjects.map((w, i) => `
+        <article class="work-card reveal" style="--delay:${(0.08 + i * 0.07).toFixed(2)}s">
+            <div class="work-top">
+                <span class="work-company">${d[w.companyKey]}</span>
+                <span class="work-role">${d[w.roleKey]}</span>
+            </div>
+            <p class="work-desc">${d[w.descKey]}</p>
+            <span class="work-metric">${d[w.metrics]}</span>
+            <ul class="work-stack">${w.stack.map(t => `<li>${t}</li>`).join('')}</ul>
+        </article>`).join('');
 
     document.getElementById('projects-grid').innerHTML = CONFIG.projects.map((p, i) => `
         <article class="project-card reveal" style="--delay:${(0.1 + i * 0.1).toFixed(2)}s"
@@ -1183,7 +1284,7 @@ if (!isTouch && !prefersReduced) {
 /* Навешивает эффекты на элементы, отрендеренные динамически (data-fx — защита от повторов) */
 function bindEffects() {
     if (isTouch) return;
-    document.querySelectorAll('.project-card, .exp-card, .artifact-card').forEach(el => {
+    document.querySelectorAll('.project-card, .exp-card, .artifact-card, .work-card').forEach(el => {
         el.addEventListener('mousemove', e => {
             const r = el.getBoundingClientRect();
             const cx = r.width / 2;
