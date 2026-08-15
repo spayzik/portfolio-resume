@@ -410,8 +410,20 @@ const I18N = {
         edu2_spec: 'Менеджмент и управление бизнесом',
         edu2_place: 'Московский международный университет, Москва',
 
-        contact_title: 'Открыт к новым проектам',
-        contact_sub: '',
+        contact_title: 'Контакты',
+        contact_sub: 'Без формы сбора персональных данных — только прямые каналы связи. Телефон предоставляется по запросу.',
+        ch_tg_lbl: 'Telegram',
+        ch_tg_hint: 'Быстрый ответ по вакансиям и вопросам',
+        ch_email_lbl: 'Email',
+        ch_email_hint: 'Для предложений и сотрудничества',
+        ch_gh_lbl: 'GitHub',
+        ch_gh_hint: 'Личные проекты и эксперименты',
+        ch_hh_lbl: 'HH',
+        ch_hh_value: 'Резюме на hh.ru',
+        ch_hh_hint: 'Актуальный профиль для рекрутеров',
+        resume_kicker: 'PDF',
+        resume_name: 'Daniil Dunaev — Analyst / Architect',
+        resume_sub: 'Актуальная версия резюме — PDF, одна страница, только подтверждённые данные.',
         wish_label: 'Ищу роль',
         wish_text: '<b>Senior Systems Analyst / Solution Architect</b> · гибрид / удаленно · г. Москва',
         copy_done: 'Email скопирован', copy_fail: 'Не удалось скопировать',
@@ -589,8 +601,20 @@ const I18N = {
         edu2_spec: 'Management and Business Administration',
         edu2_place: 'Moscow International University, Moscow',
 
-        contact_title: 'Open to new projects',
-        contact_sub: '',
+        contact_title: 'Contact',
+        contact_sub: 'No data-collection form — only direct channels. Phone is available on request.',
+        ch_tg_lbl: 'Telegram',
+        ch_tg_hint: 'Fast reply on vacancies and questions',
+        ch_email_lbl: 'Email',
+        ch_email_hint: 'For proposals and collaboration',
+        ch_gh_lbl: 'GitHub',
+        ch_gh_hint: 'Personal projects and experiments',
+        ch_hh_lbl: 'HH',
+        ch_hh_value: 'Resume on hh.ru',
+        ch_hh_hint: 'Up-to-date profile for recruiters',
+        resume_kicker: 'PDF',
+        resume_name: 'Daniil Dunaev — Analyst / Architect',
+        resume_sub: 'Latest resume — PDF, one page, verified data only.',
         wish_label: 'Looking for',
         wish_text: '<b>Senior Systems Analyst / Solution Architect</b> · hybrid / remote · Moscow',
         copy_done: 'Email copied', copy_fail: 'Copy failed',
@@ -1284,7 +1308,7 @@ if (!isTouch && !prefersReduced) {
 /* Навешивает эффекты на элементы, отрендеренные динамически (data-fx — защита от повторов) */
 function bindEffects() {
     if (isTouch) return;
-    document.querySelectorAll('.project-card, .exp-card, .artifact-card, .work-card').forEach(el => {
+    document.querySelectorAll('.project-card, .exp-card, .artifact-card, .work-card, .channel-card').forEach(el => {
         el.addEventListener('mousemove', e => {
             const r = el.getBoundingClientRect();
             const cx = r.width / 2;
@@ -1620,57 +1644,61 @@ function formatTgMessage(d) {
     ].join('\n');
 }
 
-contactForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    formStatus.className = 'form-status';
-    const d = new FormData(contactForm);
+if (contactForm && formStatus && formSubmit) {
+    contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        formStatus.className = 'form-status';
+        const d = new FormData(contactForm);
 
-    /* Honeypot: бот-заполнитель попадает в скрытое поле — молча игнорируем */
-    if (d.get('_gotcha')) return;
+        /* Honeypot: бот-заполнитель попадает в скрытое поле — молча игнорируем */
+        if (d.get('_gotcha')) return;
 
-    /* Нет токена — открываем почтовый клиент */
-    if (!CONFIG.telegramBotToken || !CONFIG.telegramChatId) {
-        const subject = encodeURIComponent(`[Portfolio] ${d.get('name')}`);
-        const body = encodeURIComponent(`${d.get('message')}\n\n— ${d.get('name')} (${d.get('email')})`);
-        window.location.href = `mailto:${CONFIG.email}?subject=${subject}&body=${body}`;
-        showToast(I18N[currentLang].mail_open);
-        return;
-    }
-
-    formSubmit.disabled = true;
-    formSubmit.textContent = I18N[currentLang].f_sending;
-    try {
-        const res = await fetch(`https://api.telegram.org/bot${CONFIG.telegramBotToken}/sendMessage`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                chat_id: CONFIG.telegramChatId,
-                text: formatTgMessage(d),
-            }),
-        });
-        const j = await res.json();
-        if (j && j.ok) {
-            contactForm.classList.add('sent');
-            formStatus.classList.add('success');
-            formStatus.textContent = I18N[currentLang].f_success;
-            contactForm.reset();
-        } else {
-            throw new Error(j && j.description ? j.description : 'telegram rejected');
+        /* Нет токена — открываем почтовый клиент */
+        if (!CONFIG.telegramBotToken || !CONFIG.telegramChatId) {
+            const subject = encodeURIComponent(`[Portfolio] ${d.get('name')}`);
+            const body = encodeURIComponent(`${d.get('message')}\n\n— ${d.get('name')} (${d.get('email')})`);
+            window.location.href = `mailto:${CONFIG.email}?subject=${subject}&body=${body}`;
+            showToast(I18N[currentLang].mail_open);
+            return;
         }
-    } catch {
-        formStatus.classList.add('error');
-        formStatus.textContent = I18N[currentLang].f_error;
-    } finally {
-        formSubmit.disabled = false;
-        formSubmit.textContent = I18N[currentLang].f_send;
-    }
-});
 
-formAgain.addEventListener('click', () => {
-    contactForm.classList.remove('sent');
-    formStatus.className = 'form-status';
-    formStatus.textContent = '';
-});
+        formSubmit.disabled = true;
+        formSubmit.textContent = I18N[currentLang].f_sending;
+        try {
+            const res = await fetch(`https://api.telegram.org/bot${CONFIG.telegramBotToken}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: CONFIG.telegramChatId,
+                    text: formatTgMessage(d),
+                }),
+            });
+            const j = await res.json();
+            if (j && j.ok) {
+                contactForm.classList.add('sent');
+                formStatus.classList.add('success');
+                formStatus.textContent = I18N[currentLang].f_success;
+                contactForm.reset();
+            } else {
+                throw new Error(j && j.description ? j.description : 'telegram rejected');
+            }
+        } catch {
+            formStatus.classList.add('error');
+            formStatus.textContent = I18N[currentLang].f_error;
+        } finally {
+            formSubmit.disabled = false;
+            formSubmit.textContent = I18N[currentLang].f_send;
+        }
+    });
+
+    if (formAgain) {
+        formAgain.addEventListener('click', () => {
+            contactForm.classList.remove('sent');
+            formStatus.className = 'form-status';
+            formStatus.textContent = '';
+        });
+    }
+}
 
 /* ============================================================
    11. SEO: JSON-LD + HREFLANG (из CONFIG)
