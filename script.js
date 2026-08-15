@@ -1292,6 +1292,74 @@ function bindEffects() {
 })();
 
 /* ============================================================
+   9.3. МЕРЦАЮЩИЕ ИСКРЫ-ЗВЁЗДЫ (весь фон)
+   ============================================================ */
+(function bgSparks() {
+    const canvas = document.getElementById('bg-canvas');
+    if (!canvas || prefersReduced) return;
+    const ctx = canvas.getContext('2d');
+    let w, h, dpr, sparks = [];
+    const t0 = performance.now();
+
+    function makeSpark() {
+        const r = Math.random();
+        return {
+            x: Math.random(),
+            y: Math.random(),
+            size: r < 0.7 ? (Math.random() * 1 + 0.6) : (Math.random() * 1.8 + 1.4),
+            phase: Math.random() * Math.PI * 2,
+            speed: 0.4 + Math.random() * 0.9,
+            color: ['255,255,255', '0,210,255', '139,92,246'][Math.floor(Math.random() * 3)],
+        };
+    }
+
+    function resize() {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        w = canvas.width = window.innerWidth * dpr;
+        h = canvas.height = window.innerHeight * dpr;
+        canvas.style.width = window.innerWidth + 'px';
+        canvas.style.height = window.innerHeight + 'px';
+        const count = Math.min(70, Math.floor(window.innerWidth / 24));
+        sparks = Array.from({ length: count }, makeSpark);
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    let dim = document.documentElement.dataset.theme === 'light' ? 0.4 : 1;
+    const themeObserver = new MutationObserver(() => {
+        dim = document.documentElement.dataset.theme === 'light' ? 0.4 : 1;
+    });
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+    function step() {
+        ctx.clearRect(0, 0, w, h);
+        const el = (performance.now() - t0) / 1000;
+        for (const s of sparks) {
+            const tw = (Math.sin(el * s.speed + s.phase) + 1) / 2; // 0..1 пульс
+            const alpha = (0.15 + tw * 0.7) * dim;
+            const x = s.x * w;
+            const y = s.y * h;
+            const r = s.size * dpr;
+            /* Лёгкое свечение */
+            const g = ctx.createRadialGradient(x, y, 0, x, y, r * 4);
+            g.addColorStop(0, `rgba(${s.color},${alpha * 0.35})`);
+            g.addColorStop(1, `rgba(${s.color},0)`);
+            ctx.fillStyle = g;
+            ctx.beginPath();
+            ctx.arc(x, y, r * 4, 0, Math.PI * 2);
+            ctx.fill();
+            /* Ядро */
+            ctx.fillStyle = `rgba(${s.color},${alpha})`;
+            ctx.beginPath();
+            ctx.arc(x, y, r, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+})();
+
+/* ============================================================
    9.5. СВЕТЛЯЧКИ + СВЕТОВОЙ СЛЕД ЗА КУРСОРОМ (на весь сайт)
    ============================================================ */
 (function heroAmbience() {
