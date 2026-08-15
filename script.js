@@ -1292,6 +1292,123 @@ function bindEffects() {
 })();
 
 /* ============================================================
+   9.3. ПЕРСПЕКТИВНАЯ НЕОН-СЕТКА + ОРБИТЫ-КОЛЬЦА (весь фон)
+   ============================================================ */
+(function bgGridOrbits() {
+    const canvas = document.getElementById('bg-canvas');
+    if (!canvas || prefersReduced) return;
+    const ctx = canvas.getContext('2d');
+    let w, h, dpr;
+    const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
+    const t0 = performance.now();
+
+    function resize() {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        w = canvas.width = window.innerWidth * dpr;
+        h = canvas.height = window.innerHeight * dpr;
+        canvas.style.width = window.innerWidth + 'px';
+        canvas.style.height = window.innerHeight + 'px';
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    /* В светлой теме эффект сильно приглушаем */
+    let dim = document.documentElement.dataset.theme === 'light' ? 0.35 : 1;
+    const themeObserver = new MutationObserver(() => {
+        dim = document.documentElement.dataset.theme === 'light' ? 0.35 : 1;
+    });
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+    window.addEventListener('mousemove', (e) => {
+        mouse.tx = (e.clientX / window.innerWidth - 0.5) * 2;
+        mouse.ty = (e.clientY / window.innerHeight - 0.5) * 2;
+    }, { passive: true });
+
+    /* Орбиты: кольца, дрейфующие по фону и вращающиеся вокруг своей оси */
+    const orbits = [
+        { cx: 0.22, cy: 0.28, rx: 150, ry: 44, speed: 0.00042, phase: 0, color: '56,189,248', lw: 1.2 },
+        { cx: 0.78, cy: 0.68, rx: 190, ry: 52, speed: -0.0003, phase: 1.2, color: '139,92,246', lw: 1.2 },
+        { cx: 0.55, cy: 0.12, rx: 120, ry: 34, speed: 0.00055, phase: 2.4, color: '14,165,233', lw: 1 },
+    ];
+
+    function step() {
+        ctx.clearRect(0, 0, w, h);
+        const t = performance.now();
+        const el = (t - t0) / 1000;
+
+        /* Плавное движение мыши */
+        mouse.x += (mouse.tx - mouse.x) * 0.05;
+        mouse.y += (mouse.ty - mouse.y) * 0.05;
+
+        /* --- Орбиты-кольца --- */
+        for (const o of orbits) {
+            const cx = o.cx * w + mouse.x * 40 * dpr;
+            const cy = o.cy * h + mouse.y * 30 * dpr;
+            const rx = o.rx * dpr;
+            const ry = o.ry * dpr;
+            ctx.save();
+            ctx.translate(cx, cy);
+            ctx.rotate(0.12 + mouse.x * 0.12);
+            ctx.beginPath();
+            ctx.ellipse(0, 0, rx, ry, 0, 0, Math.PI * 2);
+            ctx.strokeStyle = `rgba(${o.color},${0.16 * dim})`;
+            ctx.lineWidth = o.lw * dpr;
+            ctx.stroke();
+            /* Светящаяся точка на орбите */
+            const px = Math.cos(el * o.speed * 1000) * rx;
+            const py = Math.sin(el * o.speed * 1000) * ry;
+            ctx.beginPath();
+            ctx.arc(px, py, 2.2 * dpr, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${o.color},${0.9 * dim})`;
+            ctx.fill();
+            ctx.restore();
+        }
+
+        /* --- Перспективная неон-сетка --- */
+        const horizon = h * 0.30 + mouse.y * 20 * dpr;
+        const lines = 16;
+        const breath = Math.sin(el * 0.4) * 0.5 + 0.5; // 0..1
+        ctx.lineWidth = 1 * dpr;
+        /* Горизонтали: сходятся к горизонту */
+        for (let i = 0; i <= lines; i++) {
+            const f = i / lines;
+            const y = horizon + Math.pow(f, 1.6) * (h - horizon) * 1.05;
+            const alpha = (0.05 + f * 0.10 + breath * 0.03 * (1 - f)) * dim;
+            const xShift = Math.sin(el * 0.5 + i * 0.7) * 6 * dpr * (f * 0.5 + 0.2);
+            ctx.beginPath();
+            ctx.moveTo(0, y);
+            ctx.quadraticCurveTo(w / 2, y + xShift, w, y);
+            ctx.strokeStyle = `rgba(0,210,255,${alpha})`;
+            ctx.stroke();
+        }
+        /* Вертикали: веер от горизонта */
+        const vLines = 26;
+        for (let i = 0; i <= vLines; i++) {
+            const fx = (i / vLines - 0.5) * 2;
+            const x = w / 2 + fx * (w * 0.75) * (1 + mouse.x * 0.08);
+            const xTop = w / 2 + fx * (w * 0.02 + mouse.x * 20 * dpr);
+            const alpha = (0.05 + Math.abs(fx) * 0.06) * dim;
+            ctx.beginPath();
+            ctx.moveTo(xTop, horizon);
+            ctx.lineTo(x, h);
+            ctx.strokeStyle = `rgba(139,92,246,${alpha})`;
+            ctx.stroke();
+        }
+        /* Горизонт — яркая линия */
+        ctx.beginPath();
+        ctx.moveTo(0, horizon);
+        ctx.lineTo(w, horizon);
+        ctx.strokeStyle = `rgba(56,189,248,${(0.16 + breath * 0.08) * dim})`;
+        ctx.lineWidth = 1.2 * dpr;
+        ctx.stroke();
+
+        requestAnimationFrame(step);
+    }
+
+    requestAnimationFrame(step);
+})();
+
+/* ============================================================
    9.5. СВЕТЛЯЧКИ + СВЕТОВОЙ СЛЕД ЗА КУРСОРОМ (на весь сайт)
    ============================================================ */
 (function heroAmbience() {
