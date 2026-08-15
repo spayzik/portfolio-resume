@@ -5,7 +5,7 @@
       Плейсхолдеры заменяются здесь — и обновятся по всему сайту.
    ============================================================ */
 const CONFIG = {
-    email: '[your@email.com]',
+    email: 'spayz.53crew@mail.ru',
     resumePdf: '',                 // путь к resume.pdf или '' (тогда кнопка открывает печать)
     siteUrl: '',                   // домен для SEO, напр. 'https://ddunaev.ru' (JSON-LD + hreflang)
 
@@ -198,6 +198,11 @@ const I18N = {
         hero_tagline: 'Fullstack-аналитик. Активно погружаюсь в смежные области (архитектуру, разработку, DevOps), чтобы говорить с инженерами на одном языке и превращать задачи бизнеса в предельно понятные требования.',
         hero_cta_projects: 'Смотреть проекты', hero_cta_contact: 'Связаться',
         hero_cta_resume: 'Скачать резюме',
+        pdf_title: 'Сборка PDF',
+        pdf_step1: 'Собираю данные профиля…',
+        pdf_step2: 'Рендерю макет резюме…',
+        pdf_step3: 'Упаковываю в PDF…',
+        pdf_step4: 'Готово — файл сформирован',
         scroll: 'скролл',
         metaDesc: 'Портфолио Даниила Дунаева: fullstack-аналитик (системный + бизнес-анализ), проектирование архитектуры, AI-инженерия. FinGuard, EzLearn, микросервисы, unit-экономика.',
         ogTitle: 'Даниил Дунаев — Fullstack Analyst → Solution Architect',
@@ -226,14 +231,26 @@ const I18N = {
         projects_title: 'Ключевые проекты',
         projects_sub: 'Два продукта, которые я спроектировал и собрал с нуля — от требований до релиза.',
         artifacts_title: 'Что я готовлю как аналитик — документы и модели',
+        artgroup1_title: 'Проектная документация',
         art_ftr_title: 'ФТТ',
-        art_ftr_sub: 'Состояния, сценарии, БТ/ФТ/НФТ/AC, потоки данных',
+        art_ftr_sub: 'Функционально-технические требования: цели, состояния, сценарии, БТ/ФТ/НФТ/AC, потоки данных',
+        art_tz_title: 'ТЗ',
+        art_tz_sub: 'Техническое задание: назначение, границы, требования, этапы и критерии приёмки',
+        art_chtz_title: 'ЧТЗ',
+        art_chtz_sub: 'Частное техническое задание: детальные требования к модулю или интеграции',
+        art_spec_title: 'Спецификация',
+        art_spec_sub: 'Точные контракты: API, структуры данных, форматы и правила обработки',
+        artgroup2_title: 'Визуальные схемы и диаграммы',
+        art_bpmn_title: 'BPMN',
+        art_bpmn_sub: 'Моделирование бизнес-процессов: роли, события, потоки управления',
         art_c4_title: 'C4 Model',
         art_c4_sub: 'Контекст, контейнеры, компоненты и код',
+        art_uml_title: 'UML',
+        art_uml_sub: 'Диаграммы классов, последовательностей и состояний',
+        art_epc_title: 'EPC + ARIS',
+        art_epc_sub: 'Событийные цепочки процессов и моделирование в методологии ARIS',
         art_archimate_title: 'ArchiMate',
         art_archimate_sub: 'Архитектура: бизнес, данные, приложения, инфраструктура',
-        art_pitch_title: 'Презентация',
-        art_pitch_sub: 'Материалы для демонстрации и защиты решения',
         p1_role: 'Роль: Solution Architect / Systems Analyst',
         p1_desc: 'Платформа мониторинга транзакций с <b>ML-скорингом</b> и AI-ассистентом для банков. Самостоятельно описал проект и составил <b>документ ФТТ</b> со всеми состояниями, to-be диаграммами, user stories, use cases, БТ/ФТ/НФТ/AC, потоками данных с атрибутными составами. Спроектировал <b>архитектуру C4 и ArchiMate</b>, микросервисную интеграцию (Kafka, gRPC, GraphQL), построил RAG-пайплайн с локальным LLM, настроил CI/CD в Kubernetes. Подготовил <b>презентацию проекта</b> и рассчитал юнит-экономику: CAC, LTV, ROI.',
         p2_role: 'Роль: Full-stack Architect & AI Engineer',
@@ -329,6 +346,11 @@ const I18N = {
         hero_tagline: "Fullstack Analyst. I actively dive into adjacent fields (architecture, engineering, DevOps) to speak the same language with engineers and turn business goals into clear requirements.",
         hero_cta_projects: 'View projects', hero_cta_contact: 'Get in touch',
         hero_cta_resume: 'Download CV',
+        pdf_title: 'Building PDF',
+        pdf_step1: 'Collecting profile data…',
+        pdf_step2: 'Rendering resume layout…',
+        pdf_step3: 'Packing into PDF…',
+        pdf_step4: 'Done — file is ready',
         scroll: 'scroll',
         metaDesc: 'Portfolio of Daniil Dunaev: fullstack analyst (systems + business analysis), architecture design, AI engineering. FinGuard, EzLearn, microservices, unit economics.',
         ogTitle: 'Daniil Dunaev — Fullstack Analyst → Solution Architect',
@@ -358,14 +380,26 @@ const I18N = {
         projects_title: 'Key projects',
         projects_sub: 'Two products I designed and built from scratch — from requirements to release.',
         artifacts_title: 'What I produce as an analyst — documents and models',
+        artgroup1_title: 'Project documentation',
         art_ftr_title: 'FTR',
-        art_ftr_sub: 'States, scenarios, BR/FR/NFR/AC, data flows',
+        art_ftr_sub: 'Functional & technical requirements: goals, states, scenarios, BR/FR/NFR/AC, data flows',
+        art_tz_title: 'TS',
+        art_tz_sub: 'Technical specification: purpose, scope, requirements, milestones and acceptance criteria',
+        art_chtz_title: 'PTS',
+        art_chtz_sub: 'Private technical spec: detailed requirements for a module or integration',
+        art_spec_title: 'Specification',
+        art_spec_sub: 'Precise contracts: API, data structures, formats and processing rules',
+        artgroup2_title: 'Visual diagrams and schemas',
+        art_bpmn_title: 'BPMN',
+        art_bpmn_sub: 'Business process modeling: roles, events, control flows',
         art_c4_title: 'C4 Model',
         art_c4_sub: 'Context, containers, components and code',
+        art_uml_title: 'UML',
+        art_uml_sub: 'Class, sequence and state diagrams',
+        art_epc_title: 'EPC + ARIS',
+        art_epc_sub: 'Event-driven process chains and modeling with the ARIS methodology',
         art_archimate_title: 'ArchiMate',
         art_archimate_sub: 'Architecture: business, data, application, infrastructure',
-        art_pitch_title: 'Presentation',
-        art_pitch_sub: 'Materials for demo and solution sign-off',
         p1_role: 'Role: Solution Architect / Systems Analyst',
         p1_desc: 'A transaction monitoring platform with <b>ML scoring</b> and an AI assistant for banks. Independently authored the project and produced a <b>FTR document</b> covering all states, to-be diagrams, user stories, use cases, BRs/FRs/NFRs/ACs, and data flows with attribute sets. Designed <b>C4 and ArchiMate architecture</b>, microservice integrations (Kafka, gRPC, GraphQL), built a RAG pipeline with a local LLM, set up CI/CD in Kubernetes. Prepared a <b>project presentation</b> and calculated unit economics: CAC, LTV, ROI.',
         p2_role: 'Role: Full-stack Architect & AI Engineer',
@@ -717,13 +751,47 @@ if (sessionStorage.getItem('dd_portfolio_seen')) {
     sessionStorage.setItem('dd_portfolio_seen', '1');
 }
 
-/* Резюме: файл из CONFIG или печать (window.print) */
+/* Резюме: файл из CONFIG или красивая генерация PDF через печать */
+const pdfOverlay = document.getElementById('pdf-overlay');
+const pdfFill = document.getElementById('pdf-bar-fill');
+const pdfPercent = document.getElementById('pdf-percent');
+const pdfStatus = document.getElementById('pdf-status');
+const PDF_STEPS = ['pdf_step1', 'pdf_step2', 'pdf_step3'];
+function runPdfBuild(onDone) {
+    let p = 0;
+    const t0 = performance.now();
+    const dict = I18N[currentLang] || I18N.ru;
+    const tick = () => {
+        const el = (performance.now() - t0) / 2800;
+        p = Math.min(100, Math.round(92 * (1 - Math.pow(1 - el, 3))));
+        pdfFill.style.width = p + '%';
+        pdfPercent.textContent = p + '%';
+        pdfStatus.textContent = dict[PDF_STEPS[Math.min(2, Math.floor(p / 31))]];
+        if (el < 1) requestAnimationFrame(tick);
+        else {
+            pdfFill.style.width = '100%';
+            pdfPercent.textContent = '100%';
+            pdfOverlay.classList.add('done');
+            pdfStatus.textContent = dict.pdf_step4;
+            setTimeout(onDone, 650);
+        }
+    };
+    requestAnimationFrame(tick);
+}
 document.querySelectorAll('[data-resume]').forEach(a => {
     a.addEventListener('click', (e) => {
-        if (!CONFIG.resumePdf) {
-            e.preventDefault();
+        if (CONFIG.resumePdf) return; // прямой файл из CONFIG
+        e.preventDefault();
+        pdfOverlay.classList.remove('done');
+        pdfFill.style.width = '0%';
+        pdfPercent.textContent = '0%';
+        pdfOverlay.classList.add('open');
+        pdfOverlay.setAttribute('aria-hidden', 'false');
+        runPdfBuild(() => {
             window.print();
-        }
+            pdfOverlay.classList.remove('open');
+            pdfOverlay.setAttribute('aria-hidden', 'true');
+        });
     });
 });
 
