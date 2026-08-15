@@ -81,6 +81,22 @@ const CONFIG = {
                 'assets/projects/ezlearn-2.svg',
             ],
         },
+        {
+            id: 'domera',
+            name: 'Домэра',
+            tag: 'E-commerce / Web',
+            roleKey: 'p3_role',
+            descKey: 'p3_desc',
+            hlKeys: ['p3_h1', 'p3_h2', 'p3_h3', 'p3_h4'],
+            metrics: 'SEO · Performance · Leads',
+            repo: 'https://spayzik.github.io/sitedomera/',
+            linkLabelKey: 'p3_link',
+            stack: ['React', 'Vite', 'JavaScript', 'CSS', 'SEO', 'Open Graph', 'Landing', 'Catalog', 'GitHub Pages'],
+            shots: [
+                'assets/projects/domera-1.svg',
+                'assets/projects/domera-2.svg',
+            ],
+        },
     ],
 
     /* Компетенции: иконки + ключи текстов из I18N */
@@ -229,7 +245,7 @@ const I18N = {
         c7_t: 'Business Result', c7_s: 'измеримый бизнес-эффект',
 
         projects_title: 'Ключевые проекты',
-        projects_sub: 'Два продукта, которые я спроектировал и собрал с нуля — от требований до релиза.',
+        projects_sub: 'Продукты и коммерческий сайт — от аналитики требований до релиза.',
         artifacts_title: 'Что я готовлю как аналитик — документы и модели',
         artgroup1_title: 'Проектная документация',
         art_ftr_title: 'ФТТ',
@@ -268,6 +284,13 @@ const I18N = {
         p2_h2: 'Гибридный поиск: ChromaDB + FTS — ответы, опирающиеся на материалы курса',
         p2_h3: '115+ pytest и 41+ vitest; аудит безопасности: 35/37 уязвимостей закрыто',
         p2_h4: 'Геймификация, сертификации и маркетплейс курсов',
+        p3_role: 'Роль: Product Analyst / Frontend Developer',
+        p3_desc: 'Коммерческий сайт <b>Домэры</b> — производителя бамбуковых стеновых панелей премиум-класса: каталог, шоурум в Москве, заявки на замер. Полный цикл от аналитики требований бизнеса (ассортимент, юнит-экономика лида) до релиза: прототип, вёрстка на <b>React</b>, SEO-разметка (Open Graph, мета-теги, семантика), оптимизация скорости загрузки и формы захвата контактов. Сайт собран на Vite и выложен на GitHub Pages.',
+        p3_h1: 'Полный цикл: аналитика требований → дизайн → фронтенд → релиз и SEO',
+        p3_h2: 'Каталог панелей и реек с фильтрацией и карточками товара',
+        p3_h3: 'SEO и Open Graph: виден в поиске и корректно шарится в соцсетях',
+        p3_h4: 'Формы заявки и юнит-экономика: превращение трафика в лиды',
+        p3_link: 'Открыть сайт',
 
         skills_title: 'Компетенции',
         skills_sub: 'Технологии и практики, с которыми работаю каждый день — от требований до продакшена.',
@@ -378,7 +401,7 @@ const I18N = {
 
         
         projects_title: 'Key projects',
-        projects_sub: 'Two products I designed and built from scratch — from requirements to release.',
+        projects_sub: 'Products and a commercial website — from requirements analysis to release.',
         artifacts_title: 'What I produce as an analyst — documents and models',
         artgroup1_title: 'Project documentation',
         art_ftr_title: 'FTR',
@@ -417,6 +440,13 @@ const I18N = {
         p2_h2: 'Hybrid search: ChromaDB + FTS — answers grounded in course materials',
         p2_h3: '115+ pytest and 41+ vitest; security audit: 35/37 vulnerabilities fixed',
         p2_h4: 'Gamification, certifications and a course marketplace',
+        p3_role: 'Role: Product Analyst / Frontend Developer',
+        p3_desc: 'A commercial website for <b>Domera</b> — a premium bamboo wall-panel manufacturer: catalog, showroom in Moscow, measuring requests. Full cycle from business requirements analysis (assortment, lead unit economics) to release: prototype, <b>React</b> frontend, SEO markup (Open Graph, meta tags, semantics), load-speed optimization and lead-capture forms. Built with Vite and hosted on GitHub Pages.',
+        p3_h1: 'Full cycle: requirements analysis → design → frontend → release and SEO',
+        p3_h2: 'Panel & rack catalog with filtering and product cards',
+        p3_h3: 'SEO and Open Graph: visible in search, shares correctly in social media',
+        p3_h4: 'Request forms and unit economics: turning traffic into leads',
+        p3_link: 'Visit site',
 
         skills_title: 'Core skills',
         skills_sub: 'Technologies and practices I work with every day — from requirements to production.',
@@ -647,7 +677,7 @@ function renderDynamic() {
             <div class="project-footer">
                 <span class="project-metrics">${p.metrics}</span>
                 <a href="${p.repo}" target="_blank" rel="noopener" class="btn btn--ghost btn--sm" data-stop>
-                    ${GITHUB_SVG} GitHub
+                    ${GITHUB_SVG} ${d[p.linkLabelKey] || 'GitHub'}
                 </a>
             </div>
         </article>`).join('');
@@ -1071,7 +1101,7 @@ function openProjectModal(id) {
             </ul>
             <p class="modal-metrics">${p.metrics}</p>
             <div class="modal-footer">
-                <a href="${p.repo}" target="_blank" rel="noopener" class="btn btn--primary">${GITHUB_SVG} GitHub</a>
+                <a href="${p.repo}" target="_blank" rel="noopener" class="btn btn--primary">${GITHUB_SVG} ${d[p.linkLabelKey] || 'GitHub'}</a>
             </div>
         </div>`;
     projectModal.classList.add('open');

@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="750" viewBox="0 0 1200 750">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a0e1a"/>
+      <stop offset="1" stop-color="#14100a"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="0.3" cy="0.3" r="0.7">
+      <stop offset="0" stop-color="#fbbf24" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#fbbf24" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#8a633c"/>
+      <stop offset="0.5" stop-color="#c69a64"/>
+      <stop offset="1" stop-color="#7a5735"/>
+    </linearGradient>
+    <pattern id="line" width="10" height="10" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="10" x2="10" y2="0" stroke="#6b4a2e" stroke-width="2"/>
+    </pattern>
+    <linearGradient id="title" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#fcd34d"/>
+      <stop offset="1" stop-color="#f59e0b"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="750" fill="url(#bg)"/>
+  <rect width="1200" height="750" fill="url(#glow1)"/>
+
+  <g transform="translate(70,60)" font-family="Inter, sans-serif">
+    <text x="0" y="22" font-size="16" fill="#fcd34d" letter-spacing="2" font-weight="600">CATALOG</text>
+    <rect x="180" y="0" width="60" height="28" rx="14" fill="#ffffff" fill-opacity="0.08"/>
+    <text x="210" y="20" font-size="13" fill="#94a3b8" text-anchor="middle">Panel</text>
+    <rect x="250" y="0" width="60" height="28" rx="14" fill="#ffffff" fill-opacity="0.08"/>
+    <text x="280" y="20" font-size="13" fill="#94a3b8" text-anchor="middle">Rack</text>
+  </g>
+
+  <g transform="translate(70,150)">
+    <rect x="0" y="0" width="320" height="420" rx="16" fill="url(#panel)"/>
+    <rect x="0" y="0" width="320" height="420" rx="16" fill="url(#line)" opacity="0.6"/>
+    <rect x="20" y="20" width="280" height="60" rx="10" fill="#ffffff" fill-opacity="0.1"/>
+    <rect x="20" y="340" width="180" height="14" rx="7" fill="#1c1917" opacity="0.5"/>
+    <rect x="20" y="364" width="230" height="10" rx="5" fill="#1c1917" opacity="0.3"/>
+  </g>
+
+  <g transform="translate(430,150)" font-family="Inter, sans-serif">
+    <rect x="0" y="0" width="320" height="420" rx="16" fill="url(#panel)"/>
+    <rect x="0" y="0" width="320" height="420" rx="16" fill="url(#line)" opacity="0.6"/>
+    <rect x="20" y="20" width="280" height="60" rx="10" fill="#ffffff" fill-opacity="0.1"/>
+    <rect x="20" y="340" width="150" height="14" rx="7" fill="#1c1917" opacity="0.5"/>
+    <rect x="20" y="364" width="200" height="10" rx="5" fill="#1c1917" opacity="0.3"/>
+  </g>
+
+  <g transform="translate(790,150)" font-family="Inter, sans-serif">
+    <rect x="0" y="0" width="320" height="420" rx="16" fill="url(#panel)"/>
+    <rect x="0" y="0" width="320" height="420" rx="16" fill="url(#line)" opacity="0.6"/>
+    <rect x="20" y="20" width="280" height="60" rx="10" fill="#ffffff" fill-opacity="0.1"/>
+    <rect x="20" y="340" width="200" height="14" rx="7" fill="#1c1917" opacity="0.5"/>
+    <rect x="20" y="364" width="170" height="10" rx="5" fill="#1c1917" opacity="0.3"/>
+  </g>
+
+  <text x="70" y="640" font-family="Consolas, monospace" font-size="16" fill="#64748b" letter-spacing="1">DOMERA · BAMBOO · MOSCOW SHOWROOM</text>
+</svg>
